@@ -286,35 +286,37 @@ export default function Banking() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+                            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
                             onClick={() => setShowConfirmation(false)}
-                        />
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] bg-white rounded-2xl p-6 shadow-2xl max-w-md w-full mx-4"
                         >
-                            <h3 className="text-xl font-bold text-slate-900 mb-4">Köçürməni təsdiqləyin</h3>
-                            <div className="space-y-2 mb-6 text-slate-600">
-                                <p><strong>Məbləğ:</strong> {amount} {currency}</p>
-                                <p><strong>Alıcı:</strong> {recipient === 'self' ? 'Özünüzə' : 'Başqa şəxs'}</p>
-                                {description && <p><strong>Təsvir:</strong> {description}</p>}
-                            </div>
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={() => setShowConfirmation(false)}
-                                    className="flex-1 py-3 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition-colors"
-                                >
-                                    Ləğv et
-                                </button>
-                                <button
-                                    onClick={confirmTransfer}
-                                    className="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition-colors"
-                                >
-                                    Təsdiq et
-                                </button>
-                            </div>
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-white rounded-2xl p-5 shadow-2xl w-full max-w-sm"
+                            >
+                                <h3 className="text-lg font-bold text-slate-900 mb-3">Köçürməni təsdiqləyin</h3>
+                                <div className="space-y-2 mb-5 text-sm text-slate-600">
+                                    <p><strong className="text-slate-900">Məbləğ:</strong> {amount} {currency}</p>
+                                    <p><strong className="text-slate-900">Alıcı:</strong> {recipient === 'self' ? 'Özünüzə' : 'Başqa şəxs'}</p>
+                                    {description && <p><strong className="text-slate-900">Təsvir:</strong> {description}</p>}
+                                </div>
+                                <div className="flex gap-3">
+                                    <button
+                                        onClick={() => setShowConfirmation(false)}
+                                        className="flex-1 py-2.5 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition-colors text-sm"
+                                    >
+                                        Ləğv et
+                                    </button>
+                                    <button
+                                        onClick={confirmTransfer}
+                                        className="flex-1 py-2.5 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition-colors text-sm"
+                                    >
+                                        Təsdiq et
+                                    </button>
+                                </div>
+                            </motion.div>
                         </motion.div>
                     </>
                 )}
