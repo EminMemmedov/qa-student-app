@@ -63,6 +63,21 @@ export default function Payment() {
         setReportModalOpen(true);
     };
 
+    const handleBugDetected = (bugId) => {
+        const result = addBug(bugId);
+        if (result.isNew) {
+            const bug = bugs.find(b => b.id === bugId);
+            setToast({ show: true, message: bug.description });
+            triggerBugAnimation(result);
+            checkAchievements({
+                foundBugs: [...foundBugs, bugId],
+                totalBugs: bugs.length,
+                moduleBugs: { payment: bugs },
+                getBugDifficulty
+            });
+        }
+    };
+
     const handleReportSubmit = ({ severity, priority }) => {
         const bug = bugs.find(b => b.id === selectedBugId);
         let bonus = 0;
@@ -175,7 +190,7 @@ export default function Payment() {
     const handlePayment = async () => {
         // Prevent double submission
         if (isProcessing) {
-            handleBugClick('btn_double', 'Düyməyə 2 dəfə klik ödənişi təkrarlayır');
+            handleBugDetected('btn_double');
             return;
         }
 
@@ -184,14 +199,7 @@ export default function Payment() {
         // Report all detected bugs
         let foundNew = false;
         detectedBugs.forEach(bugId => {
-            const bug = bugs.find(b => b.id === bugId);
-            // Use handleBugClick to trigger animations and achievements
-            // We pass the bug description as the message
-            handleBugClick(bugId, bug.description);
-
-            // Check if it was new (we can't easily get the return value here without modifying handleBugClick to return it, 
-            // but for the purpose of foundNew flag, we can check if it's in foundBugs before calling, 
-            // OR just rely on the fact that handleBugClick handles the UI feedback)
+            handleBugDetected(bugId);
             if (!foundBugs.includes(bugId)) {
                 foundNew = true;
             }

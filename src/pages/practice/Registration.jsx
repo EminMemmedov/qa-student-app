@@ -79,6 +79,21 @@ export default function Registration() {
         setReportModalOpen(true);
     };
 
+    const handleBugDetected = (bugId) => {
+        const result = addBug(bugId);
+        if (result.isNew) {
+            const bug = bugs.find(b => b.id === bugId);
+            setToast({ show: true, message: bug.description });
+            triggerBugAnimation(result);
+            checkAchievements({
+                foundBugs: [...foundBugs, bugId],
+                totalBugs: bugs.length,
+                moduleBugs: { registration: bugs },
+                getBugDifficulty
+            });
+        }
+    };
+
     const handleReportSubmit = ({ severity, priority }) => {
         const bug = bugs.find(b => b.id === selectedBugId);
         let bonus = 0;
@@ -97,9 +112,8 @@ export default function Registration() {
             setToast({ show: true, message: `Əla! Düzgün qiymətləndirmə üçün +${bonus} XP bonus! 🎯` });
         }
 
-        // Check achievements after bug is added
         checkAchievements({
-            foundBugs: [...foundBugs, selectedBugId], // Pass updated foundBugs
+            foundBugs: [...foundBugs, selectedBugId],
             totalBugs: bugs.length,
             moduleBugs: { registration: bugs },
             getBugDifficulty
@@ -318,8 +332,8 @@ export default function Registration() {
                                 maxLength={5}
                                 className="w-full p-3 border border-slate-200 rounded-xl outline-none focus:border-blue-500"
                                 onChange={(e) => {
-                                    if (e.target.value.length > 0) handleBugClick('password_type');
-                                    if (e.target.value.length === 5) handleBugClick('password_len');
+                                    if (e.target.value.length > 0) handleBugDetected('password_type');
+                                    if (e.target.value.length === 5) handleBugDetected('password_len');
                                 }}
                             />
                             <p className="text-xs text-slate-400 mt-1">
@@ -339,7 +353,7 @@ export default function Registration() {
                                     className="w-full pl-10 p-3 border border-slate-200 rounded-xl outline-none focus:border-blue-500"
                                     onChange={(e) => {
                                         if (/[a-zA-Z]/.test(e.target.value)) {
-                                            handleBugClick('phone_type');
+                                            handleBugDetected('phone_type');
                                         }
                                     }}
                                 />
@@ -358,7 +372,7 @@ export default function Registration() {
                                     className="w-full pl-10 p-3 border border-slate-200 rounded-xl outline-none focus:border-blue-500"
                                     onChange={(e) => {
                                         const date = new Date(e.target.value);
-                                        if (date > new Date()) handleBugClick('dob_future');
+                                        if (date > new Date()) handleBugDetected('dob_future');
                                     }}
                                 />
                             </div>
@@ -378,7 +392,7 @@ export default function Registration() {
                                             const newState = { ...genderState, male: e.target.checked };
                                             setGenderState(newState);
                                             if (newState.male && newState.female) {
-                                                handleBugClick('gender_radio');
+                                                handleBugDetected('gender_radio');
                                             }
                                         }}
                                     />
@@ -393,7 +407,7 @@ export default function Registration() {
                                             const newState = { ...genderState, female: e.target.checked };
                                             setGenderState(newState);
                                             if (newState.male && newState.female) {
-                                                handleBugClick('gender_radio');
+                                                handleBugDetected('gender_radio');
                                             }
                                         }}
                                     />

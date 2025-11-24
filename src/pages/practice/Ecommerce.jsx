@@ -63,6 +63,21 @@ export default function Ecommerce() {
         setReportModalOpen(true);
     };
 
+    const handleBugDetected = (bugId) => {
+        const result = addBug(bugId);
+        if (result.isNew) {
+            const bug = bugs.find(b => b.id === bugId);
+            setToast({ show: true, message: bug.description });
+            triggerBugAnimation(result);
+            checkAchievements({
+                foundBugs: [...foundBugs, bugId],
+                totalBugs: bugs.length,
+                moduleBugs: { ecommerce: bugs },
+                getBugDifficulty
+            });
+        }
+    };
+
     const handleReportSubmit = ({ severity, priority }) => {
         const bug = bugs.find(b => b.id === selectedBugId);
         let bonus = 0;
@@ -72,7 +87,6 @@ export default function Ecommerce() {
         const basePoints = getBugPoints(getBugDifficulty(selectedBugId));
         const totalPoints = basePoints + bonus;
 
-        addBug(selectedBugId);
         triggerBugAnimation(totalPoints);
         setReportModalOpen(false);
         setSelectedBugId(null);
@@ -124,10 +138,10 @@ export default function Ecommerce() {
         setCount(newCount);
 
         if (newCount === 0) {
-            handleBugClick('zero_qty', 'Məhsul sayı 0 ola bilir');
+            handleBugDetected('zero_qty');
         }
         if (newCount < 0) {
-            handleBugClick('neg_qty', 'Məhsul sayı mənfi ola bilir (-1)');
+            handleBugDetected('neg_qty');
         }
     };
 
@@ -136,7 +150,7 @@ export default function Ecommerce() {
         setCount(newCount);
 
         if (newCount > stock) {
-            handleBugClick('stock_limit', 'Stokda olandan çox məhsul seçmək olur');
+            handleBugDetected('stock_limit');
         }
     };
 
@@ -145,19 +159,19 @@ export default function Ecommerce() {
         setCount(val);
 
         if (val % 1 !== 0) {
-            handleBugClick('float_qty', 'Məhsul sayı kəsr ola bilir (1.5)');
+            handleBugDetected('float_qty');
         }
     };
 
     const handleDelete = () => {
-        handleBugClick('del_btn', 'Silmə düyməsi işləmir');
+        handleBugDetected('del_btn');
         // Button doesn't actually delete - this is the bug
     };
 
     const handleCouponApply = () => {
         addLog('info', `Attempting to apply coupon: ${couponCode}`);
         if (couponCode.toUpperCase() === 'FREE100') {
-            handleBugClick('coupon_100', 'Kupon kodu "FREE100" 100% endirim verir');
+            handleBugDetected('coupon_100');
             setAppliedCoupon({ code: 'FREE100', discount: 100 });
             addLog('success', 'Coupon applied successfully', { code: 'FREE100', discount: 100 });
         } else if (couponCode) {
@@ -172,8 +186,7 @@ export default function Ecommerce() {
         // Report all detected bugs
         let foundNew = false;
         detectedBugs.forEach(bugId => {
-            const bug = bugs.find(b => b.id === bugId);
-            handleBugClick(bugId, bug.description);
+            handleBugDetected(bugId);
             if (!foundBugs.includes(bugId)) {
                 foundNew = true;
             }
@@ -205,7 +218,7 @@ export default function Ecommerce() {
         // setStock(stock - count); // This line is commented out - the bug!
 
         if (oldStock === stock) {
-            handleBugClick('stock_info', 'Stok məlumatı göstərilmir');
+            handleBugDetected('stock_info');
         }
 
         setToast({ show: true, message: 'Sifariş qəbul edildi! ✅' });

@@ -69,6 +69,21 @@ export default function Banking() {
         setReportModalOpen(true);
     };
 
+    const handleBugDetected = (bugId) => {
+        const result = addBug(bugId);
+        if (result.isNew) {
+            const bug = bugs.find(b => b.id === bugId);
+            setToast({ show: true, message: bug.description });
+            triggerBugAnimation(result.points);
+            checkAchievements({
+                foundBugs: [...foundBugs, bugId],
+                totalBugs: bugs.length,
+                moduleBugs: { banking: bugs },
+                getBugDifficulty
+            });
+        }
+    };
+
     const handleReportSubmit = ({ severity, priority }) => {
         const bug = bugs.find(b => b.id === selectedBugId);
         let bonus = 0;
@@ -156,8 +171,7 @@ export default function Banking() {
         // Report all detected bugs
         let foundNew = false;
         detectedBugs.forEach(bugId => {
-            const bug = bugs.find(b => b.id === bugId);
-            handleBugClick(bugId, bug.description);
+            handleBugDetected(bugId);
             if (!foundBugs.includes(bugId)) {
                 foundNew = true;
             }
@@ -173,7 +187,7 @@ export default function Banking() {
 
         // Bug: No confirmation dialog
         if (!showConfirmation) {
-            handleBugClick('no_confirmation', 'Köçürmə təsdiq dialoqusuz icra olunur');
+            handleBugDetected('no_confirmation');
         }
 
         // Show confirmation (but bug is already triggered)
@@ -196,11 +210,11 @@ export default function Banking() {
         // setBalance(balance - numAmount); // This line is commented out - the bug!
 
         if (oldBalance === balance) {
-            handleBugClick('balance_static', 'Balans köçürmədən sonra yenilənmir');
+            handleBugDetected('balance_static');
         }
 
         // Bug: Always show success message
-        handleBugClick('success_msg', 'Uğursuz əməliyyatda "Uğurlu" mesajı çıxır');
+        handleBugDetected('success_msg');
         setToast({ show: true, message: 'Köçürmə uğurla tamamlandı! ✅' });
 
         // Clear form
