@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import BottomNav from './BottomNav';
-import DevToolsPanel from './DevToolsPanel';
 
 export default function Layout() {
     return (
@@ -8,7 +7,6 @@ export default function Layout() {
             <div className="max-w-md mx-auto min-h-screen bg-white shadow-2xl relative overflow-hidden">
                 <Outlet />
                 <BottomNav />
-                <DevToolsPanel />
             </div>
         </div>
     );

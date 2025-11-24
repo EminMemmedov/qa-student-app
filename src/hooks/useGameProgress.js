@@ -6,7 +6,10 @@ export function useGameProgress() {
         return saved ? JSON.parse(saved) : [];
     });
 
-    const [xp, setXp] = useState(0);
+    const [xp, setXp] = useState(() => {
+        const saved = localStorage.getItem('qa_game_xp');
+        return saved ? parseInt(saved) : 0;
+    });
 
     // Bug difficulty points mapping
     const bugPoints = {
@@ -77,20 +80,19 @@ export function useGameProgress() {
 
     useEffect(() => {
         localStorage.setItem('qa_game_progress', JSON.stringify(foundBugs));
-
-        // Calculate XP based on bug difficulty
-        const totalXp = foundBugs.reduce((sum, bugId) => {
-            return sum + (bugPoints[bugId] || 5); // Default 5 points if not defined
-        }, 0);
-
-        setXp(totalXp);
     }, [foundBugs]);
+
+    useEffect(() => {
+        localStorage.setItem('qa_game_xp', xp.toString());
+    }, [xp]);
 
     const addBug = (bugId) => {
         if (!foundBugs.includes(bugId)) {
             setFoundBugs(prev => [...prev, bugId]);
             const points = bugPoints[bugId] || 5;
             const difficulty = getBugDifficulty(bugId);
+            // Add XP
+            setXp(prev => prev + points);
             return { isNew: true, points, difficulty }; // Return info for animations
         }
         return { isNew: false }; // Bug already found
@@ -98,7 +100,9 @@ export function useGameProgress() {
 
     const resetProgress = () => {
         setFoundBugs([]);
+        setXp(0);
         localStorage.removeItem('qa_game_progress');
+        localStorage.removeItem('qa_game_xp');
     };
 
     const getBugPoints = (bugId) => {
@@ -113,23 +117,9 @@ export function useGameProgress() {
     };
 
     const deductXP = (amount) => {
-        // Remove bugs to deduct XP (starting from lowest value bugs)
-        const sortedBugs = [...foundBugs].sort((a, b) => {
-            return (bugPoints[a] || 5) - (bugPoints[b] || 5);
-        });
-
-        let remaining = amount;
-        const bugsToRemove = [];
-
-        for (const bugId of sortedBugs) {
-            if (remaining <= 0) break;
-            const points = bugPoints[bugId] || 5;
-            bugsToRemove.push(bugId);
-            remaining -= points;
-        }
-
-        if (bugsToRemove.length > 0) {
-            setFoundBugs(prev => prev.filter(id => !bugsToRemove.includes(id)));
+        // Simply deduct XP without removing bugs
+        if (xp >= amount) {
+            setXp(prev => prev - amount);
             return true;
         }
         return false;
