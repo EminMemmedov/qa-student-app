@@ -1,42 +1,169 @@
+/* Mobile-first optimizations */
+* {
+  -webkit-tap-highlight-color: rgba(99, 102, 241, 0.1);
+  -webkit-touch-callout: none;
+}
+
+/* Root container - remove default padding for mobile */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Prevent horizontal scroll */
+body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Touch-friendly buttons and interactive elements */
+button,
+a,
+[role="button"] {
+  -webkit-tap-highlight-color: rgba(99, 102, 241, 0.2);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Improve input focus on mobile */
+input,
+textarea,
+select {
+  font-size: 16px;
+  /* Prevents zoom on iOS */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Better scrolling performance */
+.overflow-y-auto,
+.overflow-auto {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Safe area padding for iOS notch */
+@supports (padding: env(safe-area-inset-top)) {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
   }
-  to {
-    transform: rotate(360deg);
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Prevent text selection on UI elements */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Optimize animations for mobile */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-.card {
-  padding: 2em;
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+
+  /* Larger touch targets */
+  button,
+  a[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Better spacing for mobile */
+  .p-6 {
+    padding: 1rem;
+  }
+
+  /* Adjust font sizes for readability */
+  html {
+    font-size: 14px;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+
+  /* Fix iOS Safari bottom bar issue */
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+
+  /* Prevent bounce scroll */
+  body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #root {
+    overflow-y: auto;
+    height: 100%;
+  }
+}
+
+/* Android specific fixes */
+@media (hover: none) and (pointer: coarse) {
+
+  /* Remove hover effects on touch devices */
+  *:hover {
+    transition-duration: 0s;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+
+  /* Reduce vertical padding in landscape */
+  .pt-12 {
+    padding-top: 0.5rem;
+  }
+
+  .pb-24 {
+    padding-bottom: 1rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
+  /* Sharper rendering for high DPI */
+  * {
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
 }
