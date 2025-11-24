@@ -25,6 +25,8 @@ export default function Registration() {
     const [toast, setToast] = useState({ show: false, message: '' });
     const [showSpec, setShowSpec] = useState(false);
     const [genderState, setGenderState] = useState({ male: false, female: false });
+    const [reportModalOpen, setReportModalOpen] = useState(false);
+    const [selectedBugId, setSelectedBugId] = useState(null);
 
     // Initialize DevTools bugs
     useEffect(() => {
