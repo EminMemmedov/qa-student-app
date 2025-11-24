@@ -5,6 +5,7 @@ import PageTransition from '../components/PageTransition';
 import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target } from 'lucide-react';
 import { useGameProgress } from '../hooks/useGameProgress';
 import { useAchievements } from '../hooks/useAchievements';
+import { achievements } from '../data/achievements';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -23,13 +24,13 @@ const itemVariants = {
 
 export default function Home() {
   const { xp, foundBugs } = useGameProgress();
-  const { achievements } = useAchievements();
+  const { unlockedAchievements } = useAchievements();
 
   // Level calculation: 1 level per 500 XP
   const level = Math.floor(xp / 500) + 1;
   const progress = (xp % 500) / 500 * 100;
   const nextLevelXp = 500 - (xp % 500);
-  const unlockedAchievements = achievements.filter(a => a.unlocked).length;
+  const unlockedCount = unlockedAchievements.length;
 
   return (
     <PageTransition className="p-6 pb-24 min-h-screen bg-slate-50/50">
@@ -197,7 +198,7 @@ export default function Home() {
               <Medal size={20} />
             </div>
             <div>
-              <div className="text-2xl font-black text-slate-900">{unlockedAchievements}</div>
+              <div className="text-2xl font-black text-slate-900">{unlockedCount}</div>
               <div className="text-xs text-slate-500 font-bold uppercase">Nailiyyətlər</div>
             </div>
           </div>
