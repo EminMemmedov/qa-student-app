@@ -68,7 +68,10 @@ export default function Ecommerce() {
         if (result.isNew) {
             const bug = bugs.find(b => b.id === bugId);
             setToast({ show: true, message: bug.description });
-            triggerBugAnimation(result);
+            triggerBugAnimation({
+                ...result,
+                bugName: bug.description
+            });
             checkAchievements({
                 foundBugs: [...foundBugs, bugId],
                 totalBugs: bugs.length,
@@ -302,8 +305,8 @@ export default function Ecommerce() {
                     <div
                         className="w-24 h-24 bg-slate-100 rounded-xl flex items-center justify-center cursor-pointer"
                         onClick={() => {
-                            handleBugClick('img_broken', 'Məhsul şəkli yüklənməyib');
-                            handleBugClick('img_no_alt', 'Şəkildə alt atributu yoxdur (accessibility)');
+                            handleBugClick('img_broken');
+                            handleBugClick('img_no_alt');
                         }}
                     >
                         <span className="text-xs text-slate-400">Image Error</span>
@@ -311,7 +314,7 @@ export default function Ecommerce() {
                     <div className="flex-1">
                         <h3
                             className="font-bold text-slate-900 cursor-pointer"
-                            onClick={() => handleBugClick('product_typo', 'Məhsul adında səhv: "iPhone" əvəzinə "iPone"')}
+                            onClick={() => handleBugClick('product_typo')}
                         >
                             iPone 15 Pro Max
                         </h3>
@@ -321,13 +324,13 @@ export default function Ecommerce() {
                         <div className="flex gap-2 mb-2">
                             <span
                                 className="text-xs text-slate-400 cursor-pointer hover:text-red-500"
-                                onClick={() => handleBugClick('no_size', 'Ölçü seçimi yoxdur')}
+                                onClick={() => handleBugClick('no_size')}
                             >
                                 Ölçü: ?
                             </span>
                             <span
                                 className="text-xs text-slate-400 cursor-pointer hover:text-red-500"
-                                onClick={() => handleBugClick('no_color', 'Rəng seçimi yoxdur')}
+                                onClick={() => handleBugClick('no_color')}
                             >
                                 Rəng: ?
                             </span>
@@ -335,14 +338,13 @@ export default function Ecommerce() {
 
                         <div
                             className="flex items-center gap-2 cursor-pointer"
-                            onClick={() => handleBugClick('price_alignment', 'Qiymət sağa deyil, sola yönəlib')}
+                            onClick={() => handleBugClick('price_alignment')}
                         >
                             <span
                                 className="font-bold text-lg cursor-pointer"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    addBug('currency_symbol'); // Keep addBug here to avoid double toast if handleBugClick is used inside another handler? No, this is standalone.
-                                    handleBugClick('currency_symbol', 'Valyuta simvolu yanlışdır ($ əvəzinə ₼)');
+                                    handleBugClick('currency_symbol');
                                 }}
                             >
                                 ${basePrice}
@@ -351,7 +353,7 @@ export default function Ecommerce() {
                                 className="text-sm text-red-500 line-through cursor-pointer"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    handleBugClick('price_calc', 'Endirim hesablanarkən qiymət artır');
+                                    handleBugClick('price_calc');
                                 }}
                             >
                                 ${basePrice - 500}
@@ -365,7 +367,7 @@ export default function Ecommerce() {
                         <button
                             onClick={() => {
                                 handleDecrement();
-                                handleBugClick('qty_btn_size', 'Miqdar düymələri fərqli ölçüdədir');
+                                handleBugClick('qty_btn_size');
                             }}
                             className="w-10 h-8 bg-white rounded-full shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors"
                         >
@@ -389,7 +391,7 @@ export default function Ecommerce() {
                     <div className="flex items-center gap-4">
                         <div
                             className="flex items-center gap-2 cursor-pointer opacity-50"
-                            onClick={() => handleBugClick('stock_info', 'Stok məlumatı göstərilmir')}
+                            onClick={() => handleBugClick('stock_info')}
                         >
                             <Package size={16} className="text-slate-400" />
                             <span className="text-xs text-slate-400">Stok: ?</span>
@@ -446,14 +448,14 @@ export default function Ecommerce() {
                     </div>
                     <div
                         className="flex justify-between text-green-600 font-medium cursor-pointer"
-                        onClick={() => handleBugClick('discount_color', 'Endirim mənfi olduğu halda yaşıl rəngdədir')}
+                        onClick={() => handleBugClick('discount_color')}
                     >
                         <span>Endirim</span>
                         <span>{discount > 0 ? '-' : '+'}${Math.abs(discount)}</span>
                     </div>
                     <div
                         className="flex justify-between font-black text-xl text-slate-900 pt-2 cursor-pointer"
-                        onClick={() => handleBugClick('total_font', 'Yekun məbləğ şrifti çox kiçikdir')}
+                        onClick={() => handleBugClick('total_font')}
                     >
                         <span className="text-xs">Cəmi</span>
                         <span className="text-xs">${total}</span>

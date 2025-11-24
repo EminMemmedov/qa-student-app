@@ -84,7 +84,10 @@ export default function Registration() {
         if (result.isNew) {
             const bug = bugs.find(b => b.id === bugId);
             setToast({ show: true, message: bug.description });
-            triggerBugAnimation(result);
+            triggerBugAnimation({
+                ...result,
+                bugName: bug.description
+            });
             checkAchievements({
                 foundBugs: [...foundBugs, bugId],
                 totalBugs: bugs.length,
