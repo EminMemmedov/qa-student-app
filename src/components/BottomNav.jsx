@@ -23,6 +23,7 @@ export default function BottomNav() {
                     <NavLink
                         key={item.path}
                         to={item.path}
+                        replace={false}
                         className={({ isActive }) =>
                             clsx(
                                 "flex flex-col items-center gap-1 p-3 rounded-xl transition-all duration-300 min-w-[60px] min-h-[60px] justify-center touch-manipulation",
