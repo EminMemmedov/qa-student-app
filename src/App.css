@@ -4,6 +4,16 @@
   -webkit-touch-callout: none;
 }
 
+/* Hardware acceleration for animations */
+.motion-safe,
+[class*="motion"],
+[class*="animate"] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 /* Root container - remove default padding for mobile */
 #root {
   width: 100%;
@@ -81,7 +91,7 @@ select {
   user-select: none;
 }
 
-/* Optimize animations for mobile */
+/* Optimize animations for mobile - CRITICAL FOR PERFORMANCE */
 @media (prefers-reduced-motion: reduce) {
 
   *,
@@ -90,6 +100,30 @@ select {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Reduce animations on low-end devices */
+@media (max-width: 768px) {
+
+  /* Simplify animations on mobile */
+  * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
+  }
+
+  /* Reduce blur effects (expensive on mobile) */
+  .backdrop-blur-lg {
+    backdrop-filter: blur(8px);
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(4px);
+  }
+
+  /* Reduce shadows (expensive on mobile) */
+  .shadow-2xl {
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
   }
 }
 
@@ -159,4 +193,46 @@ select {
   * {
     -webkit-font-smoothing: subpixel-antialiased;
   }
+}
+
+/* Performance: Contain layout/paint for isolated components */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-strict {
+  contain: strict;
+}
+
+/* GPU acceleration for common animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate3d(0, 20px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Optimize image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }

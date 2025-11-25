@@ -188,6 +188,8 @@ export default function Theory() {
                                                 <img
                                                     src={moduleImages[selectedModule.id]}
                                                     alt={selectedModule.title}
+                                                    loading="lazy"
+                                                    decoding="async"
                                                     className="w-48 h-48 object-contain rounded-2xl bg-white/10 p-4 backdrop-blur-sm"
                                                 />
                                             </div>

@@ -1,13 +1,16 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bug, CheckCircle, Terminal, Lightbulb, X, Coins } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useMemo, memo } from 'react';
 import DifficultyBadge from './DifficultyBadge';
 
-export default function BugList({ bugs, foundBugs, onReset, xp, getBugPoints, getBugDifficulty, deductXP }) {
+function BugList({ bugs, foundBugs, onReset, xp, getBugPoints, getBugDifficulty, deductXP }) {
     const [showHint, setShowHint] = useState(false);
     const [currentHint, setCurrentHint] = useState(null);
 
-    const progress = bugs.length > 0 ? (foundBugs.length / bugs.length) * 100 : 0;
+    const progress = useMemo(() =>
+        bugs.length > 0 ? (foundBugs.length / bugs.length) * 100 : 0,
+        [bugs.length, foundBugs.length]
+    );
 
     // All available hints
     const allHints = [
@@ -199,3 +202,5 @@ export default function BugList({ bugs, foundBugs, onReset, xp, getBugPoints, ge
         </div>
     );
 }
+
+export default memo(BugList);
