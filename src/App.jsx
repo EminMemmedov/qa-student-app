@@ -23,6 +23,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="theory" element={<Theory />} />
+            <Route path="theory/:moduleId" element={<Theory />} />
             <Route path="practice" element={<PracticeHub />} />
             <Route path="achievements" element={<Achievements />} />
             <Route path="practice/registration" element={<Registration />} />
