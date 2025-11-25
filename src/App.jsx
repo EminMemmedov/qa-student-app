@@ -14,6 +14,10 @@ const Payment = lazy(() => import('./pages/practice/Payment'));
 const Banking = lazy(() => import('./pages/practice/Banking'));
 const Ecommerce = lazy(() => import('./pages/practice/Ecommerce'));
 const Achievements = lazy(() => import('./pages/Achievements'));
+const API = lazy(() => import('./pages/practice/API'));
+const Mobile = lazy(() => import('./pages/practice/Mobile'));
+const Security = lazy(() => import('./pages/practice/Security'));
+const Performance = lazy(() => import('./pages/practice/Performance'));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -42,6 +46,11 @@ function App() {
               <Route path="practice/registration" element={<Registration />} />
               <Route path="practice/payment" element={<Payment />} />
               <Route path="practice/banking" element={<Banking />} />
+              <Route path="practice/exam" element={<Exam />} />
+              <Route path="practice/api" element={<API />} />
+              <Route path="practice/mobile" element={<Mobile />} />
+              <Route path="practice/security" element={<Security />} />
+              <Route path="practice/performance" element={<Performance />} />
               <Route path="practice/ecommerce" element={<Ecommerce />} />
             </Route>
           </Routes>
