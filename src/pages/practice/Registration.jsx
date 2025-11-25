@@ -1,6 +1,8 @@
 import { useRef, useEffect } from 'react';
+import { useScrollToActiveInput } from '../../hooks/useScrollToActiveInput';
 
 const usernameRef = useRef(null);
+useScrollToActiveInput();
 useEffect(() => {
     if (usernameRef.current) usernameRef.current.focus();
 }, []);

@@ -32,7 +32,10 @@ export default function Layout() {
     return (
         <motion.div
             className="min-h-screen bg-slate-50 dark:bg-slate-900 safe-bottom transition-colors duration-300"
-            style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 5rem)' }}
+            style={{
+                paddingBottom: 'max(env(safe-area-inset-bottom), 5rem)',
+                paddingTop: 'env(safe-area-inset-top)'
+            }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleDragEnd}
