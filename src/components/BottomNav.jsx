@@ -1,4 +1,5 @@
 
+```
 import { Home, BookOpen, Bug } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -14,17 +15,20 @@ export default function BottomNav() {
         { icon: Bug, label: 'Təcrübə', path: '/practice' },
     ];
 
-    // Sync with browser navigation (popstate)
+    // Handle browser back/forward navigation and provide haptic feedback
     useEffect(() => {
         const handlePopState = (event) => {
-            console.log('Browser navigation detected:', event.state);
+            // Navigate back in history when user presses back button on Android
+            navigate(-1);
         };
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
-    }, []);
+    }, [navigate]);
 
     const handleNavigation = (path) => {
         if (location.pathname !== path) {
+            // Haptic feedback on supported devices
+            if (navigator.vibrate) navigator.vibrate(30);
             navigate(path, { replace: false, state: { from: location.pathname, timestamp: Date.now() } });
         }
     };
@@ -40,7 +44,7 @@ export default function BottomNav() {
                     return (
                         <button
                             key={item.path}
-                            onClick={() => handleNavigation(item.path)}
+                            onClick={() => handleNavigation(item.path)} aria-label={item.label}
                             className={clsx(
                                 "flex flex-col items-center gap-1 p-3 rounded-xl transition-all duration-300 min-w-[60px] min-h-[60px] justify-center touch-manipulation",
                                 isActive
@@ -57,3 +61,4 @@ export default function BottomNav() {
         </nav>
     );
 }
+```

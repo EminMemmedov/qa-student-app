@@ -22,10 +22,11 @@ const Performance = lazy(() => import('./pages/practice/Performance'));
 
 // Loading fallback component
 const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-screen bg-slate-50">
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-      <p className="text-slate-600 font-medium">Yüklənir...</p>
+  <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="space-y-4">
+      <div className="w-24 h-6 bg-gray-300 dark:bg-gray-700 rounded animate-pulse" />
+      <div className="w-48 h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse" />
+      <div className="w-32 h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse" />
     </div>
   </div>
 );
