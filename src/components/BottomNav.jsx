@@ -1,6 +1,7 @@
 
 import { Home, BookOpen, Bug } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import clsx from 'clsx';
 
 export default function BottomNav() {
@@ -13,13 +14,24 @@ export default function BottomNav() {
         { icon: Bug, label: 'Təcrübə', path: '/practice' },
     ];
 
+    // Listen to browser back/forward buttons and sync with React Router
+    useEffect(() => {
+        const handlePopState = (event) => {
+            // Browser back/forward was used, React Router will handle it
+            console.log('Browser navigation detected:', event.state);
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
+
     const handleNavigation = (path) => {
         // Only navigate if we're not already on that path
         if (location.pathname !== path) {
             // Use navigate with explicit state to ensure history entry is created
             navigate(path, {
                 replace: false,
-                state: { from: location.pathname }
+                state: { from: location.pathname, timestamp: Date.now() }
             });
         }
     };
