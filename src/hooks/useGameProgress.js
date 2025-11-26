@@ -125,5 +125,10 @@ export function useGameProgress() {
         return false;
     };
 
-    return { foundBugs, addBug, xp, resetProgress, getBugPoints, getBugDifficulty, deductXP };
+    const addXP = (amount) => {
+        // Add XP directly (for interview, exam, etc.)
+        setXp(prev => prev + amount);
+    };
+
+    return { foundBugs, addBug, xp, resetProgress, getBugPoints, getBugDifficulty, deductXP, addXP };
 }

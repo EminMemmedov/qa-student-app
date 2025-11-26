@@ -20,6 +20,10 @@ const Achievements = lazy(() => import('./pages/Achievements'));
 const Mobile = lazy(() => import('./pages/practice/Mobile'));
 const Security = lazy(() => import('./pages/practice/Security'));
 const Performance = lazy(() => import('./pages/practice/Performance'));
+const Interview = lazy(() => import('./pages/Interview'));
+const InterviewResults = lazy(() => import('./pages/InterviewResults'));
+const Automation = lazy(() => import('./pages/practice/Automation'));
+const Database = lazy(() => import('./pages/practice/Database'));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -56,6 +60,10 @@ function App() {
               <Route path="practice/security" element={<Security />} />
               <Route path="practice/performance" element={<Performance />} />
               <Route path="practice/ecommerce" element={<Ecommerce />} />
+              <Route path="interview" element={<Interview />} />
+              <Route path="practice/interview-results" element={<InterviewResults />} />
+              <Route path="practice/automation" element={<Automation />} />
+              <Route path="practice/database" element={<Database />} />
             </Route>
           </Routes>
         </Suspense>

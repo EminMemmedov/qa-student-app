@@ -5,7 +5,40 @@
         "currentLevel": "Cari Səviyyə",
         "totalXP": "Ümumi XP",
         "nextLevel": "Növbəti səviyyəyə doğru",
-        "moreXPNeeded": "Daha {{xp}} XP lazımdır"
+        "moreXPNeeded": "Daha {{xp}} XP lazımdır",
+        "examCard": {
+            "title": "QA İmtahanı",
+            "subtitle": "Biliklərini yoxla!",
+            "questions": "Sual",
+            "minutes": "Dəqiqə",
+            "passRate": "Keçid"
+        },
+        "interviewCard": {
+            "title": "Müsahibə",
+            "subtitle": "Real suallar və rəylər",
+            "technical": "Texniki",
+            "situational": "Situativ",
+            "hr": "HR"
+        },
+        "quickActions": {
+            "theory": {
+                "title": "Nəzəriyyə",
+                "subtitle": "QA əsaslarını öyrən"
+            },
+            "practice": {
+                "title": "Praktika",
+                "subtitle": "Baqları tap və qeyd et"
+            }
+        },
+        "dailyQuote": {
+            "title": "Günün Sitatı",
+            "quote": "Testləşdirmə səhvlərin olmadığını deyil, onların varlığını sübut edir.",
+            "author": "Edsger W. Dijkstra"
+        },
+        "stats": {
+            "foundBugs": "Tapılan Baq",
+            "achievements": "Nailiyyətlər"
+        }
     },
     "exam": {
         "title": "QA İmtahanı",
@@ -37,6 +70,7 @@
     },
     "theory": {
         "title": "Nəzəriyyə",
+        "subtitle": "Test mühəndisinin bilik bazası",
         "modules": "Modullar",
         "readMore": "Daha ətraflı",
         "qaBasics": "QA Əsasları",
@@ -46,24 +80,47 @@
     },
     "practice": {
         "title": "Praktika",
-        "modules": "Praktika Modulları",
+        "subtitle": "Real layihələrdə qarşılaşa biləcəyiniz ssenarilər",
+        "modules": {
+            "registration": {
+                "title": "Qeydiyyat Forması",
+                "description": "Vizual səhvlər, validasiya problemləri və DevTools tapşırıqları."
+            },
+            "payment": {
+                "title": "Ödəniş Səhifəsi",
+                "description": "Kredit kartı validasiyası, səhv hesablamalar və təhlükəsizlik boşluqları."
+            },
+            "banking": {
+                "title": "Bank Tətbiqi",
+                "description": "Pul köçürmələri, mənfi balans və məntiqi səhvlər."
+            },
+            "ecommerce": {
+                "title": "İnternet Mağaza",
+                "description": "Səbət hesablamaları, endirim kuponları və məhsul filtrləri."
+            },
+            "automation": {
+                "title": "Avtomatlaşdırma",
+                "description": "Selenium/Java kodunda səhvləri tapın (XPath, Wait, Assertion)."
+            },
+            "database": {
+                "title": "Verilənlər Bazası",
+                "description": "SQL sorğularında təhlükəsizlik və performans problemləri."
+            },
+            "accessibility": {
+                "title": "Əlçatanlıq (A11y)",
+                "description": "Kontrast, klaviatura naviqasiyası və screen reader problemləri."
+            }
+        },
         "foundBugs": "Tapılmış Baqlar",
         "tips": "Məsləhətlər",
         "specification": "Spesifikasiya",
         "reportBug": "Baq Bildir",
         "devTools": "DevTools",
-        "registration": "Qeydiyyat Forması",
-        "payment": "Ödəniş Forması",
-        "ecommerce": "E-ticarət",
-        "banking": "Bank Köçürməsi",
         "exam": "İmtahan Rejimi",
         "api": "API Testing",
         "mobile": "Mobile Testing",
         "security": "Security Testing",
-        "performance": "Performance Testing",
-        "automation": "Automation Testing",
-        "database": "Database Testing",
-        "accessibility": "Accessibility Testing"
+        "performance": "Performance Testing"
     },
     "achievements": {
         "title": "Nailiyyətlər",
@@ -72,7 +129,41 @@
         "newAchievement": "Yeni Nailiyyət!",
         "firstBug": "İlk Baq",
         "bugHunter": "Baq Ovçusu",
-        "perfectionist": "Mükəmməliyyətçi"
+        "perfectionist": "Mükəmməliyyətçi",
+        "list": {
+            "first_bug": {
+                "title": "İlk Baq",
+                "description": "İlk baqı tapın"
+            },
+            "bug_hunter": {
+                "title": "Baq Ovçusu",
+                "description": "10 baq tapın"
+            },
+            "qa_master": {
+                "title": "QA Master",
+                "description": "Bir modulda bütün baqları tapın"
+            },
+            "perfectionist": {
+                "title": "Perfeksionist",
+                "description": "Bütün 84 baqı tapın"
+            },
+            "detective": {
+                "title": "Detektiv",
+                "description": "Bütün DevTools baqlarını tapın"
+            },
+            "economical": {
+                "title": "Qənaətcil",
+                "description": "İpucu istifadə etmədən 10 baq tapın"
+            },
+            "speed_demon": {
+                "title": "Sürət Şeytanı",
+                "description": "5 dəqiqədə 5 baq tapın"
+            },
+            "hard_hunter": {
+                "title": "Çətin Baq Ovçusu",
+                "description": "5 Hard səviyyəli baq tapın"
+            }
+        }
     },
     "common": {
         "loading": "Yüklənir...",
@@ -96,5 +187,136 @@
         "test_types": "Test növləri",
         "bug_reporting": "Baq hesabatı",
         "test_planning": "Test planlaşdırması"
+    },
+    "interview": {
+        "title": "Müsahibə Simulyatoru",
+        "subtitle": "Real müsahibə sualları ilə özünü sına, süni intellekt tərəfindən rəy al və cavablarını təkmilləşdir.",
+        "start": "Simulyasiyaya Başla",
+        "selectType": "Müsahibə növünü seçin:",
+        "types": {
+            "mixed": "Qarışıq",
+            "technical": "Texniki",
+            "situational": "Situativ",
+            "behavioral": "Davranış"
+        },
+        "question": "Sual",
+        "answerPlaceholder": "Cavabınızı bura yazın...",
+        "submit": "Cavabı Göndər",
+        "next": "Növbəti Sual",
+        "results": "Nəticələri Gör",
+        "feedback": {
+            "match": "Uyğunluq",
+            "keywords": "Açar sözlər",
+            "missing": "Buraxılmış açar sözlər",
+            "tip": "Ekspert Məsləhəti"
+        },
+        "resultsPage": {
+            "congratulations": "Təbriklər!",
+            "goodTry": "Yaxşı cəhd!",
+            "passedMessage": "Siz müsahibə simulyasiyasını uğurla tamamladınız.",
+            "failedMessage": "Biraz daha təcrübəyə ehtiyacınız var.",
+            "retry": "Yenidən",
+            "home": "Ana Səhifə",
+            "detailedAnalysis": "Detallı Analiz",
+            "noResults": "Nəticə tapılmadı",
+            "missingKeywords": "Unudulmuş açar sözlər"
+        }
+    },
+    "automation": {
+        "title": "Avtomatlaşdırma",
+        "description": "Kodu analiz edin və sağ tərəfdə düzəliş edərək doğru versiyanı yazın.",
+        "fix_instruction": "Kodu düzəldin:",
+        "placeholder": "// Düzgün kodu bura yazın...",
+        "check": "Yoxla",
+        "correct": "Əla! Kod düzgündür.",
+        "incorrect": "Səhvdir. Yenidən cəhd edin.",
+        "hint": "İpucu",
+        "task": "Tapşırıq",
+        "console": "Konsol Çıxışı",
+        "run": "Testi Başlat",
+        "running": "İcra olunur...",
+        "levels": {
+            "level1": "Səviyyə 1: Əsaslar",
+            "level1_desc": "XPath və Wait problemlərini həll edin.",
+            "level2": "Səviyyə 2: POM Strukturu",
+            "level2_desc": "Page Object Model prinsiplərinə riayət edin.",
+            "level3": "Səviyyə 3: API & CI/CD",
+            "level3_desc": "Təhlükəsizlik və konfiqurasiya səhvlərini düzəldin.",
+            "level4": "Səviyyə 4: IFrame",
+            "level4_desc": "IFrame daxilindəki elementlərlə işləməyi öyrənin.",
+            "level5": "Səviyyə 5: Alert",
+            "level5_desc": "JavaScript xəbərdarlıq pəncərələrini (Alert) idarə edin."
+        },
+        "bugs": {
+            "xpath_error": "Səhv XPath lokatoru",
+            "wait_missing": "Gözləmə (Wait) çatışmır",
+            "assert_fail": "Zəif yoxlama (Assertion)",
+            "driver_quit": "Driver bağlanmayıb (Resource leak)",
+            "pom_violation": "POM prinsipi pozulub (Hardcoded locator)",
+            "hardcoded_data": "Test məlumatları kodun içindədir",
+            "api_auth": "API token açıq şəkildə yazılıb",
+            "pipeline_error": "CI/CD pipeline konfiqurasiya xətası"
+        }
+    },
+    "database": {
+        "title": "Verilənlər Bazası",
+        "description": "Sorğudakı səhvləri tapın və sağ tərəfdə düzəliş edin.",
+        "fix_instruction": "Sorğunu düzəldin:",
+        "placeholder": "-- Düzgün SQL sorğusunu bura yazın...",
+        "check": "Yoxla",
+        "correct": "Əla! Sorğu təhlükəsiz və optimaldır.",
+        "incorrect": "Səhvdir. Yenidən cəhd edin.",
+        "task": "Tapşırıq",
+        "schema": "Sxem",
+        "results": "Nəticələr",
+        "run": "Sorğunu İcra Et",
+        "executing": "İcra olunur...",
+        "success": "Sorğu uğurla icra olundu",
+        "levels": {
+            "level1": "Səviyyə 1: SQL Injection",
+            "level1_desc": "Sorğunu SQL Injection hücumundan qoruyun.",
+            "level2": "Səviyyə 2: JOIN & İndekslər",
+            "level2_desc": "Cədvəlləri düzgün birləşdirin (JOIN).",
+            "level3": "Səviyyə 3: Tranzaksiyalar",
+            "level3_desc": "Məlumat bütövlüyünü qorumaq üçün tranzaksiyalardan istifadə edin.",
+            "level4": "Səviyyə 4: Qruplaşdırma",
+            "level4_desc": "Məlumatları qruplaşdırın və filtrasiya edin (GROUP BY & HAVING).",
+            "level5": "Səviyyə 5: Təhlükəsizlik",
+            "level5_desc": "Şifrələri açıq şəkildə saxlamayın (Hashing)."
+        },
+        "bugs": {
+            "sql_injection": "SQL İnjection boşluğu",
+            "select_all": "SELECT * istifadəsi (Performance)",
+            "missing_index": "İndeks çatışmır (Slow Query)",
+            "cartesian_product": "JOIN şərti yoxdur (Cartesian Product)",
+            "n_plus_one": "N+1 sorğu problemi",
+            "no_transaction": "Tranzaksiya istifadə olunmayıb",
+            "data_integrity": "Xarici açar (Foreign Key) əlaqəsi yoxdur"
+        }
+    },
+    "accessibility": {
+        "task": "Tapşırıq",
+        "description": "Bu veb səhifədə 5 əsas əlçatanlıq (accessibility) problemi var. Elementlərə klikləyərək onları tapın.",
+        "scan": "A11y Skanerini Başlat",
+        "scanning": "Skan edilir...",
+        "status": "Status",
+        "tip": "Tip: Klaviatura ilə naviqasiya (Tab düyməsi) əlçatanlıq testinin vacib hissəsidir.",
+        "bugs": {
+            "low_contrast": "Aşağı kontrast nisbəti (boz fon üzərində açıq boz mətn)",
+            "missing_alt": "Şəkildə alt atributu yoxdur",
+            "keyboard_trap": "Klaviatura tələsi (Tab düyməsi ilə çıxmaq olmur)",
+            "empty_link": "Boş link mətni (yalnız ikon var, aria-label yoxdur)",
+            "missing_label": "Form elementində label yoxdur"
+        },
+        "demo": {
+            "image_alt": "Şəkil (Alt mətni yoxdur)",
+            "welcome": "Saytımıza Xoş Gəlmisiniz",
+            "description": "Bu, bir neçə əlçatanlıq problemi olan nümunə saytdır. Onların hamısını tapa bilərsinizmi?",
+            "button": "Mənə Kliklə (Aşağı Kontrast)",
+            "subscribe": "Xəbərlərə abunə olun",
+            "placeholder": "Email daxil edin",
+            "modal_title": "Modal Tələsi",
+            "modal_text": "Bu qutudan tab düyməsi ilə çıxmağa çalışın..."
+        }
     }
 }

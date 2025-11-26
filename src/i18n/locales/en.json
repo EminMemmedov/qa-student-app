@@ -1,11 +1,44 @@
 {
     "home": {
         "greeting": "Hello, QA!",
-        "subtitle": "Ready to learn new knowledge today?",
+        "subtitle": "Ready to learn something new today?",
         "currentLevel": "Current Level",
         "totalXP": "Total XP",
-        "nextLevel": "Progress to next level",
-        "moreXPNeeded": "{{xp}} more XP needed"
+        "nextLevel": "To next level",
+        "moreXPNeeded": "{{xp}} XP more needed",
+        "examCard": {
+            "title": "QA Exam",
+            "subtitle": "Test your knowledge!",
+            "questions": "Questions",
+            "minutes": "Minutes",
+            "passRate": "Pass Rate"
+        },
+        "interviewCard": {
+            "title": "Interview",
+            "subtitle": "Real questions and feedback",
+            "technical": "Technical",
+            "situational": "Situational",
+            "hr": "HR"
+        },
+        "quickActions": {
+            "theory": {
+                "title": "Theory",
+                "subtitle": "Learn QA basics"
+            },
+            "practice": {
+                "title": "Practice",
+                "subtitle": "Find and report bugs"
+            }
+        },
+        "dailyQuote": {
+            "title": "Daily Quote",
+            "quote": "Testing shows the presence, not the absence of bugs.",
+            "author": "Edsger W. Dijkstra"
+        },
+        "stats": {
+            "foundBugs": "Found Bugs",
+            "achievements": "Achievements"
+        }
     },
     "exam": {
         "title": "QA Exam",
@@ -18,17 +51,17 @@
         "finish": "Finish",
         "timeLeft": "Time Left",
         "question": "Question",
-        "of": "of"
+        "of": "/"
     },
     "examResults": {
         "congratulations": "Congratulations!",
-        "tryAgain": "Good attempt!",
+        "tryAgain": "Nice try!",
         "passed": "You have successfully passed the exam!",
         "failed": "Study a bit more and try again",
         "result": "Result",
         "time": "Time",
-        "categoryResults": "Results by category",
-        "retryExam": "Try Again",
+        "categoryResults": "Results by Category",
+        "retryExam": "Retry Exam",
         "backToHome": "Back to Home",
         "excellent": "Excellent",
         "good": "Good",
@@ -37,8 +70,9 @@
     },
     "theory": {
         "title": "Theory",
+        "subtitle": "Knowledge base for Test Engineers",
         "modules": "Modules",
-        "readMore": "Read more",
+        "readMore": "Read More",
         "qaBasics": "QA Basics",
         "testTypes": "Test Types",
         "bugReporting": "Bug Reporting",
@@ -46,24 +80,47 @@
     },
     "practice": {
         "title": "Practice",
-        "modules": "Practice Modules",
+        "subtitle": "Real-world scenarios you might encounter",
+        "modules": {
+            "registration": {
+                "title": "Registration Form",
+                "description": "Visual bugs, validation issues, and DevTools tasks."
+            },
+            "payment": {
+                "title": "Payment Page",
+                "description": "Credit card validation, calculation errors, and security gaps."
+            },
+            "banking": {
+                "title": "Banking App",
+                "description": "Money transfers, negative balance, and logic errors."
+            },
+            "ecommerce": {
+                "title": "E-commerce",
+                "description": "Cart calculations, discount coupons, and product filters."
+            },
+            "automation": {
+                "title": "Automation",
+                "description": "Find bugs in Selenium/Java code (XPath, Wait, Assertion)."
+            },
+            "database": {
+                "title": "Database",
+                "description": "Security and performance issues in SQL queries."
+            },
+            "accessibility": {
+                "title": "Accessibility (A11y)",
+                "description": "Contrast, keyboard navigation, and screen reader issues."
+            }
+        },
         "foundBugs": "Found Bugs",
         "tips": "Tips",
         "specification": "Specification",
         "reportBug": "Report Bug",
         "devTools": "DevTools",
-        "registration": "Registration Form",
-        "payment": "Payment Form",
-        "ecommerce": "E-commerce",
-        "banking": "Bank Transfer",
         "exam": "Exam Mode",
         "api": "API Testing",
         "mobile": "Mobile Testing",
         "security": "Security Testing",
-        "performance": "Performance Testing",
-        "automation": "Automation Testing",
-        "database": "Database Testing",
-        "accessibility": "Accessibility Testing"
+        "performance": "Performance Testing"
     },
     "achievements": {
         "title": "Achievements",
@@ -72,7 +129,41 @@
         "newAchievement": "New Achievement!",
         "firstBug": "First Bug",
         "bugHunter": "Bug Hunter",
-        "perfectionist": "Perfectionist"
+        "perfectionist": "Perfectionist",
+        "list": {
+            "first_bug": {
+                "title": "First Bug",
+                "description": "Find your first bug"
+            },
+            "bug_hunter": {
+                "title": "Bug Hunter",
+                "description": "Find 10 bugs"
+            },
+            "qa_master": {
+                "title": "QA Master",
+                "description": "Find all bugs in one module"
+            },
+            "perfectionist": {
+                "title": "Perfectionist",
+                "description": "Find all 84 bugs"
+            },
+            "detective": {
+                "title": "Detective",
+                "description": "Find all DevTools bugs"
+            },
+            "economical": {
+                "title": "Economical",
+                "description": "Find 10 bugs without hints"
+            },
+            "speed_demon": {
+                "title": "Speed Demon",
+                "description": "Find 5 bugs in 5 minutes"
+            },
+            "hard_hunter": {
+                "title": "Hard Bug Hunter",
+                "description": "Find 5 Hard level bugs"
+            }
+        }
     },
     "common": {
         "loading": "Loading...",
@@ -96,5 +187,136 @@
         "test_types": "Test Types",
         "bug_reporting": "Bug Reporting",
         "test_planning": "Test Planning"
+    },
+    "interview": {
+        "title": "Interview Simulator",
+        "subtitle": "Test yourself with real interview questions, get AI feedback, and improve your answers.",
+        "start": "Start Simulation",
+        "selectType": "Select interview type:",
+        "types": {
+            "mixed": "Mixed",
+            "technical": "Technical",
+            "situational": "Situational",
+            "behavioral": "Behavioral"
+        },
+        "question": "Question",
+        "answerPlaceholder": "Type your answer here...",
+        "submit": "Submit Answer",
+        "next": "Next Question",
+        "results": "See Results",
+        "feedback": {
+            "match": "Match",
+            "keywords": "Keywords",
+            "missing": "Missing keywords",
+            "tip": "Expert Tip"
+        },
+        "resultsPage": {
+            "congratulations": "Congratulations!",
+            "goodTry": "Good try!",
+            "passedMessage": "You have successfully completed the interview simulation.",
+            "failedMessage": "You need a bit more practice.",
+            "retry": "Retry",
+            "home": "Home",
+            "detailedAnalysis": "Detailed Analysis",
+            "noResults": "No results found",
+            "missingKeywords": "Missing keywords"
+        }
+    },
+    "automation": {
+        "title": "Automation",
+        "description": "Analyze the code and write the corrected version on the right.",
+        "fix_instruction": "Fix the code:",
+        "placeholder": "// Write correct code here...",
+        "check": "Check",
+        "correct": "Great! The code is correct.",
+        "incorrect": "Incorrect. Try again.",
+        "hint": "Hint",
+        "task": "Task",
+        "console": "Console Output",
+        "run": "Run Test",
+        "running": "Running...",
+        "levels": {
+            "level1": "Level 1: Basics",
+            "level1_desc": "Fix XPath and Wait issues.",
+            "level2": "Level 2: POM Structure",
+            "level2_desc": "Follow Page Object Model principles.",
+            "level3": "Level 3: API & CI/CD",
+            "level3_desc": "Fix security and configuration errors.",
+            "level4": "Level 4: IFrame",
+            "level4_desc": "Learn to handle elements inside IFrames.",
+            "level5": "Level 5: Alert",
+            "level5_desc": "Handle JavaScript Alerts and popups."
+        },
+        "bugs": {
+            "xpath_error": "Incorrect XPath locator",
+            "wait_missing": "Missing Wait",
+            "assert_fail": "Weak Assertion",
+            "driver_quit": "Driver not closed (Resource leak)",
+            "pom_violation": "POM principle violation (Hardcoded locator)",
+            "hardcoded_data": "Test data hardcoded",
+            "api_auth": "API token exposed",
+            "pipeline_error": "CI/CD pipeline configuration error"
+        }
+    },
+    "database": {
+        "title": "Database",
+        "description": "Find errors in the query and fix them on the right.",
+        "fix_instruction": "Fix the query:",
+        "placeholder": "-- Write correct SQL query here...",
+        "check": "Check",
+        "correct": "Great! Query is safe and optimal.",
+        "incorrect": "Incorrect. Try again.",
+        "task": "Task",
+        "schema": "Schema",
+        "results": "Results",
+        "run": "Run Query",
+        "executing": "Executing...",
+        "success": "Query executed successfully",
+        "levels": {
+            "level1": "Level 1: SQL Injection",
+            "level1_desc": "Protect the query from SQL Injection.",
+            "level2": "Level 2: JOIN & Indexes",
+            "level2_desc": "Join tables correctly to avoid Cartesian products.",
+            "level3": "Level 3: Transactions",
+            "level3_desc": "Use transactions to ensure data integrity.",
+            "level4": "Level 4: Grouping",
+            "level4_desc": "Group and filter data using GROUP BY & HAVING.",
+            "level5": "Level 5: Security",
+            "level5_desc": "Do not store passwords in plain text (Hashing)."
+        },
+        "bugs": {
+            "sql_injection": "SQL Injection vulnerability",
+            "select_all": "Using SELECT * (Performance)",
+            "missing_index": "Missing Index (Slow Query)",
+            "cartesian_product": "Missing JOIN condition (Cartesian Product)",
+            "n_plus_one": "N+1 query problem",
+            "no_transaction": "Transaction not used",
+            "data_integrity": "Missing Foreign Key constraint"
+        }
+    },
+    "accessibility": {
+        "task": "Task",
+        "description": "There are 5 main accessibility issues on this web page. Find them by clicking on the elements.",
+        "scan": "Run A11y Scanner",
+        "scanning": "Scanning...",
+        "status": "Status",
+        "tip": "Tip: Keyboard navigation (Tab key) is a crucial part of accessibility testing.",
+        "bugs": {
+            "low_contrast": "Low contrast ratio (light grey text on grey background)",
+            "missing_alt": "Missing alt attribute on image",
+            "keyboard_trap": "Keyboard trap (Cannot tab out)",
+            "empty_link": "Empty link text (icon only, no aria-label)",
+            "missing_label": "Missing label for form element"
+        },
+        "demo": {
+            "image_alt": "Image (No Alt Text)",
+            "welcome": "Welcome to Our Site",
+            "description": "This is a sample website with several accessibility issues. Can you find them all?",
+            "button": "Click Me (Low Contrast)",
+            "subscribe": "Subscribe to newsletter",
+            "placeholder": "Enter email",
+            "modal_title": "Modal Trap",
+            "modal_text": "Try to tab out of this box..."
+        }
     }
 }

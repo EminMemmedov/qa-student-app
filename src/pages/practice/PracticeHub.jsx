@@ -1,42 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { UserPlus, CreditCard, Building2, ShoppingBag, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { UserPlus, CreditCard, Building2, ShoppingBag, ChevronRight, Code, Database, Eye } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
-
-const scenarios = [
-    {
-        id: 'registration',
-        title: 'Qeydiyyat Forması',
-        description: 'Vizual səhvlər, validasiya problemləri və DevTools tapşırıqları.',
-        icon: UserPlus,
-        color: 'bg-blue-500',
-        path: '/practice/registration'
-    },
-    {
-        id: 'payment',
-        title: 'Ödəniş Səhifəsi',
-        description: 'Kredit kartı validasiyası, səhv hesablamalar və təhlükəsizlik boşluqları.',
-        icon: CreditCard,
-        color: 'bg-purple-500',
-        path: '/practice/payment'
-    },
-    {
-        id: 'banking',
-        title: 'Bank Tətbiqi',
-        description: 'Pul köçürmələri, mənfi balans və məntiqi səhvlər.',
-        icon: Building2,
-        color: 'bg-emerald-500',
-        path: '/practice/banking'
-    },
-    {
-        id: 'ecommerce',
-        title: 'İnternet Mağaza',
-        description: 'Səbət hesablamaları, endirim kuponları və məhsul filtrləri.',
-        icon: ShoppingBag,
-        color: 'bg-orange-500',
-        path: '/practice/ecommerce'
-    }
-];
 
 const container = {
     hidden: { opacity: 0 },
@@ -54,11 +20,63 @@ const item = {
 };
 
 export default function PracticeHub() {
+    const { t } = useTranslation();
+
+    const scenarios = [
+        {
+            id: 'registration',
+            title: t('practice.modules.registration.title'),
+            description: t('practice.modules.registration.description'),
+            icon: UserPlus,
+            color: 'bg-blue-500',
+            path: '/practice/registration'
+        },
+        {
+            id: 'payment',
+            title: t('practice.modules.payment.title'),
+            description: t('practice.modules.payment.description'),
+            icon: CreditCard,
+            color: 'bg-purple-500',
+            path: '/practice/payment'
+        },
+        {
+            id: 'banking',
+            title: t('practice.modules.banking.title'),
+            description: t('practice.modules.banking.description'),
+            icon: Building2,
+            color: 'bg-emerald-500',
+            path: '/practice/banking'
+        },
+        {
+            id: 'ecommerce',
+            title: t('practice.modules.ecommerce.title'),
+            description: t('practice.modules.ecommerce.description'),
+            icon: ShoppingBag,
+            color: 'bg-orange-500',
+            path: '/practice/ecommerce'
+        },
+        {
+            id: 'automation',
+            title: t('practice.modules.automation.title'),
+            description: t('practice.modules.automation.description'),
+            icon: Code,
+            color: 'bg-cyan-500',
+            path: '/practice/automation'
+        },
+        {
+            id: 'database',
+            title: t('practice.modules.database.title'),
+            description: t('practice.modules.database.description'),
+            icon: Database,
+            color: 'bg-indigo-500',
+            path: '/practice/database'
+        }
+    ];
     return (
         <PageTransition className="p-6 pt-12 pb-24 min-h-screen">
             <header className="mb-8">
-                <h1 className="text-4xl font-black text-slate-900 tracking-tight mb-2">Təcrübə</h1>
-                <p className="text-slate-500 font-medium">Real layihələrdə qarşılaşa biləcəyiniz ssenarilər</p>
+                <h1 className="text-4xl font-black text-slate-900 tracking-tight mb-2">{t('practice.title')}</h1>
+                <p className="text-slate-500 font-medium">{t('practice.subtitle')}</p>
             </header>
 
             <motion.div

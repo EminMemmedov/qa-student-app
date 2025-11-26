@@ -2,7 +2,10 @@ import { motion } from 'framer-motion';
 import { Trophy, Lock } from 'lucide-react';
 import { achievements } from '../data/achievements';
 
+import { useTranslation } from 'react-i18next';
+
 export default function AchievementsPage({ unlockedAchievements }) {
+    const { t } = useTranslation();
     return (
         <div className="p-6 pt-12 pb-24 min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
             <div className="max-w-4xl mx-auto">
@@ -11,9 +14,9 @@ export default function AchievementsPage({ unlockedAchievements }) {
                         <Trophy className="text-white" size={24} />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-black text-slate-900">Nailiyyətlər</h1>
+                        <h1 className="text-2xl font-black text-slate-900">{t('achievements.title')}</h1>
                         <p className="text-sm text-slate-600">
-                            {unlockedAchievements.length}/{achievements.length} açıldı
+                            {unlockedAchievements.length}/{achievements.length} {t('achievements.unlocked').toLowerCase()}
                         </p>
                     </div>
                 </div>
@@ -28,8 +31,8 @@ export default function AchievementsPage({ unlockedAchievements }) {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 className={`relative overflow-hidden rounded-2xl border-2 transition-all ${isUnlocked
-                                        ? 'bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-300 shadow-lg'
-                                        : 'bg-white border-slate-200 opacity-60'
+                                    ? 'bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-300 shadow-lg'
+                                    : 'bg-white border-slate-200 opacity-60'
                                     }`}
                             >
                                 <div className="p-5">
@@ -39,21 +42,21 @@ export default function AchievementsPage({ unlockedAchievements }) {
                                         </div>
                                         <div className="flex-1">
                                             <h3 className="font-bold text-lg text-slate-900 mb-1">
-                                                {achievement.title}
+                                                {t(`achievements.list.${achievement.id}.title`, achievement.title)}
                                             </h3>
                                             <p className="text-sm text-slate-600 mb-3">
-                                                {achievement.description}
+                                                {t(`achievements.list.${achievement.id}.description`, achievement.description)}
                                             </p>
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-2">
                                                     {isUnlocked ? (
                                                         <span className="text-xs font-bold text-green-600 bg-green-100 px-2 py-1 rounded-full">
-                                                            ✓ Açıldı
+                                                            ✓ {t('achievements.unlocked')}
                                                         </span>
                                                     ) : (
                                                         <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-full flex items-center gap-1">
                                                             <Lock size={10} />
-                                                            Kilidli
+                                                            {t('achievements.locked')}
                                                         </span>
                                                     )}
                                                 </div>

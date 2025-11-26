@@ -1,30 +1,63 @@
 {
     "home": {
         "greeting": "Привет, QA!",
-        "subtitle": "Готов изучать новые знания сегодня?",
+        "subtitle": "Готов узнать что-то новое сегодня?",
         "currentLevel": "Текущий уровень",
         "totalXP": "Всего XP",
         "nextLevel": "До следующего уровня",
-        "moreXPNeeded": "Еще {{xp}} XP необходимо"
+        "moreXPNeeded": "Нужно еще {{xp}} XP",
+        "examCard": {
+            "title": "QA Экзамен",
+            "subtitle": "Проверь свои знания!",
+            "questions": "Вопросы",
+            "minutes": "Минуты",
+            "passRate": "Проходной балл"
+        },
+        "interviewCard": {
+            "title": "Собеседование",
+            "subtitle": "Реальные вопросы и отзывы",
+            "technical": "Технический",
+            "situational": "Ситуативный",
+            "hr": "HR"
+        },
+        "quickActions": {
+            "theory": {
+                "title": "Теория",
+                "subtitle": "Изучите основы QA"
+            },
+            "practice": {
+                "title": "Практика",
+                "subtitle": "Находите и сообщайте о багах"
+            }
+        },
+        "dailyQuote": {
+            "title": "Цитата дня",
+            "quote": "Тестирование показывает наличие, а не отсутствие ошибок.",
+            "author": "Эдсгер В. Дейкстра"
+        },
+        "stats": {
+            "foundBugs": "Найденные баги",
+            "achievements": "Достижения"
+        }
     },
     "exam": {
         "title": "QA Экзамен",
         "subtitle": "Проверь свои знания!",
-        "questions": "Вопросов",
-        "minutes": "Минут",
+        "questions": "Вопросы",
+        "minutes": "Минуты",
         "passRate": "Проходной балл",
         "start": "Начать экзамен",
         "next": "Следующий вопрос",
         "finish": "Завершить",
         "timeLeft": "Осталось времени",
         "question": "Вопрос",
-        "of": "из"
+        "of": "/"
     },
     "examResults": {
         "congratulations": "Поздравляем!",
         "tryAgain": "Хорошая попытка!",
         "passed": "Вы успешно сдали экзамен!",
-        "failed": "Немного больше усилий и попробуйте снова",
+        "failed": "Поучитесь еще немного и попробуйте снова",
         "result": "Результат",
         "time": "Время",
         "categoryResults": "Результаты по категориям",
@@ -37,42 +70,100 @@
     },
     "theory": {
         "title": "Теория",
+        "subtitle": "База знаний тестировщика",
         "modules": "Модули",
-        "readMore": "Подробнее",
+        "readMore": "Читать далее",
         "qaBasics": "Основы QA",
-        "testTypes": "Типы тестирования",
-        "bugReporting": "Отчеты о багах",
-        "testPlanning": "Планирование тестов"
+        "testTypes": "Виды тестирования",
+        "bugReporting": "Баг-репортинг",
+        "testPlanning": "Тест-планирование"
     },
     "practice": {
         "title": "Практика",
-        "modules": "Практические модули",
+        "subtitle": "Реальные сценарии из проектов",
+        "modules": {
+            "registration": {
+                "title": "Форма регистрации",
+                "description": "Визуальные баги, проблемы валидации и задачи DevTools."
+            },
+            "payment": {
+                "title": "Страница оплаты",
+                "description": "Валидация карт, ошибки расчетов и проблемы безопасности."
+            },
+            "banking": {
+                "title": "Банковское приложение",
+                "description": "Переводы, отрицательный баланс и логические ошибки."
+            },
+            "ecommerce": {
+                "title": "Интернет-магазин",
+                "description": "Расчет корзины, купоны на скидку и фильтры товаров."
+            },
+            "automation": {
+                "title": "Автоматизация",
+                "description": "Найдите ошибки в коде Selenium/Java (XPath, Wait, Assertion)."
+            },
+            "database": {
+                "title": "Базы данных",
+                "description": "Проблемы безопасности и производительности в SQL запросах."
+            },
+            "accessibility": {
+                "title": "Доступность (A11y)",
+                "description": "Контрастность, навигация с клавиатуры и проблемы скринридеров."
+            }
+        },
         "foundBugs": "Найденные баги",
         "tips": "Подсказки",
         "specification": "Спецификация",
         "reportBug": "Сообщить о баге",
         "devTools": "DevTools",
-        "registration": "Форма регистрации",
-        "payment": "Форма оплаты",
-        "ecommerce": "Электронная коммерция",
-        "banking": "Банковский перевод",
         "exam": "Режим экзамена",
-        "api": "API тестирование",
-        "mobile": "Мобильное тестирование",
-        "security": "Тестирование безопасности",
-        "performance": "Тестирование производительности",
-        "automation": "Автоматизация тестирования",
-        "database": "Тестирование БД",
-        "accessibility": "Тестирование доступности"
+        "api": "API Testing",
+        "mobile": "Mobile Testing",
+        "security": "Security Testing",
+        "performance": "Performance Testing"
     },
     "achievements": {
         "title": "Достижения",
-        "unlocked": "Разблокировано",
-        "locked": "Заблокировано",
+        "unlocked": "Открыто",
+        "locked": "Закрыто",
         "newAchievement": "Новое достижение!",
         "firstBug": "Первый баг",
         "bugHunter": "Охотник за багами",
-        "perfectionist": "Перфекционист"
+        "perfectionist": "Перфекционист",
+        "list": {
+            "first_bug": {
+                "title": "Первый баг",
+                "description": "Найдите свой первый баг"
+            },
+            "bug_hunter": {
+                "title": "Охотник за багами",
+                "description": "Найдите 10 багов"
+            },
+            "qa_master": {
+                "title": "QA Мастер",
+                "description": "Найдите все баги в одном модуле"
+            },
+            "perfectionist": {
+                "title": "Перфекционист",
+                "description": "Найдите все 84 бага"
+            },
+            "detective": {
+                "title": "Детектив",
+                "description": "Найдите все DevTools баги"
+            },
+            "economical": {
+                "title": "Экономный",
+                "description": "Найдите 10 багов без подсказок"
+            },
+            "speed_demon": {
+                "title": "Демон скорости",
+                "description": "Найдите 5 багов за 5 минут"
+            },
+            "hard_hunter": {
+                "title": "Охотник за сложными",
+                "description": "Найдите 5 багов уровня Hard"
+            }
+        }
     },
     "common": {
         "loading": "Загрузка...",
@@ -82,7 +173,7 @@
         "submit": "Отправить",
         "back": "Назад",
         "next": "Далее",
-        "previous": "Предыдущий",
+        "previous": "Назад",
         "yes": "Да",
         "no": "Нет",
         "search": "Поиск",
@@ -93,8 +184,139 @@
     },
     "categories": {
         "qa_basics": "Основы QA",
-        "test_types": "Типы тестов",
-        "bug_reporting": "Отчеты о багах",
-        "test_planning": "Планирование тестов"
+        "test_types": "Виды тестирования",
+        "bug_reporting": "Баг-репортинг",
+        "test_planning": "Тест-планирование"
+    },
+    "interview": {
+        "title": "Симулятор собеседования",
+        "subtitle": "Проверьте себя с реальными вопросами собеседования, получите отзыв от ИИ и улучшите свои ответы.",
+        "start": "Начать симуляцию",
+        "selectType": "Выберите тип собеседования:",
+        "types": {
+            "mixed": "Смешанный",
+            "technical": "Технический",
+            "situational": "Ситуативный",
+            "behavioral": "Поведенческий"
+        },
+        "question": "Вопрос",
+        "answerPlaceholder": "Напишите ваш ответ здесь...",
+        "submit": "Отправить ответ",
+        "next": "Следующий вопрос",
+        "results": "Посмотреть результаты",
+        "feedback": {
+            "match": "Соответствие",
+            "keywords": "Ключевые слова",
+            "missing": "Пропущенные ключевые слова",
+            "tip": "Совет эксперта"
+        },
+        "resultsPage": {
+            "congratulations": "Поздравляем!",
+            "goodTry": "Хорошая попытка!",
+            "passedMessage": "Вы успешно завершили симуляцию собеседования.",
+            "failedMessage": "Вам нужно немного больше практики.",
+            "retry": "Повторить",
+            "home": "Главная",
+            "detailedAnalysis": "Детальный анализ",
+            "noResults": "Результаты не найдены",
+            "missingKeywords": "Пропущенные ключевые слова"
+        }
+    },
+    "automation": {
+        "title": "Автоматизация",
+        "description": "Проанализируйте код и напишите исправленную версию справа.",
+        "fix_instruction": "Исправьте код:",
+        "placeholder": "// Напишите правильный код здесь...",
+        "check": "Проверить",
+        "correct": "Отлично! Код верный.",
+        "incorrect": "Неверно. Попробуйте еще раз.",
+        "hint": "Подсказка",
+        "task": "Задание",
+        "console": "Вывод консоли",
+        "run": "Запустить тест",
+        "running": "Выполнение...",
+        "levels": {
+            "level1": "Уровень 1: Основы",
+            "level1_desc": "Исправьте проблемы с XPath и ожиданием (Wait).",
+            "level2": "Уровень 2: Структура POM",
+            "level2_desc": "Соблюдайте принципы Page Object Model.",
+            "level3": "Уровень 3: API и CI/CD",
+            "level3_desc": "Исправьте ошибки безопасности и конфигурации.",
+            "level4": "Уровень 4: IFrame",
+            "level4_desc": "Научитесь работать с элементами внутри IFrame.",
+            "level5": "Уровень 5: Alert",
+            "level5_desc": "Обработка JavaScript уведомлений (Alerts)."
+        },
+        "bugs": {
+            "xpath_error": "Неверный XPath локатор",
+            "wait_missing": "Отсутствует ожидание (Wait)",
+            "assert_fail": "Слабая проверка (Assertion)",
+            "driver_quit": "Драйвер не закрыт (Resource leak)",
+            "pom_violation": "Нарушение принципа POM (Хардкод локатора)",
+            "hardcoded_data": "Тестовые данные в коде",
+            "api_auth": "API токен в открытом виде",
+            "pipeline_error": "Ошибка конфигурации CI/CD пайплайна"
+        }
+    },
+    "database": {
+        "title": "Базы данных",
+        "description": "Найдите ошибки в запросе и исправьте их справа.",
+        "fix_instruction": "Исправьте запрос:",
+        "placeholder": "-- Напишите правильный SQL запрос здесь...",
+        "check": "Проверить",
+        "correct": "Отлично! Запрос безопасен и оптимален.",
+        "incorrect": "Неверно. Попробуйте еще раз.",
+        "task": "Задание",
+        "schema": "Схема",
+        "results": "Результаты",
+        "run": "Выполнить запрос",
+        "executing": "Выполнение...",
+        "success": "Запрос выполнен успешно",
+        "levels": {
+            "level1": "Уровень 1: SQL Injection",
+            "level1_desc": "Защитите запрос от SQL Injection.",
+            "level2": "Уровень 2: JOIN и Индексы",
+            "level2_desc": "Правильно объединяйте таблицы (JOIN).",
+            "level3": "Уровень 3: Транзакции",
+            "level3_desc": "Используйте транзакции для целостности данных.",
+            "level4": "Уровень 4: Группировка",
+            "level4_desc": "Группировка и фильтрация данных (GROUP BY & HAVING).",
+            "level5": "Уровень 5: Безопасность",
+            "level5_desc": "Не храните пароли в открытом виде (Хеширование)."
+        },
+        "bugs": {
+            "sql_injection": "Уязвимость SQL Injection",
+            "select_all": "Использование SELECT * (Performance)",
+            "missing_index": "Отсутствует индекс (Slow Query)",
+            "cartesian_product": "Нет условия JOIN (Cartesian Product)",
+            "n_plus_one": "Проблема N+1 запросов",
+            "no_transaction": "Транзакция не используется",
+            "data_integrity": "Нет связи внешнего ключа (Foreign Key)"
+        }
+    },
+    "accessibility": {
+        "task": "Задание",
+        "description": "На этой веб-странице есть 5 основных проблем доступности (accessibility). Найдите их, кликая на элементы.",
+        "scan": "Запустить A11y сканер",
+        "scanning": "Сканирование...",
+        "status": "Статус",
+        "tip": "Совет: Навигация с клавиатуры (Tab) - важная часть тестирования доступности.",
+        "bugs": {
+            "low_contrast": "Низкий контраст (светло-серый текст на сером фоне)",
+            "missing_alt": "Отсутствует атрибут alt у изображения",
+            "keyboard_trap": "Ловушка клавиатуры (Невозможно выйти через Tab)",
+            "empty_link": "Пустой текст ссылки (только иконка, нет aria-label)",
+            "missing_label": "Отсутствует label для элемента формы"
+        },
+        "demo": {
+            "image_alt": "Изображение (Нет Alt текста)",
+            "welcome": "Добро пожаловать на наш сайт",
+            "description": "Это пример сайта с несколькими проблемами доступности. Сможете найти их все?",
+            "button": "Нажми меня (Низкий контраст)",
+            "subscribe": "Подписаться на новости",
+            "placeholder": "Введите email",
+            "modal_title": "Ловушка модального окна",
+            "modal_text": "Попробуйте выйти из этого окна через Tab..."
+        }
     }
 }

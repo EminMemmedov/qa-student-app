@@ -4,6 +4,7 @@ export const examQuestions = [
     {
         id: 1,
         category: 'qa_basics',
+        difficulty: 'easy',
         question: 'QA-nın əsas məqsədi nədir?',
         options: [
             'Proqramı yazmaq',
@@ -17,6 +18,7 @@ export const examQuestions = [
     {
         id: 2,
         category: 'qa_basics',
+        difficulty: 'medium',
         question: 'Verifikasiya və Validasiya arasında əsas fərq nədir?',
         options: [
             'Heç bir fərq yoxdur',
@@ -30,6 +32,7 @@ export const examQuestions = [
     {
         id: 3,
         category: 'qa_basics',
+        difficulty: 'easy',
         question: 'Bug və Defect arasında fərq nədir?',
         options: [
             'Bug - kod səhvi, Defect - tələbə uyğunsuzluq',
@@ -43,6 +46,7 @@ export const examQuestions = [
     {
         id: 4,
         category: 'qa_basics',
+        difficulty: 'easy',
         question: 'SDLC nədir?',
         options: [
             'Software Development Life Cycle - Proqram təminatının həyat dövrü',
@@ -56,6 +60,7 @@ export const examQuestions = [
     {
         id: 5,
         category: 'qa_basics',
+        difficulty: 'easy',
         question: 'Test case nədir?',
         options: [
             'Testləşdirmə üçün istifadə olunan kompüter',
@@ -69,6 +74,7 @@ export const examQuestions = [
     {
         id: 6,
         category: 'qa_basics',
+        difficulty: 'medium',
         question: 'Regression testing nə zaman aparılır?',
         options: [
             'Yalnız yeni layihələrdə',
@@ -82,6 +88,7 @@ export const examQuestions = [
     {
         id: 7,
         category: 'qa_basics',
+        difficulty: 'medium',
         question: 'Black box testing nədir?',
         options: [
             'Yalnız qaranlıq otaqda aparılan test',
@@ -95,6 +102,7 @@ export const examQuestions = [
     {
         id: 8,
         category: 'qa_basics',
+        difficulty: 'medium',
         question: 'White box testing nədir?',
         options: [
             'Ağ rəngli interfeysin testi',
@@ -108,6 +116,7 @@ export const examQuestions = [
     {
         id: 9,
         category: 'qa_basics',
+        difficulty: 'hard',
         question: 'Test coverage nədir?',
         options: [
             'Testlərin neçə faiz kodunu əhatə etdiyi',
@@ -121,6 +130,7 @@ export const examQuestions = [
     {
         id: 10,
         category: 'qa_basics',
+        difficulty: 'easy',
         question: 'Smoke test nədir?',
         options: [
             'Yanğın təhlükəsizliyi testi',
@@ -136,6 +146,7 @@ export const examQuestions = [
     {
         id: 11,
         category: 'test_types',
+        difficulty: 'easy',
         question: 'Funksional testləşdirmə nədir?',
         options: [
             'Sistemin performansını yoxlamaq',
@@ -149,6 +160,7 @@ export const examQuestions = [
     {
         id: 12,
         category: 'test_types',
+        difficulty: 'medium',
         question: 'Performance testing nə üçün aparılır?',
         options: [
             'Baqları tapmaq üçün',
@@ -162,6 +174,7 @@ export const examQuestions = [
     {
         id: 13,
         category: 'test_types',
+        difficulty: 'medium',
         question: 'Security testing-in məqsədi nədir?',
         options: [
             'Sistemin təhlükəsizlik zəifliklərini tapmaq',
@@ -175,6 +188,7 @@ export const examQuestions = [
     {
         id: 14,
         category: 'test_types',
+        difficulty: 'easy',
         question: 'Usability testing nəyi yoxlayır?',
         options: [
             'Kodun keyfiyyətini',
@@ -188,6 +202,7 @@ export const examQuestions = [
     {
         id: 15,
         category: 'test_types',
+        difficulty: 'hard',
         question: 'Integration testing nə zaman aparılır?',
         options: [
             'Yalnız layihənin sonunda',
@@ -201,6 +216,7 @@ export const examQuestions = [
     {
         id: 16,
         category: 'test_types',
+        difficulty: 'medium',
         question: 'Unit testing nədir?',
         options: [
             'Bütün sistemin testi',
@@ -214,6 +230,7 @@ export const examQuestions = [
     {
         id: 17,
         category: 'test_types',
+        difficulty: 'hard',
         question: 'Load testing və Stress testing arasında fərq nədir?',
         options: [
             'Eyni şeydir',
@@ -227,6 +244,7 @@ export const examQuestions = [
     {
         id: 18,
         category: 'test_types',
+        difficulty: 'hard',
         question: 'Acceptance testing nə zaman aparılır?',
         options: [
             'Development başlamazdan əvvəl',
@@ -240,6 +258,7 @@ export const examQuestions = [
     {
         id: 19,
         category: 'test_types',
+        difficulty: 'medium',
         question: 'API testing nəyi yoxlayır?',
         options: [
             'Yalnız UI-ı',
@@ -253,6 +272,7 @@ export const examQuestions = [
     {
         id: 20,
         category: 'test_types',
+        difficulty: 'hard',
         question: 'Exploratory testing nədir?',
         options: [
             'Test case olmadan, sərbəst araşdırma ilə test',
@@ -268,6 +288,7 @@ export const examQuestions = [
     {
         id: 21,
         category: 'bug_reporting',
+        difficulty: 'easy',
         question: 'Baq hesabatında hansı məlumatlar mütləq olmalıdır?',
         options: [
             'Yalnız baqın adı',
@@ -281,6 +302,7 @@ export const examQuestions = [
     {
         id: 22,
         category: 'bug_reporting',
+        difficulty: 'medium',
         question: 'Bug Severity nədir?',
         options: [
             'Baqın nə qədər tez düzəldilməli olduğu',
@@ -294,6 +316,7 @@ export const examQuestions = [
     {
         id: 23,
         category: 'bug_reporting',
+        difficulty: 'medium',
         question: 'Bug Priority nədir?',
         options: [
             'Baqın sistemə təsiri',
@@ -307,6 +330,7 @@ export const examQuestions = [
     {
         id: 24,
         category: 'bug_reporting',
+        difficulty: 'hard',
         question: 'Critical severity nə deməkdir?',
         options: [
             'Kiçik dizayn problemi',
@@ -320,6 +344,7 @@ export const examQuestions = [
     {
         id: 25,
         category: 'bug_reporting',
+        difficulty: 'hard',
         question: 'Baq statusu "Resolved" nə deməkdir?',
         options: [
             'Baq hələ açıqdır',
@@ -335,6 +360,7 @@ export const examQuestions = [
     {
         id: 26,
         category: 'test_planning',
+        difficulty: 'easy',
         question: 'Test plan nədir?',
         options: [
             'Baq siyahısı',
@@ -348,6 +374,7 @@ export const examQuestions = [
     {
         id: 27,
         category: 'test_planning',
+        difficulty: 'medium',
         question: 'Test strategy nədir?',
         options: [
             'Konkret test case',
@@ -361,6 +388,7 @@ export const examQuestions = [
     {
         id: 28,
         category: 'test_planning',
+        difficulty: 'hard',
         question: 'Entry criteria nədir?',
         options: [
             'Testləşdirməyə başlamaq üçün lazım olan şərtlər',
@@ -374,6 +402,7 @@ export const examQuestions = [
     {
         id: 29,
         category: 'test_planning',
+        difficulty: 'hard',
         question: 'Exit criteria nədir?',
         options: [
             'Testləşdirməyə başlama şərtləri',
@@ -387,6 +416,7 @@ export const examQuestions = [
     {
         id: 30,
         category: 'test_planning',
+        difficulty: 'hard',
         question: 'Test environment nədir?',
         options: [
             'Testerin iş otağı',
@@ -408,6 +438,11 @@ export function getRandomQuestions(count = 30) {
 // Helper function to get questions by category
 export function getQuestionsByCategory(category) {
     return examQuestions.filter(q => q.category === category);
+}
+
+// Helper function to get questions by difficulty
+export function getQuestionsByDifficulty(difficulty) {
+    return examQuestions.filter(q => q.difficulty === difficulty);
 }
 
 // Category names

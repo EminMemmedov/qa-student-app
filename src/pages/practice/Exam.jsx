@@ -4,23 +4,30 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, CheckCircle, XCircle, ArrowRight, Award } from 'lucide-react';
 import { getRandomQuestions } from '../../data/examQuestions';
+import { useAdaptiveExam } from '../../hooks/useAdaptiveExam';
 import PageTransition from '../../components/PageTransition';
+import { Sparkles, Brain } from 'lucide-react';
 
 export default function Exam() {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { getNextQuestion, currentDifficulty, resetExam } = useAdaptiveExam();
+
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [userAnswers, setUserAnswers] = useState([]);
     const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
     const [examStarted, setExamStarted] = useState(false);
+    const [isAdaptiveMode, setIsAdaptiveMode] = useState(false);
 
-    // Initialize exam with random questions
+    // Initialize exam
     useEffect(() => {
-        const randomQuestions = getRandomQuestions(30);
-        setQuestions(randomQuestions);
-    }, []);
+        if (!isAdaptiveMode) {
+            const randomQuestions = getRandomQuestions(30);
+            setQuestions(randomQuestions);
+        }
+    }, [isAdaptiveMode]);
 
     // Timer countdown
     useEffect(() => {
@@ -40,6 +47,11 @@ export default function Exam() {
     }, [examStarted, timeLeft]);
 
     const startExam = () => {
+        if (isAdaptiveMode) {
+            resetExam();
+            const firstQuestion = getNextQuestion(null);
+            setQuestions([firstQuestion.question]);
+        }
         setExamStarted(true);
     };
 
@@ -53,12 +65,27 @@ export default function Exam() {
         newAnswers[currentQuestionIndex] = selectedAnswer;
         setUserAnswers(newAnswers);
 
-        // Move to next question or finish
-        if (currentQuestionIndex + 1 < questions.length) {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
-            setSelectedAnswer(userAnswers[currentQuestionIndex + 1] ?? null);
+        // Check correctness for adaptive logic
+        const currentQ = questions[currentQuestionIndex];
+        const isCorrect = selectedAnswer === currentQ.correctAnswer;
+
+        if (isAdaptiveMode) {
+            if (currentQuestionIndex + 1 < 30) { // Limit to 30 questions in adaptive mode too
+                const nextQ = getNextQuestion(isCorrect);
+                setQuestions(prev => [...prev, nextQ.question]);
+                setCurrentQuestionIndex(currentQuestionIndex + 1);
+                setSelectedAnswer(null);
+            } else {
+                finishExam();
+            }
         } else {
-            finishExam();
+            // Standard mode
+            if (currentQuestionIndex + 1 < questions.length) {
+                setCurrentQuestionIndex(currentQuestionIndex + 1);
+                setSelectedAnswer(userAnswers[currentQuestionIndex + 1] ?? null);
+            } else {
+                finishExam();
+            }
         }
     };
 
@@ -130,6 +157,32 @@ export default function Exam() {
                         </h1>
 
                         <div className="space-y-4 mb-8">
+                            {/* Mode Selection */}
+                            <div className="flex gap-4 mb-6">
+                                <button
+                                    onClick={() => setIsAdaptiveMode(false)}
+                                    className={`flex-1 p-4 rounded-xl border-2 transition-all ${!isAdaptiveMode
+                                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                                        : 'border-slate-200 dark:border-slate-700 hover:border-blue-300'
+                                        }`}
+                                >
+                                    <div className="font-bold text-slate-900 dark:text-white mb-1">Standart</div>
+                                    <div className="text-xs text-slate-500">Təsadüfi suallar</div>
+                                </button>
+                                <button
+                                    onClick={() => setIsAdaptiveMode(true)}
+                                    className={`flex-1 p-4 rounded-xl border-2 transition-all ${isAdaptiveMode
+                                        ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
+                                        : 'border-slate-200 dark:border-slate-700 hover:border-purple-300'
+                                        }`}
+                                >
+                                    <div className="flex items-center justify-center gap-2 font-bold text-slate-900 dark:text-white mb-1">
+                                        Adaptiv <Sparkles size={14} className="text-purple-500" />
+                                    </div>
+                                    <div className="text-xs text-slate-500">Səviyyəyə uyğun</div>
+                                </button>
+                            </div>
+
                             <div className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
                                 <CheckCircle className="text-blue-600 dark:text-blue-400" size={24} />
                                 <div>
@@ -181,7 +234,15 @@ export default function Exam() {
                     <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
                         <span className="font-bold text-lg">Sual {currentQuestionIndex + 1}</span>
                         <span>/</span>
-                        <span>{questions.length}</span>
+                        <span>{isAdaptiveMode ? 30 : questions.length}</span>
+                        {isAdaptiveMode && (
+                            <span className={`ml-2 px-2 py-1 rounded text-xs font-bold uppercase ${currentDifficulty === 'easy' ? 'bg-green-100 text-green-700' :
+                                currentDifficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                                    'bg-red-100 text-red-700'
+                                }`}>
+                                {currentDifficulty}
+                            </span>
+                        )}
                     </div>
                     <div className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold ${timeLeft < 60 ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
                         }`}>

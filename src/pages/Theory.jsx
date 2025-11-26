@@ -2,6 +2,7 @@ import { theoryModules } from '../data/theory';
 import { BookOpen, ChevronRight, ArrowLeft, Sparkles, Target, Bug, FileCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/PageTransition';
 
 const moduleIcons = {
@@ -75,6 +76,7 @@ const item = {
 };
 
 export default function Theory() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { moduleId } = useParams();
     const selectedModule = theoryModules.find(m => m.id === moduleId);
@@ -107,8 +109,8 @@ export default function Theory() {
                                     <BookOpen size={24} className="text-white" />
                                 </div>
                                 <div>
-                                    <h1 className="text-4xl font-black text-slate-900 tracking-tight">Nəzəriyyə</h1>
-                                    <p className="text-slate-500 font-medium">Test mühəndisinin bilik bazası</p>
+                                    <h1 className="text-4xl font-black text-slate-900 tracking-tight">{t('theory.title')}</h1>
+                                    <p className="text-slate-500 font-medium">{t('theory.subtitle')}</p>
                                 </div>
                             </motion.div>
                         </header>
@@ -121,6 +123,8 @@ export default function Theory() {
                         >
                             {theoryModules.map((module) => {
                                 const Icon = moduleIcons[module.id] || BookOpen;
+                                const titleKey = module.id.replace(/-([a-z])/g, (g) => g[1].toUpperCase()); // qa-basics -> qaBasics
+
                                 return (
                                     <motion.div
                                         key={module.id}
@@ -138,7 +142,7 @@ export default function Theory() {
 
                                         <div className="flex-1 relative z-10">
                                             <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-indigo-600 transition-colors">
-                                                {module.title}
+                                                {t(`theory.${titleKey}`, module.title)}
                                             </h3>
                                             <p className="text-slate-500 text-sm leading-snug">
                                                 {module.description}
@@ -169,7 +173,7 @@ export default function Theory() {
                                 className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors group"
                             >
                                 <ArrowLeft size={18} className="text-slate-600 group-hover:-translate-x-1 transition-transform" />
-                                <span className="font-medium text-slate-700">Geri</span>
+                                <span className="font-medium text-slate-700">{t('common.back')}</span>
                             </button>
                             <div className="flex-1">
                                 <h2 className="text-xl font-bold text-slate-900">{selectedModule.title}</h2>
