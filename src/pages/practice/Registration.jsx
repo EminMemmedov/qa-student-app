@@ -22,7 +22,7 @@ export default function Registration() {
     const { showAnimation, animationData, triggerBugAnimation } = useBugAnimation();
     const { addLog, addRequest } = useDevTools();
     const [flagInput, setFlagInput] = useState('');
-    const [toast, setToast] = useState({ show: false, message: '' });
+
     const [showSpec, setShowSpec] = useState(false);
     const [genderState, setGenderState] = useState({ male: false, female: false });
     const [reportModalOpen, setReportModalOpen] = useState(false);
@@ -91,7 +91,7 @@ export default function Registration() {
         const result = addBug(bugId);
         if (result.isNew) {
             const bug = bugs.find(b => b.id === bugId);
-            setToast({ show: true, message: bug.description });
+
             triggerBugAnimation({
                 ...result,
                 bugName: bug.description
@@ -124,7 +124,7 @@ export default function Registration() {
         setSelectedBugId(null);
 
         if (bonus > 0) {
-            setToast({ show: true, message: `Əla! Düzgün qiymətləndirmə üçün +${bonus} XP bonus! 🎯` });
+
         }
 
         checkAchievements({
@@ -143,7 +143,7 @@ export default function Registration() {
             if (result.isNew) {
                 const bug = bugs.find(b => b.id === bugId);
                 setFlagInput('');
-                setToast({ show: true, message: bug.description });
+
 
                 // Trigger animation
                 triggerBugAnimation({
@@ -159,7 +159,7 @@ export default function Registration() {
                     getBugDifficulty
                 });
             } else {
-                setToast({ show: true, message: 'Bu baq artıq tapılıb!' });
+
             }
         } else {
             alert('Yanlış kod! DevTools-u diqqətlə yoxlayın.');

@@ -24,7 +24,7 @@ export default function Ecommerce() {
     const [couponCode, setCouponCode] = useState('');
     const [appliedCoupon, setAppliedCoupon] = useState(null);
     const [stock, setStock] = useState(5);
-    const [toast, setToast] = useState({ show: false, message: '' });
+
     const [showSpec, setShowSpec] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [errors, setErrors] = useState({});
@@ -66,7 +66,7 @@ export default function Ecommerce() {
         const result = addBug(bugId);
         if (result.isNew) {
             const bug = bugs.find(b => b.id === bugId);
-            setToast({ show: true, message: bug.description });
+
             triggerBugAnimation({
                 ...result,
                 bugName: bug.description
@@ -99,7 +99,7 @@ export default function Ecommerce() {
         setSelectedBugId(null);
 
         if (bonus > 0) {
-            setToast({ show: true, message: `Əla! Düzgün qiymətləndirmə üçün +${bonus} XP bonus! 🎯` });
+
         }
 
         checkAchievements({
@@ -182,7 +182,7 @@ export default function Ecommerce() {
             setAppliedCoupon({ code: 'FREE100', discount: 100 });
             addLog('success', 'Coupon applied successfully', { code: 'FREE100', discount: 100 });
         } else if (couponCode) {
-            setToast({ show: true, message: 'Yanlış kupon kodu' });
+
             addLog('warn', 'Invalid coupon code', { code: couponCode });
         }
     };
@@ -202,7 +202,7 @@ export default function Ecommerce() {
         if (!isValid) {
             const firstError = Object.values(errors)[0];
             if (!foundNew) {
-                setToast({ show: true, message: firstError });
+
             }
             addLog('warn', 'Checkout validation failed', errors);
             return;
@@ -228,7 +228,7 @@ export default function Ecommerce() {
             handleBugDetected('stock_info');
         }
 
-        setToast({ show: true, message: 'Sifariş qəbul edildi! ✅' });
+
     };
 
     const basePrice = 2999;

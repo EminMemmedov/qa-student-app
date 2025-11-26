@@ -25,7 +25,7 @@ export default function Banking() {
     const [recipient, setRecipient] = useState('other');
     const [currency, setCurrency] = useState('AZN');
     const [balance, setBalance] = useState(500);
-    const [toast, setToast] = useState({ show: false, message: '' });
+
     const [showSpec, setShowSpec] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -72,7 +72,7 @@ export default function Banking() {
         const result = addBug(bugId);
         if (result.isNew) {
             const bug = bugs.find(b => b.id === bugId);
-            setToast({ show: true, message: bug.description });
+
             triggerBugAnimation({
                 ...result,
                 bugName: bug.description
@@ -105,7 +105,7 @@ export default function Banking() {
         setSelectedBugId(null);
 
         if (bonus > 0) {
-            setToast({ show: true, message: `Əla! Düzgün qiymətləndirmə üçün +${bonus} XP bonus! 🎯` });
+
         }
 
         checkAchievements({
@@ -186,7 +186,7 @@ export default function Banking() {
         if (!isValid) {
             const firstError = Object.values(errors)[0];
             if (!foundNew) {
-                setToast({ show: true, message: firstError });
+
             }
             return;
         }
@@ -221,7 +221,7 @@ export default function Banking() {
 
         // Bug: Always show success message
         handleBugDetected('success_msg');
-        setToast({ show: true, message: 'Köçürmə uğurla tamamlandı! ✅' });
+
 
         // Clear form
         setAmount('');

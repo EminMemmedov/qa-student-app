@@ -24,7 +24,7 @@ export default function Payment() {
     const [cardName, setCardName] = useState('');
     const [expiry, setExpiry] = useState('');
     const [cvv, setCvv] = useState('');
-    const [toast, setToast] = useState({ show: false, message: '' });
+
     const [showSpec, setShowSpec] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [errors, setErrors] = useState({});
@@ -66,7 +66,7 @@ export default function Payment() {
         const result = addBug(bugId);
         if (result.isNew) {
             const bug = bugs.find(b => b.id === bugId);
-            setToast({ show: true, message: bug.description });
+
             triggerBugAnimation({
                 ...result,
                 bugName: bug.description
@@ -99,7 +99,7 @@ export default function Payment() {
         setSelectedBugId(null);
 
         if (bonus > 0) {
-            setToast({ show: true, message: `Əla! Düzgün qiymətləndirmə üçün +${bonus} XP bonus! 🎯` });
+
         }
 
         checkAchievements({
@@ -215,7 +215,7 @@ export default function Payment() {
             // Show first error
             const firstError = Object.values(errors)[0];
             if (!foundNew) {
-                setToast({ show: true, message: firstError });
+
             }
             return;
         }
@@ -417,7 +417,7 @@ export default function Payment() {
                                     onChange={(e) => {
                                         setCvv(e.target.value);
                                         if (e.target.value.length > 0 && !foundBugs.includes('cvv_visible')) {
-                                            addBug('cvv_visible') && setToast({ show: true, message: 'CVV kodu gizli deyil (görünür)' });
+                                            addBug('cvv_visible');
                                         }
                                     }}
                                     onBlur={() => handleBlur('cvv')}
