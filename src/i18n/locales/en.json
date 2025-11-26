@@ -1,0 +1,100 @@
+{
+    "home": {
+        "greeting": "Hello, QA!",
+        "subtitle": "Ready to learn new knowledge today?",
+        "currentLevel": "Current Level",
+        "totalXP": "Total XP",
+        "nextLevel": "Progress to next level",
+        "moreXPNeeded": "{{xp}} more XP needed"
+    },
+    "exam": {
+        "title": "QA Exam",
+        "subtitle": "Test your knowledge!",
+        "questions": "Questions",
+        "minutes": "Minutes",
+        "passRate": "Pass Rate",
+        "start": "Start Exam",
+        "next": "Next Question",
+        "finish": "Finish",
+        "timeLeft": "Time Left",
+        "question": "Question",
+        "of": "of"
+    },
+    "examResults": {
+        "congratulations": "Congratulations!",
+        "tryAgain": "Good attempt!",
+        "passed": "You have successfully passed the exam!",
+        "failed": "Study a bit more and try again",
+        "result": "Result",
+        "time": "Time",
+        "categoryResults": "Results by category",
+        "retryExam": "Try Again",
+        "backToHome": "Back to Home",
+        "excellent": "Excellent",
+        "good": "Good",
+        "satisfactory": "Satisfactory",
+        "unsatisfactory": "Unsatisfactory"
+    },
+    "theory": {
+        "title": "Theory",
+        "modules": "Modules",
+        "readMore": "Read more",
+        "qaBasics": "QA Basics",
+        "testTypes": "Test Types",
+        "bugReporting": "Bug Reporting",
+        "testPlanning": "Test Planning"
+    },
+    "practice": {
+        "title": "Practice",
+        "modules": "Practice Modules",
+        "foundBugs": "Found Bugs",
+        "tips": "Tips",
+        "specification": "Specification",
+        "reportBug": "Report Bug",
+        "devTools": "DevTools",
+        "registration": "Registration Form",
+        "payment": "Payment Form",
+        "ecommerce": "E-commerce",
+        "banking": "Bank Transfer",
+        "exam": "Exam Mode",
+        "api": "API Testing",
+        "mobile": "Mobile Testing",
+        "security": "Security Testing",
+        "performance": "Performance Testing",
+        "automation": "Automation Testing",
+        "database": "Database Testing",
+        "accessibility": "Accessibility Testing"
+    },
+    "achievements": {
+        "title": "Achievements",
+        "unlocked": "Unlocked",
+        "locked": "Locked",
+        "newAchievement": "New Achievement!",
+        "firstBug": "First Bug",
+        "bugHunter": "Bug Hunter",
+        "perfectionist": "Perfectionist"
+    },
+    "common": {
+        "loading": "Loading...",
+        "save": "Save",
+        "cancel": "Cancel",
+        "close": "Close",
+        "submit": "Submit",
+        "back": "Back",
+        "next": "Next",
+        "previous": "Previous",
+        "yes": "Yes",
+        "no": "No",
+        "search": "Search",
+        "filter": "Filter",
+        "sort": "Sort",
+        "settings": "Settings",
+        "language": "Language"
+    },
+    "categories": {
+        "qa_basics": "QA Basics",
+        "test_types": "Test Types",
+        "bug_reporting": "Bug Reporting",
+        "test_planning": "Test Planning"
+    }
+}

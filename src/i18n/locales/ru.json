@@ -1,0 +1,100 @@
+{
+    "home": {
+        "greeting": "Привет, QA!",
+        "subtitle": "Готов изучать новые знания сегодня?",
+        "currentLevel": "Текущий уровень",
+        "totalXP": "Всего XP",
+        "nextLevel": "До следующего уровня",
+        "moreXPNeeded": "Еще {{xp}} XP необходимо"
+    },
+    "exam": {
+        "title": "QA Экзамен",
+        "subtitle": "Проверь свои знания!",
+        "questions": "Вопросов",
+        "minutes": "Минут",
+        "passRate": "Проходной балл",
+        "start": "Начать экзамен",
+        "next": "Следующий вопрос",
+        "finish": "Завершить",
+        "timeLeft": "Осталось времени",
+        "question": "Вопрос",
+        "of": "из"
+    },
+    "examResults": {
+        "congratulations": "Поздравляем!",
+        "tryAgain": "Хорошая попытка!",
+        "passed": "Вы успешно сдали экзамен!",
+        "failed": "Немного больше усилий и попробуйте снова",
+        "result": "Результат",
+        "time": "Время",
+        "categoryResults": "Результаты по категориям",
+        "retryExam": "Попробовать снова",
+        "backToHome": "Вернуться на главную",
+        "excellent": "Отлично",
+        "good": "Хорошо",
+        "satisfactory": "Удовлетворительно",
+        "unsatisfactory": "Неудовлетворительно"
+    },
+    "theory": {
+        "title": "Теория",
+        "modules": "Модули",
+        "readMore": "Подробнее",
+        "qaBasics": "Основы QA",
+        "testTypes": "Типы тестирования",
+        "bugReporting": "Отчеты о багах",
+        "testPlanning": "Планирование тестов"
+    },
+    "practice": {
+        "title": "Практика",
+        "modules": "Практические модули",
+        "foundBugs": "Найденные баги",
+        "tips": "Подсказки",
+        "specification": "Спецификация",
+        "reportBug": "Сообщить о баге",
+        "devTools": "DevTools",
+        "registration": "Форма регистрации",
+        "payment": "Форма оплаты",
+        "ecommerce": "Электронная коммерция",
+        "banking": "Банковский перевод",
+        "exam": "Режим экзамена",
+        "api": "API тестирование",
+        "mobile": "Мобильное тестирование",
+        "security": "Тестирование безопасности",
+        "performance": "Тестирование производительности",
+        "automation": "Автоматизация тестирования",
+        "database": "Тестирование БД",
+        "accessibility": "Тестирование доступности"
+    },
+    "achievements": {
+        "title": "Достижения",
+        "unlocked": "Разблокировано",
+        "locked": "Заблокировано",
+        "newAchievement": "Новое достижение!",
+        "firstBug": "Первый баг",
+        "bugHunter": "Охотник за багами",
+        "perfectionist": "Перфекционист"
+    },
+    "common": {
+        "loading": "Загрузка...",
+        "save": "Сохранить",
+        "cancel": "Отмена",
+        "close": "Закрыть",
+        "submit": "Отправить",
+        "back": "Назад",
+        "next": "Далее",
+        "previous": "Предыдущий",
+        "yes": "Да",
+        "no": "Нет",
+        "search": "Поиск",
+        "filter": "Фильтр",
+        "sort": "Сортировка",
+        "settings": "Настройки",
+        "language": "Язык"
+    },
+    "categories": {
+        "qa_basics": "Основы QA",
+        "test_types": "Типы тестов",
+        "bug_reporting": "Отчеты о багах",
+        "test_planning": "Планирование тестов"
+    }
+}

@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import BottomNav from './BottomNav';
 import ThemeToggle from './ThemeToggle';
+import LanguageSelector from './LanguageSelector';
 import { motion, useAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -42,8 +43,9 @@ export default function Layout() {
             animate={controls}
         >
             <div className="w-full max-w-md mx-auto min-h-screen bg-white dark:bg-slate-800 md:shadow-2xl relative overflow-hidden transition-colors duration-300">
-                {/* Theme Toggle Button */}
-                <div className="fixed top-4 right-4 z-50">
+                {/* Top Controls */}
+                <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+                    <LanguageSelector />
                     <ThemeToggle />
                 </div>
                 <Outlet />

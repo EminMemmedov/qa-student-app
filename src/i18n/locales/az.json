@@ -1,0 +1,100 @@
+{
+    "home": {
+        "greeting": "Salam, QA!",
+        "subtitle": "Bu gün yeni biliklər öyrənməyə hazırsan?",
+        "currentLevel": "Cari Səviyyə",
+        "totalXP": "Ümumi XP",
+        "nextLevel": "Növbəti səviyyəyə doğru",
+        "moreXPNeeded": "Daha {{xp}} XP lazımdır"
+    },
+    "exam": {
+        "title": "QA İmtahanı",
+        "subtitle": "Biliklərini yoxla!",
+        "questions": "Sual",
+        "minutes": "Dəqiqə",
+        "passRate": "Keçid",
+        "start": "İmtahana Başla",
+        "next": "Növbəti Sual",
+        "finish": "Bitir",
+        "timeLeft": "Qalan vaxt",
+        "question": "Sual",
+        "of": "/"
+    },
+    "examResults": {
+        "congratulations": "Təbriklər!",
+        "tryAgain": "Yaxşı cəhd!",
+        "passed": "Siz imtahandan uğurla keçdiniz!",
+        "failed": "Bir az daha çalışın və yenidən cəhd edin",
+        "result": "Nəticə",
+        "time": "Vaxt",
+        "categoryResults": "Kateqoriyalar üzrə nəticə",
+        "retryExam": "Yenidən Cəhd Et",
+        "backToHome": "Ana Səhifəyə Qayıt",
+        "excellent": "Əla",
+        "good": "Yaxşı",
+        "satisfactory": "Kafi",
+        "unsatisfactory": "Qeyri-kafi"
+    },
+    "theory": {
+        "title": "Nəzəriyyə",
+        "modules": "Modullar",
+        "readMore": "Daha ətraflı",
+        "qaBasics": "QA Əsasları",
+        "testTypes": "Test Növləri",
+        "bugReporting": "Baq Hesabatı",
+        "testPlanning": "Test Planlaşdırması"
+    },
+    "practice": {
+        "title": "Praktika",
+        "modules": "Praktika Modulları",
+        "foundBugs": "Tapılmış Baqlar",
+        "tips": "Məsləhətlər",
+        "specification": "Spesifikasiya",
+        "reportBug": "Baq Bildir",
+        "devTools": "DevTools",
+        "registration": "Qeydiyyat Forması",
+        "payment": "Ödəniş Forması",
+        "ecommerce": "E-ticarət",
+        "banking": "Bank Köçürməsi",
+        "exam": "İmtahan Rejimi",
+        "api": "API Testing",
+        "mobile": "Mobile Testing",
+        "security": "Security Testing",
+        "performance": "Performance Testing",
+        "automation": "Automation Testing",
+        "database": "Database Testing",
+        "accessibility": "Accessibility Testing"
+    },
+    "achievements": {
+        "title": "Nailiyyətlər",
+        "unlocked": "Açılmış",
+        "locked": "Kilidli",
+        "newAchievement": "Yeni Nailiyyət!",
+        "firstBug": "İlk Baq",
+        "bugHunter": "Baq Ovçusu",
+        "perfectionist": "Mükəmməliyyətçi"
+    },
+    "common": {
+        "loading": "Yüklənir...",
+        "save": "Yadda saxla",
+        "cancel": "Ləğv et",
+        "close": "Bağla",
+        "submit": "Göndər",
+        "back": "Geri",
+        "next": "Növbəti",
+        "previous": "Əvvəlki",
+        "yes": "Bəli",
+        "no": "Xeyr",
+        "search": "Axtar",
+        "filter": "Filtr",
+        "sort": "Sırala",
+        "settings": "Parametrlər",
+        "language": "Dil"
+    },
+    "categories": {
+        "qa_basics": "QA əsasları",
+        "test_types": "Test növləri",
+        "bug_reporting": "Baq hesabatı",
+        "test_planning": "Test planlaşdırması"
+    }
+}

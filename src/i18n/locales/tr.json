@@ -1,0 +1,100 @@
+{
+    "home": {
+        "greeting": "Merhaba, QA!",
+        "subtitle": "Bugün yeni bilgiler öğrenmeye hazır mısın?",
+        "currentLevel": "Mevcut Seviye",
+        "totalXP": "Toplam XP",
+        "nextLevel": "Sonraki seviyeye",
+        "moreXPNeeded": "{{xp}} daha XP gerekli"
+    },
+    "exam": {
+        "title": "QA Sınavı",
+        "subtitle": "Bilgini test et!",
+        "questions": "Soru",
+        "minutes": "Dakika",
+        "passRate": "Geçme Notu",
+        "start": "Sınava Başla",
+        "next": "Sonraki Soru",
+        "finish": "Bitir",
+        "timeLeft": "Kalan Süre",
+        "question": "Soru",
+        "of": "/"
+    },
+    "examResults": {
+        "congratulations": "Tebrikler!",
+        "tryAgain": "İyi deneme!",
+        "passed": "Sınavı başarıyla geçtiniz!",
+        "failed": "Biraz daha çalış ve tekrar dene",
+        "result": "Sonuç",
+        "time": "Süre",
+        "categoryResults": "Kategorilere göre sonuçlar",
+        "retryExam": "Tekrar Dene",
+        "backToHome": "Ana Sayfaya Dön",
+        "excellent": "Mükemmel",
+        "good": "İyi",
+        "satisfactory": "Yeterli",
+        "unsatisfactory": "Yetersiz"
+    },
+    "theory": {
+        "title": "Teori",
+        "modules": "Modüller",
+        "readMore": "Devamını oku",
+        "qaBasics": "QA Temelleri",
+        "testTypes": "Test Türleri",
+        "bugReporting": "Hata Raporlama",
+        "testPlanning": "Test Planlama"
+    },
+    "practice": {
+        "title": "Pratik",
+        "modules": "Pratik Modülleri",
+        "foundBugs": "Bulunan Hatalar",
+        "tips": "İpuçları",
+        "specification": "Şartname",
+        "reportBug": "Hata Bildir",
+        "devTools": "DevTools",
+        "registration": "Kayıt Formu",
+        "payment": "Ödeme Formu",
+        "ecommerce": "E-ticaret",
+        "banking": "Banka Transferi",
+        "exam": "Sınav Modu",
+        "api": "API Testi",
+        "mobile": "Mobil Test",
+        "security": "Güvenlik Testi",
+        "performance": "Performans Testi",
+        "automation": "Otomasyon Testi",
+        "database": "Veritabanı Testi",
+        "accessibility": "Erişilebilirlik Testi"
+    },
+    "achievements": {
+        "title": "Başarılar",
+        "unlocked": "Açıldı",
+        "locked": "Kilitli",
+        "newAchievement": "Yeni Başarı!",
+        "firstBug": "İlk Hata",
+        "bugHunter": "Hata Avcısı",
+        "perfectionist": "Mükemmeliyetçi"
+    },
+    "common": {
+        "loading": "Yükleniyor...",
+        "save": "Kaydet",
+        "cancel": "İptal",
+        "close": "Kapat",
+        "submit": "Gönder",
+        "back": "Geri",
+        "next": "İleri",
+        "previous": "Önceki",
+        "yes": "Evet",
+        "no": "Hayır",
+        "search": "Ara",
+        "filter": "Filtre",
+        "sort": "Sırala",
+        "settings": "Ayarlar",
+        "language": "Dil"
+    },
+    "categories": {
+        "qa_basics": "QA temelleri",
+        "test_types": "Test türleri",
+        "bug_reporting": "Hata raporlama",
+        "test_planning": "Test planlama"
+    }
+}
