@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, CheckCircle, XCircle, ArrowRight, Award } from 'lucide-react';
 import { getRandomQuestions } from '../../data/examQuestions';
 import PageTransition from '../../components/PageTransition';
 
 export default function Exam() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -218,14 +220,14 @@ export default function Exam() {
                                     whileTap={{ scale: 0.99 }}
                                     onClick={() => handleAnswerSelect(index)}
                                     className={`w-full p-4 rounded-xl text-left transition-all ${selectedAnswer === index
-                                            ? 'bg-blue-600 text-white shadow-lg'
-                                            : 'bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-600'
+                                        ? 'bg-blue-600 text-white shadow-lg'
+                                        : 'bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-600'
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
                                         <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${selectedAnswer === index
-                                                ? 'bg-white text-blue-600'
-                                                : 'bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-300'
+                                            ? 'bg-white text-blue-600'
+                                            : 'bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-300'
                                             }`}>
                                             {String.fromCharCode(65 + index)}
                                         </div>
@@ -244,8 +246,8 @@ export default function Exam() {
                     onClick={handleNextQuestion}
                     disabled={selectedAnswer === null}
                     className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all ${selectedAnswer === null
-                            ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed'
-                            : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg'
+                        ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg'
                         }`}
                 >
                     {currentQuestionIndex + 1 === questions.length ? 'Bitir' : 'Növbəti Sual'}

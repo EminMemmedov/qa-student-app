@@ -3,7 +3,6 @@ import { initReactI18next } from 'react-i18next';
 import az from './locales/az.json';
 import ru from './locales/ru.json';
 import en from './locales/en.json';
-import tr from './locales/tr.json';
 
 i18n
     .use(initReactI18next)
@@ -11,8 +10,7 @@ i18n
         resources: {
             az: { translation: az },
             ru: { translation: ru },
-            en: { translation: en },
-            tr: { translation: tr }
+            en: { translation: en }
         },
         lng: localStorage.getItem('language') || 'az',
         fallbackLng: 'az',

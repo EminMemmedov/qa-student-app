@@ -1,6 +1,7 @@
 
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/PageTransition';
 import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target } from 'lucide-react';
 import { useGameProgress } from '../hooks/useGameProgress';
@@ -23,6 +24,7 @@ const itemVariants = {
 };
 
 export default function Home() {
+  const { t } = useTranslation();
   const { xp, foundBugs } = useGameProgress();
   const { unlockedAchievements } = useAchievements();
 
@@ -44,7 +46,7 @@ export default function Home() {
         <motion.header variants={itemVariants} className="relative z-10 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-black text-slate-900 tracking-tighter mb-2">
-              Salam, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">QA!</span>
+              {t('home.greeting').split(',')[0]}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{t('home.greeting').split(' ')[1]}</span>
               <motion.span
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ repeat: Infinity, duration: 2, repeatDelay: 3 }}
@@ -54,7 +56,7 @@ export default function Home() {
               </motion.span>
             </h1>
             <p className="text-slate-500 text-lg font-medium">
-              Bu gün yeni biliklər öyrənməyə hazırsan?
+              {t('home.subtitle')}
             </p>
           </div>
           <motion.div
@@ -83,12 +85,12 @@ export default function Home() {
                   <Trophy size={24} className="text-blue-400" />
                 </div>
                 <div>
-                  <div className="text-sm text-slate-400 font-medium uppercase tracking-wider">Cari Səviyyə</div>
+                  <div className="text-sm text-slate-400 font-medium uppercase tracking-wider">{t('home.currentLevel')}</div>
                   <div className="text-3xl font-black text-white">Level {level}</div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-sm text-slate-400 font-medium uppercase tracking-wider">Ümumi XP</div>
+                <div className="text-sm text-slate-400 font-medium uppercase tracking-wider">{t('home.totalXP')}</div>
                 <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
                   {xp}
                 </div>
@@ -97,7 +99,7 @@ export default function Home() {
 
             <div className="bg-slate-800/50 rounded-2xl p-4 border border-slate-700/50 backdrop-blur-sm">
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-300 font-medium">Növbəti səviyyəyə doğru</span>
+                <span className="text-slate-300 font-medium">{t('home.nextLevel')}</span>
                 <span className="text-blue-400 font-bold">{Math.round(progress)}%</span>
               </div>
 
@@ -112,7 +114,7 @@ export default function Home() {
 
               <div className="flex items-center gap-2 text-xs text-slate-400">
                 <Target size={12} />
-                <span>Daha <strong>{nextLevelXp} XP</strong> lazımdır</span>
+                <span>{t('home.moreXPNeeded', { xp: nextLevelXp })}</span>
               </div>
             </div>
           </div>

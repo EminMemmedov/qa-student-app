@@ -6,8 +6,7 @@ import { Globe, Check } from 'lucide-react';
 const languages = [
     { code: 'az', name: 'Azərbaycan', flag: '🇦🇿' },
     { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-    { code: 'en', name: 'English', flag: '🇬🇧' },
-    { code: 'tr', name: 'Türkçe', flag: '🇹🇷' }
+    { code: 'en', name: 'English', flag: '🇬🇧' }
 ];
 
 export default function LanguageSelector() {
