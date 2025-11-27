@@ -1,35 +1,42 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, Bug } from 'lucide-react';
+import { CheckCircle, Bug, Info, AlertTriangle } from 'lucide-react';
 import { useEffect } from 'react';
 
-export default function Toast({ message, isVisible, onClose }) {
+export default function Toast({ message, type = 'success', onClose }) {
     useEffect(() => {
-        if (isVisible) {
-            const timer = setTimeout(() => {
-                onClose();
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [isVisible, onClose]);
+        const timer = setTimeout(() => {
+            onClose();
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, [onClose]);
+
+    const icons = {
+        success: <CheckCircle size={24} className="text-green-400" />,
+        error: <Bug size={24} className="text-red-400" />,
+        info: <Info size={24} className="text-blue-400" />,
+        warning: <AlertTriangle size={24} className="text-yellow-400" />
+    };
+
+    const bgColors = {
+        success: 'bg-slate-900',
+        error: 'bg-slate-900',
+        info: 'bg-slate-900',
+        warning: 'bg-slate-900'
+    };
 
     return (
-        <AnimatePresence>
-            {isVisible && (
-                <motion.div
-                    initial={{ opacity: 0, y: -50, x: '-50%' }}
-                    animate={{ opacity: 1, y: 0, x: '-50%' }}
-                    exit={{ opacity: 0, y: -50, x: '-50%' }}
-                    className="fixed top-6 left-1/2 z-50 flex items-center gap-3 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl shadow-slate-500/50 min-w-[300px]"
-                >
-                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shrink-0 text-slate-900">
-                        <Bug size={20} fill="currentColor" />
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-lg leading-none mb-1">Baq tapıldı!</h4>
-                        <p className="text-slate-400 text-sm">{message}</p>
-                    </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
+        <motion.div
+            initial={{ opacity: 0, y: 50, x: '-50%' }} // Changed to bottom
+            animate={{ opacity: 1, y: -20, x: '-50%' }} // Slightly up from bottom
+            exit={{ opacity: 0, y: 50, x: '-50%' }}
+            className={`fixed bottom-0 left-1/2 z-[100] flex items-center gap-4 px-6 py-4 rounded-2xl shadow-2xl border border-slate-800 ${bgColors[type]} min-w-[320px] max-w-[90vw]`}
+        >
+            <div className="shrink-0">
+                {icons[type]}
+            </div>
+            <div>
+                <p className="text-white font-bold text-sm">{message}</p>
+            </div>
+        </motion.div>
     );
 }

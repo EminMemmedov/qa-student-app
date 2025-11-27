@@ -1,9 +1,8 @@
-
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/PageTransition';
-import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target, MessageSquare } from 'lucide-react';
+import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target, MessageSquare, Linkedin, Instagram, Phone } from 'lucide-react';
 import { useGameProgress } from '../hooks/useGameProgress';
 import { useAchievements } from '../hooks/useAchievements';
 import { achievements } from '../data/achievements';
@@ -47,8 +46,23 @@ export default function Home() {
         className="pt-6"
       >
         {/* Header Section */}
-        <motion.header variants={itemVariants} className="relative z-10 flex justify-between items-center mb-8">
-          <div>
+        <motion.header variants={itemVariants} className="relative z-10 flex justify-between items-start mb-8">
+          <div className="flex-1">
+            <motion.div 
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              className="relative inline-block mb-6 group"
+            >
+                {/* Animated Glow Effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+                
+                {/* Logo Container */}
+                <div className="relative bg-white p-4 rounded-2xl shadow-xl shadow-slate-200/50 ring-1 ring-slate-100">
+                    <img src="/qa-academy.png" alt="QA Academy" className="h-20 object-contain" />
+                </div>
+            </motion.div>
+
             <h1 className="text-4xl font-black text-slate-900 tracking-tighter mb-2">
               {t('home.greeting').split(',')[0]}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{t('home.greeting').split(' ')[1]}</span>
               <motion.span
@@ -273,7 +287,7 @@ export default function Home() {
         </motion.div>
 
         {/* Recent Activity / Stats Row */}
-        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
+        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4 mb-8">
           <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4">
             <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
               <Bug size={20} />
@@ -298,6 +312,56 @@ export default function Home() {
               </div>
             </motion.div>
           </Link>
+        </motion.div>
+
+        {/* Footer / Contact Section */}
+        <motion.div variants={itemVariants} className="mt-12 border-t border-slate-200 pt-8">
+            <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-slate-900">{t('contact.title')}</h3>
+                <p className="text-slate-500 text-sm">{t('contact.subtitle')}</p>
+            </div>
+            
+            <div className="flex justify-center gap-6 flex-wrap">
+                <a 
+                    href="https://www.linkedin.com/company/qa-academyaz" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 group"
+                >
+                    <div className="w-14 h-14 bg-white border border-slate-100 shadow-sm rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-50 group-hover:scale-110 transition-all duration-300">
+                        <Linkedin size={24} />
+                    </div>
+                    <span className="text-xs font-medium text-slate-500 group-hover:text-blue-600">LinkedIn</span>
+                </a>
+
+                <a 
+                    href="https://www.instagram.com/qaacademy.az/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 group"
+                >
+                    <div className="w-14 h-14 bg-white border border-slate-100 shadow-sm rounded-2xl flex items-center justify-center text-pink-600 group-hover:bg-pink-50 group-hover:scale-110 transition-all duration-300">
+                        <Instagram size={24} />
+                    </div>
+                    <span className="text-xs font-medium text-slate-500 group-hover:text-pink-600">Instagram</span>
+                </a>
+
+                <a 
+                    href="https://wa.me/994505412141" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 group"
+                >
+                    <div className="w-14 h-14 bg-white border border-slate-100 shadow-sm rounded-2xl flex items-center justify-center text-green-600 group-hover:bg-green-50 group-hover:scale-110 transition-all duration-300">
+                        <Phone size={24} />
+                    </div>
+                    <span className="text-xs font-medium text-slate-500 group-hover:text-green-600">WhatsApp</span>
+                </a>
+            </div>
+            
+            <div className="mt-8 text-center">
+                 <p className="text-slate-400 text-xs font-medium">© 2025 QA Academy. Made with ❤️ by Emin</p>
+            </div>
         </motion.div>
 
       </motion.div>

@@ -10,9 +10,10 @@ export function ThemeProvider({ children }) {
       if (saved === 'dark' || saved === 'light') {
         return saved === 'dark';
       }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+      // Default to light mode for first visit
+      return false; 
     } catch (e) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+      return false;
     }
   });
 

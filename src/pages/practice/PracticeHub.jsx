@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { UserPlus, CreditCard, Building2, ShoppingBag, ChevronRight, Code, Database, Eye } from 'lucide-react';
+import { UserPlus, CreditCard, Building2, ShoppingBag, ChevronRight, Code, Database, Globe, Smartphone } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
 
 const container = {
@@ -70,7 +70,23 @@ export default function PracticeHub() {
             icon: Database,
             color: 'bg-indigo-500',
             path: '/practice/database'
-        }
+        },
+        {
+            id: 'api',
+            title: t('api.title'),
+            description: t('api.description'),
+            icon: Globe,
+            color: 'bg-sky-500',
+            path: '/practice/api'
+        }/*,
+        {
+            id: 'mobile',
+            title: t('mobile.title'),
+            description: t('mobile.description'),
+            icon: Smartphone,
+            color: 'bg-rose-500',
+            path: '/practice/mobile'
+        }*/
     ];
     return (
         <PageTransition className="p-6 pt-12 pb-24 min-h-screen">

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code, Play, CheckCircle, AlertCircle, Bug, Terminal, ChevronLeft, Lock, Unlock, Globe, MousePointer2, Loader2, RotateCcw, Eye } from 'lucide-react';
+import { Code, Play, CheckCircle, AlertCircle, Bug, Terminal, ChevronLeft, Lock, Unlock, Globe, MousePointer2, Loader2, RotateCcw, Eye, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../../components/PageTransition';
 import { useGameProgress } from '../../hooks/useGameProgress';
@@ -309,17 +309,36 @@ public void testAlert() {
         <PageTransition className="min-h-screen bg-slate-900 text-slate-300 p-6 pt-20 pb-24">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="flex items-center gap-4 mb-8">
-                    <Link to="/practice" className="p-2 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors">
-                        <ChevronLeft className="text-white" />
-                    </Link>
-                    <div>
-                        <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-                            <Code size={32} className="text-cyan-500" />
-                            {t('automation.title')}
-                        </h1>
-                        <p className="text-slate-400">{t('automation.description')}</p>
+                <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-4">
+                        <Link to="/practice" className="p-2 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors">
+                            <ChevronLeft className="text-white" />
+                        </Link>
+                        <div>
+                            <h1 className="text-3xl font-bold text-white flex items-center gap-3">
+                                <Code size={32} className="text-cyan-500" />
+                                {t('automation.title')}
+                            </h1>
+                            <p className="text-slate-400">{t('automation.description')}</p>
+                        </div>
                     </div>
+                    <button 
+                        onClick={() => {
+                            if(window.confirm(t('common.reset_confirm') || "Are you sure you want to reset progress?")) {
+                                setCompletedLevels([]);
+                                setLevel(1);
+                                setUserCodes({});
+                                setCode(levels[1].initialCode);
+                                setLogs([]);
+                                setTestStatus('idle');
+                                setBrowserState('initial');
+                            }
+                        }}
+                        className="p-2 text-slate-500 hover:text-red-400 transition-colors"
+                        title="Reset Progress"
+                    >
+                        <Trash2 size={20} />
+                    </button>
                 </div>
 
                 {/* Level Selector */}
@@ -374,7 +393,7 @@ public void testAlert() {
                                     disabled={hasSeenAnswer}
                                     className={`flex-1 py-2 px-3 rounded-lg border text-sm font-bold flex items-center justify-center gap-2 transition-colors ${
                                         hasSeenAnswer 
-                                            ? 'bg-slate-800 border-slate-700 text-slate-500 cursor-not-allowed'
+                                            ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 cursor-default'
                                             : 'bg-cyan-900/50 hover:bg-cyan-900 border-cyan-500/30 text-cyan-300'
                                     }`}
                                 >

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Database as DbIcon, Play, CheckCircle, AlertCircle, RefreshCw, Terminal, ChevronLeft, Lock, Unlock, Table, Eye, RotateCcw } from 'lucide-react';
+import { Database as DbIcon, Play, CheckCircle, AlertCircle, RefreshCw, Terminal, ChevronLeft, Lock, Unlock, Table, Eye, RotateCcw, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../../components/PageTransition';
 import { useGameProgress } from '../../hooks/useGameProgress';
@@ -276,17 +276,34 @@ export default function Database() {
         <PageTransition className="min-h-screen bg-slate-900 text-slate-300 p-6 pt-20 pb-24">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="flex items-center gap-4 mb-8">
-                    <Link to="/practice" className="p-2 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors">
-                        <ChevronLeft className="text-white" />
-                    </Link>
-                    <div>
-                        <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-                            <DbIcon size={32} className="text-indigo-500" />
-                            {t('database.title')}
-                        </h1>
-                        <p className="text-slate-400">{t('database.description')}</p>
+                <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-4">
+                        <Link to="/practice" className="p-2 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors">
+                            <ChevronLeft className="text-white" />
+                        </Link>
+                        <div>
+                            <h1 className="text-3xl font-bold text-white flex items-center gap-3">
+                                <DbIcon size={32} className="text-indigo-500" />
+                                {t('database.title')}
+                            </h1>
+                            <p className="text-slate-400">{t('database.description')}</p>
+                        </div>
                     </div>
+                    <button 
+                        onClick={() => {
+                            if(window.confirm(t('common.reset_confirm') || "Are you sure you want to reset progress?")) {
+                                setCompletedLevels([]);
+                                setLevel(1);
+                                setUserInputs({});
+                                setHistory([]);
+                                setResult(null);
+                            }
+                        }}
+                        className="p-2 text-slate-500 hover:text-red-400 transition-colors"
+                        title="Reset Progress"
+                    >
+                        <Trash2 size={20} />
+                    </button>
                 </div>
 
                 {/* Level Selector */}

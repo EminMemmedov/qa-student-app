@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Trophy, Home, RotateCcw, CheckCircle, XCircle, Award, Clock, TrendingUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Trophy, Home, RotateCcw, CheckCircle, XCircle, Award, Clock, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
 import { useEffect } from 'react';
 import { celebrateCompletion } from '../../utils/confetti';
 import { categories } from '../../data/examQuestions';
@@ -11,8 +12,12 @@ export default function ExamResults() {
         foundCount = 0,
         totalQuestions = 30,
         categoryScores = {},
-        timeSpent = 0
+        timeSpent = 0,
+        questions = [],
+        userAnswers = []
     } = location.state || {};
+
+    const [showDetails, setShowDetails] = useState(false);
 
     const percentage = Math.round((foundCount / totalQuestions) * 100);
     const passed = percentage >= 70;
@@ -148,6 +153,76 @@ export default function ExamResults() {
                                 );
                             })}
                         </div>
+                    </div>
+                )}
+
+                {/* Question Analysis */}
+                {questions.length > 0 && (
+                    <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden">
+                        <button
+                            onClick={() => setShowDetails(!showDetails)}
+                            className="w-full p-8 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+                        >
+                            <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                {showDetails ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+                                Sualların Analizi
+                            </h2>
+                            <span className="text-sm text-slate-500 font-medium">
+                                {showDetails ? 'Gizlət' : 'Göstər'}
+                            </span>
+                        </button>
+                        
+                        <AnimatePresence>
+                            {showDetails && (
+                                <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="border-t border-slate-100 dark:border-slate-700"
+                                >
+                                    <div className="p-8 space-y-6">
+                                        {questions.map((q, idx) => {
+                                            const userAnswer = userAnswers[idx];
+                                            const isCorrect = userAnswer === q.correctAnswer;
+                                            
+                                            return (
+                                                <div 
+                                                    key={idx} 
+                                                    className={`p-4 rounded-xl border-2 ${
+                                                        isCorrect 
+                                                            ? 'border-green-100 bg-green-50/50 dark:border-green-900/30 dark:bg-green-900/10' 
+                                                            : 'border-red-100 bg-red-50/50 dark:border-red-900/30 dark:bg-red-900/10'
+                                                    }`}
+                                                >
+                                                    <div className="flex items-start gap-3 mb-3">
+                                                        {isCorrect ? (
+                                                            <CheckCircle className="text-green-500 shrink-0 mt-1" size={20} />
+                                                        ) : (
+                                                            <XCircle className="text-red-500 shrink-0 mt-1" size={20} />
+                                                        )}
+                                                        <div>
+                                                            <h3 className="font-bold text-slate-900 dark:text-white mb-2">
+                                                                {idx + 1}. {q.question}
+                                                            </h3>
+                                                            <div className="space-y-1 text-sm">
+                                                                <p className={`${isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
+                                                                    <span className="font-bold">Sizin cavabınız:</span> {q.options[userAnswer]}
+                                                                </p>
+                                                                {!isCorrect && (
+                                                                    <p className="text-green-700 dark:text-green-400">
+                                                                        <span className="font-bold">Doğru cavab:</span> {q.options[q.correctAnswer]}
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 )}
 
