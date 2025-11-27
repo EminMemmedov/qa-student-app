@@ -15,6 +15,7 @@ import BugReportModal from '../../components/BugReportModal';
 import { celebrateCompletion } from '../../utils/confetti';
 import { practiceSpecs } from '../../data/practiceSpecs';
 import { useScrollToActiveInput } from '../../hooks/useScrollToActiveInput';
+import { getBugsForModule, getDevToolFlags } from '../../data/bugs';
 
 export default function Registration() {
     const { foundBugs, addBug, resetProgress, getBugDifficulty, xp, getBugPoints, deductXP } = useGameProgress();
@@ -31,6 +32,10 @@ export default function Registration() {
     const usernameRef = useRef(null);
     useScrollToActiveInput();
 
+    // Get bugs from centralized file
+    const bugs = getBugsForModule('registration');
+    const devToolFlags = getDevToolFlags('registration');
+
     // Initialize DevTools bugs
     useEffect(() => {
         console.error("CRITICAL_ERROR: API Connection Failed! Error Code: BUG_CONSOLE_LOG");
@@ -42,44 +47,6 @@ export default function Registration() {
     useEffect(() => {
         if (usernameRef.current) usernameRef.current.focus();
     }, []);
-
-    // 24 Simulated bugs
-    const [bugs] = useState([
-        { id: 'title_typo', description: 'Başlıqda hərf səhvi: "Qeydiyyat" əvəzinə "Qeydiyat"', severity: 'Minor', priority: 'Low' },
-        { id: 'logo_pixel', description: 'Loqo çox keyfiyyətsizdir (piksel-piksel)', severity: 'Minor', priority: 'Low' },
-        { id: 'nav_broken', description: '"Ana Səhifə" linki işləmir (kliklənmir)', severity: 'Major', priority: 'Medium' },
-        { id: 'username_bg', description: 'İnput rəngi fərqlidir (boz əvəzinə sarımtıl)', severity: 'Minor', priority: 'Low' },
-        { id: 'email_placeholder', description: 'Email sahəsində placeholder yoxdur', severity: 'Minor', priority: 'Low' },
-        { id: 'email_validation', description: 'Email formatı yoxlanılmır (yanlış email qəbul edilir)', severity: 'Critical', priority: 'High' },
-        { id: 'password_visibility', description: 'Şifrəni göstər düyməsi işləmir', severity: 'Major', priority: 'Medium' },
-        { id: 'dob_validation', description: 'Gələcək tarix seçilə bilir (Doğum tarixi)', severity: 'Major', priority: 'Medium' },
-        { id: 'phone_input', description: 'Telefon nömrəsinə hərflər daxil edilə bilir', severity: 'Minor', priority: 'Low' },
-        { id: 'terms_checkbox', description: 'Qaydalar qəbul edilmədən qeydiyyat mümkündür', severity: 'Critical', priority: 'High' },
-        { id: 'password_type', description: 'Şifrə sahəsi gizli deyil (text type)', severity: 'Critical', priority: 'High' },
-        { id: 'password_len', description: 'Maksimum uzunluq 5 simvoldur (çox qısa)', severity: 'Major', priority: 'Medium' },
-        { id: 'phone_type', description: 'Telefon sahəsi hərfləri qəbul edir', severity: 'Major', priority: 'Medium' },
-        { id: 'dob_future', description: 'Doğum tarixi gələcəyi göstərir (2050)', severity: 'Major', priority: 'Medium' },
-        { id: 'gender_radio', description: 'Hər iki cinsiyyəti seçmək olur (radio qrup səhvi)', severity: 'Major', priority: 'Medium' },
-        { id: 'avatar_broken', description: 'Profil şəkli yüklənməyib (sınıq şəkil)', severity: 'Minor', priority: 'Low' },
-        { id: 'terms_typo', description: 'Şərtlərdə səhv: "Qaydalar" əvəzinə "Qaydar"', severity: 'Minor', priority: 'Low' },
-        { id: 'btn_contrast', description: 'Düymə kontrastı çox zəifdir', severity: 'Minor', priority: 'Low' },
-        { id: 'btn_align', description: 'Düymə mətni mərkəzdə deyil', severity: 'Minor', priority: 'Low' },
-        { id: 'btn_cursor', description: 'Düymədə kursor "text" formasındadır', severity: 'Minor', priority: 'Low' },
-        { id: 'cancel_color', description: '"Ləğv et" düyməsi yaşıl rəngdədir (çaşdırıcı)', severity: 'Major', priority: 'Medium' },
-        { id: 'footer_year', description: 'Müəllif hüquqları ili köhnədir (1999)', severity: 'Minor', priority: 'Low' },
-        { id: 'footer_typo', description: '"Məxfilik" sözündə hərf səhvi', severity: 'Minor', priority: 'Low' },
-        { id: 'dev_console', description: 'Konsol xətası (Console Tab)', isDevTool: true, severity: 'Major', priority: 'Medium' },
-        { id: 'dev_hidden', description: 'Gizli input sahəsi (Elements Tab)', isDevTool: true, severity: 'Major', priority: 'Medium' },
-        { id: 'dev_data', description: 'Gizli data atributu (Elements Tab)', isDevTool: true, severity: 'Minor', priority: 'Low' },
-        { id: 'dev_storage', description: 'Local Storage dəyəri (Application Tab)', isDevTool: true, severity: 'Minor', priority: 'Low' }
-    ]);
-
-    const devToolFlags = {
-        'BUG_CONSOLE_LOG': 'dev_console',
-        'BUG_HIDDEN_VAL': 'dev_hidden',
-        'BUG_DATA_ATTR': 'dev_data',
-        'BUG_LOCAL_STORE': 'dev_storage'
-    };
 
     const handleBugClick = (bugId) => {
         if (foundBugs.includes(bugId)) return;
@@ -168,7 +135,7 @@ export default function Registration() {
 
     // Filter bugs for this page
     const pageBugs = bugs;
-    const foundPageBugs = foundBugs.filter(id => pageBugs.find(b => b.id === id));
+    const foundPageBugs = foundBugs.filter(id => pageBugs.some(b => b.id === id));
 
     // Celebrate completion
     useEffect(() => {

@@ -26,7 +26,7 @@ export default function Interview() {
     const [questions, setQuestions] = useState([]);
 
     const startInterview = () => {
-        const shuffled = [...filteredQuestions].sort(() => Math.random() - 0.5).slice(0, 5); // Take 5 random questions
+        const shuffled = [...filteredQuestions].sort(() => Math.random() - 0.5).slice(0, 10); // Take 10 random questions
         setQuestions(shuffled);
         setInterviewStarted(true);
         setAnswers([]);

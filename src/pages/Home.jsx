@@ -7,6 +7,9 @@ import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, T
 import { useGameProgress } from '../hooks/useGameProgress';
 import { useAchievements } from '../hooks/useAchievements';
 import { achievements } from '../data/achievements';
+import { useStreak } from '../hooks/useStreak';
+import LearningProgress from '../components/LearningProgress';
+import { Flame } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,6 +30,7 @@ export default function Home() {
   const { t } = useTranslation();
   const { xp, foundBugs } = useGameProgress();
   const { unlockedAchievements } = useAchievements();
+  const { currentStreak, longestStreak } = useStreak();
 
   // Level calculation: 1 level per 500 XP
   const level = Math.floor(xp / 500) + 1;
@@ -40,10 +44,10 @@ export default function Home() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="space-y-8 pt-6"
+        className="pt-6"
       >
         {/* Header Section */}
-        <motion.header variants={itemVariants} className="relative z-10 flex justify-between items-center">
+        <motion.header variants={itemVariants} className="relative z-10 flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-black text-slate-900 tracking-tighter mb-2">
               {t('home.greeting').split(',')[0]}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{t('home.greeting').split(' ')[1]}</span>
@@ -72,7 +76,7 @@ export default function Home() {
         <motion.div
           variants={itemVariants}
           whileHover={{ scale: 1.02 }}
-          className="relative overflow-hidden bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-slate-400/20"
+          className="relative overflow-hidden bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-slate-400/20 mb-8"
         >
           {/* Decorative Background Elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
@@ -126,7 +130,7 @@ export default function Home() {
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
             whileTap={{ scale: 0.98 }}
-            className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-purple-400/30 cursor-pointer group mt-8"
+            className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-purple-400/30 cursor-pointer group mb-6"
           >
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500"></div>
@@ -170,7 +174,7 @@ export default function Home() {
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
             whileTap={{ scale: 0.98 }}
-            className="relative overflow-hidden bg-gradient-to-br from-purple-600 via-pink-600 to-rose-600 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-pink-400/30 cursor-pointer group mt-6"
+            className="relative overflow-hidden bg-gradient-to-br from-purple-600 via-pink-600 to-rose-600 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-pink-400/30 cursor-pointer group mb-8"
           >
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500"></div>
@@ -199,8 +203,41 @@ export default function Home() {
           </motion.div>
         </Link>
 
+        {/* Learning Progress Card */}
+        <LearningProgress />
+
+        {/* Streak Card */}
+        {currentStreak > 0 && (
+          <motion.div
+            variants={itemVariants}
+            className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden mb-2"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
+            <div className="relative z-10 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md">
+                  <Flame size={28} className="text-orange-200" />
+                </div>
+                <div>
+                  <div className="text-sm text-white/80 font-medium">{t('streak.title')}</div>
+                  <div className="text-3xl font-black">{currentStreak} {t('streak.days')}</div>
+                  {longestStreak > currentStreak && (
+                    <div className="text-xs text-white/70 mt-1">{t('streak.record')}: {longestStreak} {t('streak.days')}</div>
+                  )}
+                </div>
+              </div>
+              {currentStreak >= 7 && (
+                <div className="text-right">
+                  <div className="text-xs text-white/80 font-medium">{t('streak.bonus')}</div>
+                  <div className="text-2xl font-black">+50% XP</div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+
         {/* Quick Actions Grid */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 mb-6 -mt-20 relative z-20">
           <Link to="/theory" className="block" rel="prefetch">
             <motion.div
               variants={itemVariants}
@@ -236,10 +273,10 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Daily Challenge / Quote Section */}
+        {/* Daily Quote Section */}
         <motion.div
           variants={itemVariants}
-          className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-3xl p-8 text-white shadow-xl shadow-blue-400/20 relative overflow-hidden"
+          className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-3xl p-8 text-white shadow-xl shadow-blue-400/20 relative overflow-hidden mb-6"
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
 

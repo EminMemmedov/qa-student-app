@@ -1,23 +1,18 @@
 import { useState, useEffect } from 'react';
+import { getStorageItem, setStorageItem, removeStorageItem } from '../utils/storage';
 
 export function useGameProgress() {
     const [foundBugs, setFoundBugs] = useState(() => {
-        try {
-            const saved = localStorage.getItem('qa_game_progress');
-            return saved ? JSON.parse(saved) : [];
-        } catch (e) {
-            console.error('Error parsing game progress:', e);
-            return [];
-        }
+        const saved = getStorageItem('qa_game_progress', []);
+        // Валидация: убеждаемся что это массив
+        return Array.isArray(saved) ? saved : [];
     });
 
     const [xp, setXp] = useState(() => {
-        try {
-            const saved = localStorage.getItem('qa_game_xp');
-            return saved ? parseInt(saved) : 0;
-        } catch (e) {
-            return 0;
-        }
+        const saved = getStorageItem('qa_game_xp', 0);
+        // Валидация: убеждаемся что это число
+        const parsed = typeof saved === 'number' ? saved : parseInt(saved, 10);
+        return isNaN(parsed) ? 0 : Math.max(0, parsed);
     });
 
     // Bug difficulty points mapping
@@ -88,21 +83,22 @@ export function useGameProgress() {
     };
 
     useEffect(() => {
-        localStorage.setItem('qa_game_progress', JSON.stringify(foundBugs));
+        setStorageItem('qa_game_progress', foundBugs);
     }, [foundBugs]);
 
     useEffect(() => {
-        localStorage.setItem('qa_game_xp', xp.toString());
+        setStorageItem('qa_game_xp', xp);
     }, [xp]);
 
-    const addBug = (bugId) => {
+    const addBug = (bugId, streakBonus = 1.0) => {
         if (!foundBugs.includes(bugId)) {
             setFoundBugs(prev => [...prev, bugId]);
             const points = bugPoints[bugId] || 5;
             const difficulty = getBugDifficulty(bugId);
-            // Add XP
-            setXp(prev => prev + points);
-            return { isNew: true, points, difficulty }; // Return info for animations
+            // Add XP with streak bonus
+            const finalPoints = Math.round(points * streakBonus);
+            setXp(prev => prev + finalPoints);
+            return { isNew: true, points: finalPoints, basePoints: points, difficulty }; // Return info for animations
         }
         return { isNew: false }; // Bug already found
     };
@@ -110,8 +106,8 @@ export function useGameProgress() {
     const resetProgress = () => {
         setFoundBugs([]);
         setXp(0);
-        localStorage.removeItem('qa_game_progress');
-        localStorage.removeItem('qa_game_xp');
+        removeStorageItem('qa_game_progress');
+        removeStorageItem('qa_game_xp');
     };
 
     const getBugPoints = (bugId) => {

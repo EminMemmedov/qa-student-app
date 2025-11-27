@@ -14,6 +14,7 @@ import { useDevTools } from '../../context/DevToolsContext';
 import BugReportModal from '../../components/BugReportModal';
 import { celebrateCompletion } from '../../utils/confetti';
 import { practiceSpecs } from '../../data/practiceSpecs';
+import { getBugsForModule } from '../../data/bugs';
 
 export default function Payment() {
     const { foundBugs, addBug, resetProgress, getBugDifficulty, xp, getBugPoints, deductXP } = useGameProgress();
@@ -30,28 +31,8 @@ export default function Payment() {
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
 
-    const [bugs] = useState([
-        { id: 'card_len', description: 'Kart nömrəsi 16 rəqəmdən çox qəbul edir', severity: 'Major', priority: 'Medium' },
-        { id: 'card_char', description: 'Kart nömrəsinə hərf yazmaq olur', severity: 'Major', priority: 'Medium' },
-        { id: 'card_special', description: 'Kart nömrəsinə xüsusi simvollar daxil olur', severity: 'Minor', priority: 'Low' },
-        { id: 'name_numbers', description: 'Ad sahəsinə rəqəm yazmaq olur', severity: 'Minor', priority: 'Low' },
-        { id: 'name_short', description: 'Ad sahəsi 2 simvoldan az qəbul edir', severity: 'Minor', priority: 'Low' },
-        { id: 'name_label', description: 'Ad sahəsində label səhvi: "Kart sahibi" əvəzinə "Kart sahbi"', severity: 'Minor', priority: 'Low' },
-        { id: 'expiry_past', description: 'Keçmiş tarix seçmək mümkündür', severity: 'Critical', priority: 'High' },
-        { id: 'expiry_current', description: 'Cari ay seçilə bilir (artıq bitib)', severity: 'Major', priority: 'Medium' },
-        { id: 'cvv_visible', description: 'CVV kodu gizli deyil (görünür)', severity: 'Critical', priority: 'High' },
-        { id: 'cvv_len', description: 'CVV 3 rəqəmdən çox qəbul edir', severity: 'Major', priority: 'Medium' },
-        { id: 'cvv_letters', description: 'CVV sahəsinə hərf yazmaq olur', severity: 'Major', priority: 'Medium' },
-        { id: 'btn_typo', description: 'Düymədə hərf səhvi: "Ödəniş" əvəzinə "Ödəni"', severity: 'Minor', priority: 'Low' },
-        { id: 'btn_double', description: 'Düyməyə 2 dəfə klik ödənişi təkrarlayır', severity: 'Critical', priority: 'High' },
-        { id: 'total_wrong', description: 'Yekun məbləğ səhv hesablanıb (100 + 5 = 1005)', severity: 'Critical', priority: 'High' },
-        { id: 'amount_label', description: 'Məbləğ yazısında rəng kontrastı zəifdir', severity: 'Minor', priority: 'Low' },
-        { id: 'form_spacing', description: 'Form elementləri arasında boşluq qeyri-bərabərdir', severity: 'Minor', priority: 'Low' },
-        { id: 'card_icon', description: 'Kart ikonası yanlış rəngdədir (qırmızı əvəzinə yaşıl)', severity: 'Minor', priority: 'Low' },
-        { id: 'border_color', description: 'Focus zamanı border rəngi səhvdir', severity: 'Minor', priority: 'Low' },
-        { id: 'loading_state', description: 'Ödəniş zamanı yükləmə göstəricisi yoxdur', severity: 'Major', priority: 'Medium' },
-        { id: 'success_msg', description: 'Uğurlu ödəniş mesajı göstərilmir', severity: 'Major', priority: 'Medium' }
-    ]);
+    // Get bugs from centralized file
+    const bugs = getBugsForModule('payment');
 
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [selectedBugId, setSelectedBugId] = useState(null);
@@ -248,7 +229,7 @@ export default function Payment() {
 
     // Filter bugs for this page
     const pageBugs = bugs;
-    const foundPageBugs = foundBugs.filter(id => pageBugs.find(b => b.id === id));
+    const foundPageBugs = foundBugs.filter(id => pageBugs.some(b => b.id === id));
 
     // Celebrate completion
     useEffect(() => {

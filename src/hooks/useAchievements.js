@@ -1,33 +1,28 @@
 import { useState, useEffect } from 'react';
 import { achievements } from '../data/achievements';
+import { getStorageItem, setStorageItem, removeStorageItem } from '../utils/storage';
 
 export function useAchievements() {
     const [unlockedAchievements, setUnlockedAchievements] = useState(() => {
-        try {
-            const saved = localStorage.getItem('qa_achievements');
-            return saved ? JSON.parse(saved) : [];
-        } catch (e) {
-            console.error('Error parsing achievements:', e);
-            return [];
-        }
+        const saved = getStorageItem('qa_achievements', []);
+        // Валидация: убеждаемся что это массив строк
+        return Array.isArray(saved) ? saved.filter(id => typeof id === 'string') : [];
     });
 
     const [newAchievement, setNewAchievement] = useState(null);
     const [hintsUsed, setHintsUsed] = useState(() => {
-        try {
-            const saved = localStorage.getItem('qa_hints_used');
-            return saved ? parseInt(saved) : 0;
-        } catch (e) {
-            return 0;
-        }
+        const saved = getStorageItem('qa_hints_used', 0);
+        // Валидация: убеждаемся что это число
+        const parsed = typeof saved === 'number' ? saved : parseInt(saved, 10);
+        return isNaN(parsed) ? 0 : Math.max(0, parsed);
     });
 
     useEffect(() => {
-        localStorage.setItem('qa_achievements', JSON.stringify(unlockedAchievements));
+        setStorageItem('qa_achievements', unlockedAchievements);
     }, [unlockedAchievements]);
 
     useEffect(() => {
-        localStorage.setItem('qa_hints_used', hintsUsed.toString());
+        setStorageItem('qa_hints_used', hintsUsed);
     }, [hintsUsed]);
 
     const checkAchievements = (stats) => {
@@ -149,8 +144,8 @@ export function useAchievements() {
     const resetAchievements = () => {
         setUnlockedAchievements([]);
         setHintsUsed(0);
-        localStorage.removeItem('qa_achievements');
-        localStorage.removeItem('qa_hints_used');
+        removeStorageItem('qa_achievements');
+        removeStorageItem('qa_hints_used');
     };
 
     return {

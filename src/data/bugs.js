@@ -1,0 +1,117 @@
+// Централизованный файл с багами для всех практических модулей
+
+export const moduleBugs = {
+    registration: [
+        { id: 'title_typo', description: 'Başlıqda hərf səhvi: "Qeydiyyat" əvəzinə "Qeydiyat"', severity: 'Minor', priority: 'Low' },
+        { id: 'logo_pixel', description: 'Loqo çox keyfiyyətsizdir (piksel-piksel)', severity: 'Minor', priority: 'Low' },
+        { id: 'nav_broken', description: '"Ana Səhifə" linki işləmir (kliklənmir)', severity: 'Major', priority: 'Medium' },
+        { id: 'username_bg', description: 'İnput rəngi fərqlidir (boz əvəzinə sarımtıl)', severity: 'Minor', priority: 'Low' },
+        { id: 'email_placeholder', description: 'Email sahəsində placeholder yoxdur', severity: 'Minor', priority: 'Low' },
+        { id: 'email_validation', description: 'Email formatı yoxlanılmır (yanlış email qəbul edilir)', severity: 'Critical', priority: 'High' },
+        { id: 'password_visibility', description: 'Şifrəni göstər düyməsi işləmir', severity: 'Major', priority: 'Medium' },
+        { id: 'dob_validation', description: 'Gələcək tarix seçilə bilir (Doğum tarixi)', severity: 'Major', priority: 'Medium' },
+        { id: 'phone_input', description: 'Telefon nömrəsinə hərflər daxil edilə bilir', severity: 'Minor', priority: 'Low' },
+        { id: 'terms_checkbox', description: 'Qaydalar qəbul edilmədən qeydiyyat mümkündür', severity: 'Critical', priority: 'High' },
+        { id: 'password_type', description: 'Şifrə sahəsi gizli deyil (text type)', severity: 'Critical', priority: 'High' },
+        { id: 'password_len', description: 'Maksimum uzunluq 5 simvoldur (çox qısa)', severity: 'Major', priority: 'Medium' },
+        { id: 'phone_type', description: 'Telefon sahəsi hərfləri qəbul edir', severity: 'Major', priority: 'Medium' },
+        { id: 'dob_future', description: 'Doğum tarixi gələcəyi göstərir (2050)', severity: 'Major', priority: 'Medium' },
+        { id: 'gender_radio', description: 'Hər iki cinsiyyəti seçmək olur (radio qrup səhvi)', severity: 'Major', priority: 'Medium' },
+        { id: 'avatar_broken', description: 'Profil şəkli yüklənməyib (sınıq şəkil)', severity: 'Minor', priority: 'Low' },
+        { id: 'terms_typo', description: 'Şərtlərdə səhv: "Qaydalar" əvəzinə "Qaydar"', severity: 'Minor', priority: 'Low' },
+        { id: 'btn_contrast', description: 'Düymə kontrastı çox zəifdir', severity: 'Minor', priority: 'Low' },
+        { id: 'btn_align', description: 'Düymə mətni mərkəzdə deyil', severity: 'Minor', priority: 'Low' },
+        { id: 'btn_cursor', description: 'Düymədə kursor "text" formasındadır', severity: 'Minor', priority: 'Low' },
+        { id: 'cancel_color', description: '"Ləğv et" düyməsi yaşıl rəngdədir (çaşdırıcı)', severity: 'Major', priority: 'Medium' },
+        { id: 'footer_year', description: 'Müəllif hüquqları ili köhnədir (1999)', severity: 'Minor', priority: 'Low' },
+        { id: 'footer_typo', description: '"Məxfilik" sözündə hərf səhvi', severity: 'Minor', priority: 'Low' },
+        { id: 'dev_console', description: 'Konsol xətası (Console Tab)', isDevTool: true, severity: 'Major', priority: 'Medium' },
+        { id: 'dev_hidden', description: 'Gizli input sahəsi (Elements Tab)', isDevTool: true, severity: 'Major', priority: 'Medium' },
+        { id: 'dev_data', description: 'Gizli data atributu (Elements Tab)', isDevTool: true, severity: 'Minor', priority: 'Low' },
+        { id: 'dev_storage', description: 'Local Storage dəyəri (Application Tab)', isDevTool: true, severity: 'Minor', priority: 'Low' }
+    ],
+    payment: [
+        { id: 'card_len', description: 'Kart nömrəsi 16 rəqəmdən çox qəbul edir', severity: 'Major', priority: 'Medium' },
+        { id: 'card_char', description: 'Kart nömrəsinə hərf yazmaq olur', severity: 'Major', priority: 'Medium' },
+        { id: 'card_special', description: 'Kart nömrəsinə xüsusi simvollar daxil olur', severity: 'Minor', priority: 'Low' },
+        { id: 'name_numbers', description: 'Ad sahəsinə rəqəm yazmaq olur', severity: 'Minor', priority: 'Low' },
+        { id: 'name_short', description: 'Ad sahəsi 2 simvoldan az qəbul edir', severity: 'Minor', priority: 'Low' },
+        { id: 'name_label', description: 'Ad sahəsində label səhvi: "Kart sahibi" əvəzinə "Kart sahbi"', severity: 'Minor', priority: 'Low' },
+        { id: 'expiry_past', description: 'Keçmiş tarix seçmək mümkündür', severity: 'Critical', priority: 'High' },
+        { id: 'expiry_current', description: 'Cari ay seçilə bilir (artıq bitib)', severity: 'Major', priority: 'Medium' },
+        { id: 'cvv_visible', description: 'CVV kodu gizli deyil (görünür)', severity: 'Critical', priority: 'High' },
+        { id: 'cvv_len', description: 'CVV 3 rəqəmdən çox qəbul edir', severity: 'Major', priority: 'Medium' },
+        { id: 'cvv_letters', description: 'CVV sahəsinə hərf yazmaq olur', severity: 'Major', priority: 'Medium' },
+        { id: 'btn_typo', description: 'Düymədə hərf səhvi: "Ödəniş" əvəzinə "Ödəni"', severity: 'Minor', priority: 'Low' },
+        { id: 'btn_double', description: 'Düyməyə 2 dəfə klik ödənişi təkrarlayır', severity: 'Critical', priority: 'High' },
+        { id: 'total_wrong', description: 'Yekun məbləğ səhv hesablanıb (100 + 5 = 1005)', severity: 'Critical', priority: 'High' },
+        { id: 'amount_label', description: 'Məbləğ yazısında rəng kontrastı zəifdir', severity: 'Minor', priority: 'Low' },
+        { id: 'form_spacing', description: 'Form elementləri arasında boşluq qeyri-bərabərdir', severity: 'Minor', priority: 'Low' },
+        { id: 'card_icon', description: 'Kart ikonası yanlış rəngdədir (qırmızı əvəzinə yaşıl)', severity: 'Minor', priority: 'Low' },
+        { id: 'border_color', description: 'Focus zamanı border rəngi səhvdir', severity: 'Minor', priority: 'Low' },
+        { id: 'loading_state', description: 'Ödəniş zamanı yükləmə göstəricisi yoxdur', severity: 'Major', priority: 'Medium' },
+        { id: 'success_msg', description: 'Uğurlu ödəniş mesajı göstərilmir', severity: 'Major', priority: 'Medium' }
+    ],
+    banking: [
+        { id: 'neg_amount', description: 'Mənfi məbləğ göndərmək mümkündür', severity: 'Critical', priority: 'High' },
+        { id: 'zero_amount', description: '0 AZN göndərmək mümkündür', severity: 'Major', priority: 'Medium' },
+        { id: 'self_transfer', description: 'Öz kartına pul köçürmək olur', severity: 'Major', priority: 'Medium' },
+        { id: 'currency_mix', description: 'AZN hesabdan USD köçürmə (konvertasiyasız)', severity: 'Major', priority: 'Medium' },
+        { id: 'balance_limit', description: 'Balansdan çox pul göndərmək olur', severity: 'Critical', priority: 'High' },
+        { id: 'success_msg', description: 'Uğursuz əməliyyatda "Uğurlu" mesajı çıxır', severity: 'Major', priority: 'Medium' },
+        { id: 'decimal_places', description: 'Məbləğ 10+ onluq yerə qəbul edir (0.0000000001)', severity: 'Minor', priority: 'Low' },
+        { id: 'desc_xss', description: 'Təsvir sahəsinə <script> tag yazmaq olur', severity: 'Critical', priority: 'High' },
+        { id: 'no_confirmation', description: 'Köçürmə təsdiq dialoqusuz icra olunur', severity: 'Major', priority: 'Medium' },
+        { id: 'balance_static', description: 'Balans köçürmədən sonra yenilənmir', severity: 'Critical', priority: 'High' },
+        { id: 'card_format', description: 'Kart nömrəsi formatı yoxlanılmır', severity: 'Major', priority: 'Medium' },
+        { id: 'amount_label', description: 'Məbləğ labelində hərf səhvi: "Məbləğ" əvəzinə "Mebleg"', severity: 'Minor', priority: 'Low' },
+        { id: 'btn_alignment', description: 'Köçürmə düyməsi sola yönəlib (mərkəzdə olmalı)', severity: 'Minor', priority: 'Low' },
+        { id: 'border_inconsistent', description: 'Input border qalınlığı fərqlidir', severity: 'Minor', priority: 'Low' },
+        { id: 'balance_color', description: 'Balans rəngi oxunması çətindir (ağ fonda ağ)', severity: 'Minor', priority: 'Low' },
+        { id: 'icon_missing', description: 'Valyuta seçimində ikon yoxdur', severity: 'Minor', priority: 'Low' },
+        { id: 'placeholder_typo', description: 'Placeholder səhvi: "0.00" əvəzinə "0,00"', severity: 'Minor', priority: 'Low' },
+        { id: 'focus_color', description: 'Focus border rəngi qırmızıdır (yaşıl olmalı)', severity: 'Minor', priority: 'Low' },
+        { id: 'history_missing', description: 'Köçürmə tarixçəsi göstərilmir', severity: 'Major', priority: 'Medium' },
+        { id: 'loading_indicator', description: 'Yükləmə göstəricisi yoxdur', severity: 'Major', priority: 'Medium' }
+    ],
+    ecommerce: [
+        { id: 'neg_qty', description: 'Mənfi miqdar seçmək olur', severity: 'Major', priority: 'Medium' },
+        { id: 'zero_qty', description: '0 miqdar seçmək olur', severity: 'Major', priority: 'Medium' },
+        { id: 'float_qty', description: 'Kəsr miqdar seçmək olur (2.5 ədəd)', severity: 'Minor', priority: 'Low' },
+        { id: 'stock_limit', description: 'Stok limitindən çox sifariş verilə bilir', severity: 'Critical', priority: 'High' },
+        { id: 'price_calc', description: 'Qiymət səhv hesablanır (miqdar × qiymət)', severity: 'Critical', priority: 'High' },
+        { id: 'discount_color', description: 'Endirim rəngi çaşdırıcıdır (qırmızı əvəzinə yaşıl)', severity: 'Minor', priority: 'Low' },
+        { id: 'img_no_alt', description: 'Şəkillərdə alt atributu yoxdur', severity: 'Minor', priority: 'Low' },
+        { id: 'no_size', description: 'Ölçü seçimi yoxdur', severity: 'Minor', priority: 'Low' },
+        { id: 'no_color', description: 'Rəng seçimi yoxdur', severity: 'Minor', priority: 'Low' },
+        { id: 'del_btn', description: '"Sil" düyməsi işləmir', severity: 'Major', priority: 'Medium' },
+        { id: 'coupon_100', description: '100% endirim kuponu işləyir (məhsul pulsuz)', severity: 'Critical', priority: 'High' },
+        { id: 'qty_btn_size', description: 'Miqdar düymələri çox kiçikdir', severity: 'Minor', priority: 'Low' },
+        { id: 'total_font', description: 'Yekun məbləğ fontu çox kiçikdir', severity: 'Minor', priority: 'Low' },
+        { id: 'checkout_disabled', description: 'Səbət boş olanda "Ödəniş" düyməsi aktivdir', severity: 'Major', priority: 'Medium' },
+        { id: 'img_broken', description: 'Bəzi məhsul şəkilləri yüklənməyib', severity: 'Minor', priority: 'Low' },
+        { id: 'price_alignment', description: 'Qiymət mərkəzdə deyil', severity: 'Minor', priority: 'Low' },
+        { id: 'currency_symbol', description: 'Valyuta simvolu yanlışdır', severity: 'Minor', priority: 'Low' }
+    ]
+};
+
+// DevTools флаги для модуля Registration
+export const devToolFlags = {
+    registration: {
+        'BUG_CONSOLE_LOG': 'dev_console',
+        'BUG_HIDDEN_VAL': 'dev_hidden',
+        'BUG_DATA_ATTR': 'dev_data',
+        'BUG_LOCAL_STORE': 'dev_storage'
+    }
+};
+
+// Получить баги для модуля
+export const getBugsForModule = (moduleName) => {
+    return moduleBugs[moduleName] || [];
+};
+
+// Получить DevTools флаги для модуля
+export const getDevToolFlags = (moduleName) => {
+    return devToolFlags[moduleName] || {};
+};
+

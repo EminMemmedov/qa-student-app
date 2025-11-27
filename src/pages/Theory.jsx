@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import PageTransition from '../components/PageTransition';
 import confetti from 'canvas-confetti';
+import { getStorageItem, setStorageItem } from '../utils/storage';
 
 const moduleIcons = {
     'qa-basics': Bug,
@@ -79,6 +80,7 @@ const SimpleMarkdown = ({ content }) => {
 };
 
 const QuizComponent = ({ quiz, onComplete }) => {
+    const { t } = useTranslation();
     const [answers, setAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
 
@@ -106,7 +108,7 @@ const QuizComponent = ({ quiz, onComplete }) => {
         <div className="mt-12 bg-slate-50 rounded-3xl p-8 border border-slate-200">
             <h3 className="text-2xl font-black text-slate-900 mb-6 flex items-center gap-3">
                 <Sparkles className="text-yellow-500" />
-                Biliyinizi Yoxlayın
+                {t('theory.quiz.title')}
             </h3>
 
             <div className="space-y-8">
@@ -155,19 +157,22 @@ const QuizComponent = ({ quiz, onComplete }) => {
                             : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                         }`}
                 >
-                    Nəticəni Yoxla
+                    {t('theory.quiz.checkResults')}
                 </button>
             )}
 
             {showResults && (
                 <div className="mt-8 p-6 bg-white rounded-2xl border border-slate-100 text-center">
                     <p className="text-xl font-bold text-slate-900 mb-2">
-                        {quiz.filter((q, i) => answers[i] === q.correct).length} / {quiz.length} düzgün cavab
+                        {t('theory.quiz.correctAnswers', {
+                            correct: quiz.filter((q, i) => answers[i] === q.correct).length,
+                            total: quiz.length
+                        })}
                     </p>
                     {quiz.every((q, i) => answers[i] === q.correct) ? (
-                        <p className="text-green-600 font-medium">Əla nəticə! 🎉</p>
+                        <p className="text-green-600 font-medium">{t('theory.quiz.excellent')}</p>
                     ) : (
-                        <p className="text-orange-500 font-medium">Yenidən cəhd edin 💪</p>
+                        <p className="text-orange-500 font-medium">{t('theory.quiz.tryAgain')}</p>
                     )}
                 </div>
             )}
@@ -198,18 +203,15 @@ export default function Theory() {
 
     // Progress state
     const [completedModules, setCompletedModules] = useState(() => {
-        try {
-            return JSON.parse(localStorage.getItem('theory_progress') || '[]');
-        } catch {
-            return [];
-        }
+        const saved = getStorageItem('theory_progress', []);
+        return Array.isArray(saved) ? saved : [];
     });
 
     const handleModuleComplete = (moduleId) => {
         if (!completedModules.includes(moduleId)) {
             const newCompleted = [...completedModules, moduleId];
             setCompletedModules(newCompleted);
-            localStorage.setItem('theory_progress', JSON.stringify(newCompleted));
+            setStorageItem('theory_progress', newCompleted);
         }
     };
 
@@ -377,7 +379,7 @@ export default function Theory() {
                                         onClick={handleNextModule}
                                         className="flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                                     >
-                                        Növbəti Dərs <ChevronRight size={20} />
+                                        {t('theory.quiz.nextModule')} <ChevronRight size={20} />
                                     </button>
                                 </div>
                             </div>

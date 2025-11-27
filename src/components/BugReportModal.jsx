@@ -1,18 +1,114 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, CheckCircle2, X } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, X, UserCheck, MessageSquareWarning } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function BugReportModal({ isOpen, onClose, onSubmit, bug }) {
-    const [severity, setSeverity] = useState('');
-    const [priority, setPriority] = useState('');
+    const { t } = useTranslation();
+    
+    // Form state
+    const [reportData, setReportData] = useState({
+        summary: '',
+        steps: '',
+        actualResult: '',
+        expectedResult: '',
+        severity: '',
+        priority: ''
+    });
+
+    // Feedback state
+    const [isChecking, setIsChecking] = useState(false);
+    const [feedback, setFeedback] = useState(null); // { type: 'success' | 'error', issues: [] }
+
+    // Reset state when modal opens/closes
+    useEffect(() => {
+        if (isOpen) {
+            setReportData({
+                summary: '',
+                steps: '',
+                actualResult: '',
+                expectedResult: '',
+                severity: '',
+                priority: ''
+            });
+            setFeedback(null);
+            setIsChecking(false);
+        }
+    }, [isOpen, bug]);
 
     if (!isOpen || !bug) return null;
 
-    const handleSubmit = (e) => {
+    const validateReport = () => {
+        const issues = [];
+        
+        // 1. Summary check
+        if (reportData.summary.length < 10) {
+            issues.push(t('bugReport.feedback.shortSummary'));
+        }
+
+        // 2. Steps check
+        if (!reportData.steps.trim()) {
+            issues.push(t('bugReport.feedback.noSteps'));
+        } else if (reportData.steps.length < 20) {
+            issues.push(t('bugReport.feedback.shortSteps'));
+        }
+
+        // 3. Results check
+        if (!reportData.actualResult.trim()) {
+            issues.push(t('bugReport.feedback.noActual'));
+        }
+        if (!reportData.expectedResult.trim()) {
+            issues.push(t('bugReport.feedback.noExpected'));
+        }
+        
+        // 4. Logical check
+        if (reportData.actualResult && reportData.expectedResult && 
+            reportData.actualResult.toLowerCase() === reportData.expectedResult.toLowerCase()) {
+            issues.push(t('bugReport.feedback.sameResults'));
+        }
+
+        return issues;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSubmit({ severity, priority });
-        setSeverity('');
-        setPriority('');
+        setIsChecking(true);
+        setFeedback(null);
+
+        // Simulate Team Lead thinking
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        const issues = validateReport();
+
+        if (issues.length > 0) {
+            setFeedback({ type: 'error', issues });
+            setIsChecking(false);
+        } else {
+            setFeedback({ type: 'success' });
+            // Wait a bit before closing
+            setTimeout(() => {
+                onSubmit({ 
+                    severity: reportData.severity, 
+                    priority: reportData.priority 
+                });
+                setReportData({
+                    summary: '',
+                    steps: '',
+                    actualResult: '',
+                    expectedResult: '',
+                    severity: '',
+                    priority: ''
+                });
+                setFeedback(null);
+                setIsChecking(false);
+            }, 1500);
+        }
+    };
+
+    const handleChange = (field, value) => {
+        setReportData(prev => ({ ...prev, [field]: value }));
+        // Clear feedback when user starts typing again
+        if (feedback) setFeedback(null);
     };
 
     return (
@@ -21,78 +117,197 @@ export default function BugReportModal({ isOpen, onClose, onSubmit, bug }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+                className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/50 backdrop-blur-sm p-0 md:p-4 overflow-hidden"
             >
                 <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.9, opacity: 0 }}
-                    className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+                    initial={{ y: "100%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: "100%", opacity: 0 }}
+                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                    className="bg-white rounded-t-2xl md:rounded-2xl shadow-2xl w-full max-w-2xl h-[85vh] md:h-auto md:max-h-[90vh] flex flex-col"
+                    style={{ height: '85dvh' }} // Better mobile support
                 >
-                    <div className="bg-slate-900 text-white p-6 flex justify-between items-start">
+                    {/* Header */}
+                    <div className="bg-slate-900 text-white p-4 md:p-6 flex justify-between items-start shrink-0">
                         <div>
                             <h2 className="text-xl font-bold flex items-center gap-2">
                                 <AlertTriangle className="text-yellow-400" />
-                                Baq Reportu
+                                {t('bugReport.title')}
                             </h2>
-                            <p className="text-slate-400 text-sm mt-1">Tapılan xətanı qiymətləndirin</p>
+                            <p className="text-slate-400 text-sm mt-1">{t('bugReport.subtitle')}</p>
                         </div>
                         <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
                             <X size={24} />
                         </button>
                     </div>
 
-                    <div className="p-6">
+                    <div className="p-4 md:p-8 overflow-y-auto flex-1 overscroll-contain">
+                        {/* Bug Description */}
                         <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
-                            <h3 className="text-xs font-bold text-slate-500 uppercase mb-1">Xəta Təsviri</h3>
-                            <p className="text-slate-800 font-medium">{bug.description}</p>
+                            <h3 className="text-xs font-bold text-slate-500 uppercase mb-1">{t('bugReport.description')}</h3>
+                            <p className="text-slate-800 font-medium text-lg">{bug.description}</p>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {/* Summary */}
                             <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-2">Severity (Vaciblik)</label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    {['Critical', 'Major', 'Minor'].map((s) => (
-                                        <button
-                                            key={s}
-                                            type="button"
-                                            onClick={() => setSeverity(s)}
-                                            className={`py-2 px-3 rounded-lg text-sm font-bold border-2 transition-all ${severity === s
-                                                    ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
-                                                    : 'border-slate-200 text-slate-500 hover:border-slate-300'
-                                                }`}
-                                        >
-                                            {s}
-                                        </button>
-                                    ))}
+                                <label className="block text-sm font-bold text-slate-700 mb-2">
+                                    {t('bugReport.fields.summary')} <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    value={reportData.summary}
+                                    onChange={(e) => handleChange('summary', e.target.value)}
+                                    placeholder={t('bugReport.placeholders.summary')}
+                                    className="w-full p-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all font-medium"
+                                />
+                            </div>
+
+                            {/* Steps */}
+                            <div>
+                                <label className="block text-sm font-bold text-slate-700 mb-2">
+                                    {t('bugReport.fields.steps')} <span className="text-red-500">*</span>
+                                </label>
+                                <textarea
+                                    value={reportData.steps}
+                                    onChange={(e) => handleChange('steps', e.target.value)}
+                                    placeholder={t('bugReport.placeholders.steps')}
+                                    rows={4}
+                                    className="w-full p-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all font-medium resize-none"
+                                />
+                            </div>
+
+                            {/* Results Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-bold text-slate-700 mb-2">
+                                        {t('bugReport.fields.actual')} <span className="text-red-500">*</span>
+                                    </label>
+                                    <textarea
+                                        value={reportData.actualResult}
+                                        onChange={(e) => handleChange('actualResult', e.target.value)}
+                                        placeholder={t('bugReport.placeholders.actual')}
+                                        rows={3}
+                                        className="w-full p-3 rounded-xl border-2 border-slate-200 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-none transition-all font-medium resize-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-slate-700 mb-2">
+                                        {t('bugReport.fields.expected')} <span className="text-red-500">*</span>
+                                    </label>
+                                    <textarea
+                                        value={reportData.expectedResult}
+                                        onChange={(e) => handleChange('expectedResult', e.target.value)}
+                                        placeholder={t('bugReport.placeholders.expected')}
+                                        rows={3}
+                                        className="w-full p-3 rounded-xl border-2 border-slate-200 focus:border-green-500 focus:ring-4 focus:ring-green-500/10 outline-none transition-all font-medium resize-none"
+                                    />
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-2">Priority (Prioritet)</label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    {['High', 'Medium', 'Low'].map((p) => (
-                                        <button
-                                            key={p}
-                                            type="button"
-                                            onClick={() => setPriority(p)}
-                                            className={`py-2 px-3 rounded-lg text-sm font-bold border-2 transition-all ${priority === p
-                                                    ? 'border-orange-500 bg-orange-50 text-orange-700'
-                                                    : 'border-slate-200 text-slate-500 hover:border-slate-300'
-                                                }`}
-                                        >
-                                            {p}
-                                        </button>
-                                    ))}
+                            {/* Severity & Priority */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-bold text-slate-700 mb-2">
+                                        {t('bugReport.severity')} <span className="text-red-500">*</span>
+                                    </label>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {['Critical', 'Major', 'Minor'].map((s) => (
+                                            <button
+                                                key={s}
+                                                type="button"
+                                                onClick={() => handleChange('severity', s)}
+                                                className={`py-2 px-2 rounded-lg text-xs font-bold border-2 transition-all ${reportData.severity === s
+                                                        ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                                                        : 'border-slate-200 text-slate-500 hover:border-slate-300'
+                                                    }`}
+                                            >
+                                                {s}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-bold text-slate-700 mb-2">
+                                        {t('bugReport.priority')} <span className="text-red-500">*</span>
+                                    </label>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {['High', 'Medium', 'Low'].map((p) => (
+                                            <button
+                                                key={p}
+                                                type="button"
+                                                onClick={() => handleChange('priority', p)}
+                                                className={`py-2 px-2 rounded-lg text-xs font-bold border-2 transition-all ${reportData.priority === p
+                                                        ? 'border-orange-500 bg-orange-50 text-orange-700'
+                                                        : 'border-slate-200 text-slate-500 hover:border-slate-300'
+                                                    }`}
+                                            >
+                                                {p}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
 
+                            {/* Feedback Area */}
+                            <AnimatePresence>
+                                {feedback && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0 }}
+                                        className={`p-4 rounded-xl border-l-4 ${
+                                            feedback.type === 'success' 
+                                                ? 'bg-green-50 border-green-500 text-green-800' 
+                                                : 'bg-red-50 border-red-500 text-red-800'
+                                        }`}
+                                    >
+                                        <div className="flex items-start gap-3">
+                                            {feedback.type === 'success' ? (
+                                                <CheckCircle2 className="shrink-0" />
+                                            ) : (
+                                                <MessageSquareWarning className="shrink-0" />
+                                            )}
+                                            <div>
+                                                <p className="font-bold">
+                                                    {feedback.type === 'success' 
+                                                        ? t('bugReport.feedback.success') 
+                                                        : t('bugReport.feedback.improvements')}
+                                                </p>
+                                                {feedback.issues && (
+                                                    <ul className="mt-2 space-y-1 list-disc list-inside text-sm">
+                                                        {feedback.issues.map((issue, idx) => (
+                                                            <li key={idx}>{issue}</li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            {/* Submit Button */}
                             <button
                                 type="submit"
-                                disabled={!severity || !priority}
-                                className="w-full py-3 bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+                                disabled={isChecking || !reportData.severity || !reportData.priority}
+                                className={`w-full py-4 rounded-xl font-black text-lg shadow-xl transition-all flex items-center justify-center gap-2 ${
+                                    isChecking 
+                                        ? 'bg-slate-100 text-slate-400 cursor-wait'
+                                        : feedback?.type === 'success'
+                                            ? 'bg-green-500 text-white hover:bg-green-600'
+                                            : 'bg-slate-900 text-white hover:bg-slate-800 hover:shadow-2xl hover:-translate-y-1'
+                                }`}
                             >
-                                Təsdiqlə və XP Qazan
+                                {isChecking ? (
+                                    <>
+                                        <UserCheck className="animate-pulse" />
+                                        {t('bugReport.feedback.checking')}
+                                    </>
+                                ) : (
+                                    t('bugReport.submit')
+                                )}
                             </button>
                         </form>
                     </div>

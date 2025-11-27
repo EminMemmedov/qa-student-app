@@ -76,7 +76,15 @@
         "qaBasics": "QA Əsasları",
         "testTypes": "Test Növləri",
         "bugReporting": "Baq Hesabatı",
-        "testPlanning": "Test Planlaşdırması"
+        "testPlanning": "Test Planlaşdırması",
+        "quiz": {
+            "title": "Biliyinizi Yoxlayın",
+            "checkResults": "Nəticəni Yoxla",
+            "correctAnswers": "{{correct}} / {{total}} düzgün cavab",
+            "excellent": "Əla nəticə! 🎉",
+            "tryAgain": "Yenidən cəhd edin 💪",
+            "nextModule": "Növbəti Dərs"
+        }
     },
     "practice": {
         "title": "Praktika",
@@ -181,6 +189,69 @@
         "sort": "Sırala",
         "settings": "Parametrlər",
         "language": "Dil"
+    },
+    "bugReport": {
+        "title": "Baq Reportu",
+        "subtitle": "Tapılan xətanı qiymətləndirin",
+        "description": "Xəta Təsviri",
+        "severity": "Severity (Vaciblik)",
+        "priority": "Priority (Prioritet)",
+        "submit": "Təsdiqlə və XP Qazan",
+        "fields": {
+            "summary": "Xülasə (Summary)",
+            "steps": "Addımlar (Steps to Reproduce)",
+            "actual": "Faktiki Nəticə (Actual Result)",
+            "expected": "Gözlənilən Nəticə (Expected Result)"
+        },
+        "placeholders": {
+            "summary": "Məs: Səbətə məhsul əlavə edərkən xəta baş verir",
+            "steps": "1. Sayta daxil ol\n2. Məhsulu seç...",
+            "actual": "Məhsul səbətə düşmür",
+            "expected": "Məhsul səbətə əlavə olunmalıdır"
+        },
+        "feedback": {
+            "checking": "Team Lead yoxlayır...",
+            "success": "Əla report! Hər şey qaydasındadır.",
+            "improvements": "Reportu təkmilləşdirin:",
+            "shortSummary": "Xülasə çox qısadır. Daha ətraflı yazın.",
+            "noSteps": "Addımları (Steps) qeyd etmək vacibdir.",
+            "shortSteps": "Addımlar çox azdır. Necə təkrarlamaq olar?",
+            "noActual": "Faktiki nəticəni qeyd edin.",
+            "noExpected": "Gözlənilən nəticəni qeyd edin.",
+            "sameResults": "Faktiki və gözlənilən nəticə eyni ola bilməz."
+        }
+    },
+    "dailyChallenge": {
+        "title": "Günlük Çağırış",
+        "progress": "Proqress",
+        "reward": "Mükafat",
+        "challenges": {
+            "find_bugs": {
+                "title": "5 baq tapın",
+                "description": "İstənilən modulda 5 baq tapın"
+            },
+            "complete_theory": {
+                "title": "Nəzəriyyəni öyrənin",
+                "description": "Bir nəzəriyyə modulunu tamamlayın"
+            },
+            "find_hard_bugs": {
+                "title": "Çətin baqları tapın",
+                "description": "Hard səviyyəli 2 baq tapın"
+            },
+            "use_devtools": {
+                "title": "DevTools istifadə edin",
+                "description": "DevTools ilə 1 baq tapın"
+            }
+        }
+    },
+    "streak": {
+        "title": "Seriya",
+        "days": "gün",
+        "record": "Rekord",
+        "bonus": "Bonus"
+    },
+    "recommendations": {
+        "title": "Tövsiyələr"
     },
     "categories": {
         "qa_basics": "QA əsasları",
