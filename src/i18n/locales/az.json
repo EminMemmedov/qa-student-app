@@ -43,9 +43,8 @@
             }
         },
         "dailyQuote": {
-            "title": "Günün Sitatı",
-            "quote": "Testləşdirmə səhvlərin olmadığını deyil, onların varlığını sübut edir.",
-            "author": "Edsger W. Dijkstra"
+            "title": "Faydalı Məqalələr",
+            "subtitle": "QA biliklərinizi artırın"
         },
         "stats": {
             "foundBugs": "Tapılan Baq",

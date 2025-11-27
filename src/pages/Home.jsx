@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/PageTransition';
-import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target, MessageSquare, Linkedin, Instagram, Phone } from 'lucide-react';
+import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target, MessageSquare, Linkedin, Instagram, Phone, ExternalLink, Newspaper, PieChart, FileText, Bot } from 'lucide-react';
 import { useGameProgress } from '../hooks/useGameProgress';
 import { useAchievements } from '../hooks/useAchievements';
 import { achievements } from '../data/achievements';
@@ -36,6 +36,34 @@ export default function Home() {
   const progress = (xp % 500) / 500 * 100;
   const nextLevelXp = 500 - (xp % 500);
   const unlockedCount = unlockedAchievements.length;
+
+  // LinkedIn Articles
+  const articles = [
+    {
+        id: 1,
+        title: "Allure Report vs Extent Report",
+        desc: "Hansı daha yaxşıdır? CI/CD, dizayn və funksionallıq müqayisəsi.",
+        link: "https://www.linkedin.com/posts/qa-academyaz_qaacademy-automationtesting-allurereport-activity-7396865939637538816-KYrh",
+        icon: PieChart,
+        gradient: "from-blue-500 to-cyan-500"
+    },
+    {
+        id: 2,
+        title: "Test Sənədləşməsi",
+        desc: "QA prosesinin görünməyən qəhrəmanı: Test Plan, Test Case və RTM.",
+        link: "https://www.linkedin.com/feed/update/urn:li:activity:7399097827135598593",
+        icon: FileText,
+        gradient: "from-purple-500 to-pink-500"
+    },
+    {
+        id: 3,
+        title: "Automation yoxsa Manual?",
+        desc: "Hansı yol daha düzgündür? Karyera üçün hansını seçməli?",
+        link: "https://www.linkedin.com/feed/update/urn:li:activity:7376610160896544768",
+        icon: Bot,
+        gradient: "from-orange-500 to-red-500"
+    }
+  ];
 
   return (
     <PageTransition className="p-6 pb-24 min-h-screen bg-slate-50/50">
@@ -259,31 +287,70 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Daily Quote Section */}
+        {/* LinkedIn Articles Section */}
         <motion.div
           variants={itemVariants}
-          className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-3xl p-8 text-white shadow-xl shadow-blue-400/20 relative overflow-hidden mb-6"
+          className="mb-8"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
-
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-white/20 rounded-xl backdrop-blur-md">
-                <Sparkles size={20} className="text-yellow-300" />
+            <div className="flex items-center gap-3 mb-4 px-2">
+              <div className="p-2 bg-blue-100 rounded-xl">
+                <Newspaper size={20} className="text-blue-600" />
               </div>
-              <h3 className="font-bold text-lg">{t('home.dailyQuote.title')}</h3>
+              <div>
+                <h3 className="font-bold text-lg text-slate-900">{t('home.dailyQuote.title', 'Faydalı Məqalələr')}</h3>
+                <p className="text-xs text-slate-500 font-medium">{t('home.dailyQuote.subtitle', 'QA biliklərinizi artırın')}</p>
+              </div>
             </div>
 
-            <figure>
-              <blockquote className="text-lg font-medium leading-relaxed text-blue-50 italic mb-4">
-                "{t('home.dailyQuote.quote')}"
-              </blockquote>
-              <figcaption className="flex items-center gap-2 text-sm text-blue-200 font-medium">
-                <div className="w-6 h-0.5 bg-blue-300/50 rounded-full"></div>
-                {t('home.dailyQuote.author')}
-              </figcaption>
-            </figure>
-          </div>
+            <div className="flex gap-4 overflow-x-auto pb-4 -mx-6 px-6 no-scrollbar snap-x">
+                {articles.map((article) => (
+                    <a 
+                        key={article.id}
+                        href={article.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`snap-center shrink-0 w-[280px] relative overflow-hidden rounded-[2rem] p-6 bg-gradient-to-br ${article.gradient} text-white shadow-lg shadow-slate-200/50 group hover:-translate-y-1 transition-all duration-300`}
+                    >
+                        {/* Decorative Background */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-xl -ml-8 -mb-8 group-hover:scale-150 transition-transform duration-500"></div>
+
+                        <div className="relative z-10 flex flex-col h-full justify-between min-h-[160px]">
+                            <div className="flex justify-between items-start mb-2">
+                                <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-md">
+                                    <article.icon size={24} className="text-white" />
+                                </div>
+                                <Linkedin className="text-white/80 w-5 h-5" />
+                            </div>
+                            
+                            <div>
+                                <h4 className="font-bold text-lg leading-tight mb-2 line-clamp-2">
+                                    {article.title}
+                                </h4>
+                                <p className="text-white/80 text-xs line-clamp-2 mb-3 font-medium">
+                                    {article.desc}
+                                </p>
+                                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider bg-white/20 w-fit px-2 py-1 rounded-lg">
+                                    Oxumaq <ExternalLink size={10} />
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                ))}
+                
+                {/* View More Card */}
+                <a 
+                    href="https://www.linkedin.com/company/qa-academyaz/posts/?feedView=all&viewAsMember=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="snap-center shrink-0 w-[100px] flex flex-col items-center justify-center bg-white rounded-[2rem] border-2 border-slate-100 text-slate-400 hover:border-blue-200 hover:text-blue-600 transition-all gap-2 shadow-sm hover:shadow-md"
+                >
+                    <div className="w-12 h-12 rounded-full bg-slate-50 group-hover:bg-blue-50 flex items-center justify-center transition-colors">
+                        <ArrowRight size={24} />
+                    </div>
+                    <span className="text-xs font-bold">Hamsı</span>
+                </a>
+            </div>
         </motion.div>
 
         {/* Recent Activity / Stats Row */}
