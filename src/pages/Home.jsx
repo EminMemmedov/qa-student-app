@@ -210,7 +210,7 @@ export default function Home() {
         {currentStreak > 0 && (
           <motion.div
             variants={itemVariants}
-            className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden mb-2"
+            className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden mb-2 -mt-6 z-10"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
             <div className="relative z-10 flex items-center justify-between">
@@ -237,7 +237,7 @@ export default function Home() {
         )}
 
         {/* Quick Actions Grid */}
-        <div className="grid grid-cols-2 gap-4 mb-6 -mt-20 relative z-20">
+        <div className={`grid grid-cols-2 gap-4 mb-6 relative z-20 ${currentStreak > 0 ? '-mt-6' : '-mt-20'}`}>
           <Link to="/theory" className="block" rel="prefetch">
             <motion.div
               variants={itemVariants}
