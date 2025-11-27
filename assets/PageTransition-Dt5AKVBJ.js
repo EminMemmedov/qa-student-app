@@ -1,1 +1,0 @@
-import{a as e,g as t}from"./index-DafDo4Gr.js";var n=t();function r({children:t,className:r}){return(0,n.jsx)(e.div,{initial:{opacity:0,y:20,scale:.98},animate:{opacity:1,y:0,scale:1},exit:{opacity:0,y:-20,scale:.98},transition:{duration:.4,ease:[.22,1,.36,1]},className:r,children:t})}export{r as t};
