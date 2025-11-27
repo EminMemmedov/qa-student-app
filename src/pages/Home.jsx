@@ -195,7 +195,7 @@ export default function Home() {
                   <div className="text-xs text-blue-100">{t('home.examCard.questions')}</div>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 text-center">
-                  <div className="text-2xl font-black">10</div>
+                  <div className="text-2xl font-black">15</div>
                   <div className="text-xs text-blue-100">{t('home.examCard.minutes')}</div>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 text-center">

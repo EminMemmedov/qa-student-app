@@ -17,7 +17,7 @@ export default function Exam() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [userAnswers, setUserAnswers] = useState([]);
-    const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+    const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
     const [examStarted, setExamStarted] = useState(false);
     const [isAdaptiveMode, setIsAdaptiveMode] = useState(false);
 
@@ -52,6 +52,7 @@ export default function Exam() {
             const firstQuestion = getNextQuestion(null);
             setQuestions([firstQuestion.question]);
         }
+        setTimeLeft(900); // Reset timer to 15 minutes on start
         setExamStarted(true);
     };
 
@@ -70,7 +71,7 @@ export default function Exam() {
         const isCorrect = selectedAnswer === currentQ.correctAnswer;
 
         if (isAdaptiveMode) {
-            if (currentQuestionIndex + 1 < 30) { // Limit to 30 questions in adaptive mode too
+            if (currentQuestionIndex + 1 < 30) { // Limit to 30 questions
                 const nextQ = getNextQuestion(isCorrect);
                 setQuestions(prev => [...prev, nextQ.question]);
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -118,7 +119,7 @@ export default function Exam() {
                 categoryScores,
                 userAnswers,
                 questions,
-                timeSpent: 600 - timeLeft
+                timeSpent: 900 - timeLeft
             }
         });
     };
@@ -194,7 +195,7 @@ export default function Exam() {
                             <div className="flex items-center gap-3 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-xl">
                                 <Clock className="text-orange-600 dark:text-orange-400" size={24} />
                                 <div>
-                                    <p className="font-bold text-slate-900 dark:text-white">10 dəqiqə</p>
+                                    <p className="font-bold text-slate-900 dark:text-white">15 dəqiqə</p>
                                     <p className="text-sm text-slate-600 dark:text-slate-400">Vaxt limiti</p>
                                 </div>
                             </div>

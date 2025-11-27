@@ -1,431 +1,853 @@
 // Exam questions database - QA theory questions in Azerbaijani
 export const examQuestions = [
-    // QA əsasları (QA Basics) - 10 questions
+    // QA əsasları (QA Basics)
     {
         id: 1,
         category: 'qa_basics',
         difficulty: 'easy',
-        question: 'QA-nın əsas məqsədi nədir?',
+        question: 'QA-nın (Quality Assurance) əsas məqsədi nədir?',
         options: [
-            'Proqramı yazmaq',
-            'Proqramın keyfiyyətini təmin etmək və səhvləri tapmaq',
-            'Dizayn hazırlamaq',
-            'Verilənlər bazasını idarə etmək'
+            'Proqramdakı bütün səhvləri tapmaq və dərhal developerə göndərmək',
+            'Proqramın keyfiyyətini təmin edən prosesləri qurmaq və qüsurların qarşısını almaq',
+            'Test sənədlərini hazırlamaq və hesabat vermək',
+            'Kodun düzgün yazıldığını yoxlamaq və optimallaşdırmaq'
         ],
         correctAnswer: 1,
-        explanation: 'QA (Quality Assurance) - keyfiyyətə nəzarət, proqramın keyfiyyətini təmin etmək və səhvləri tapmaq üçün aparılan prosesdir.'
+        explanation: 'QA - keyfiyyəti təmin etmək üçün proseslərin qurulması və qüsurların yaranmasının qarşısının alınmasıdır (Proses yönümlü). Testləşdirmə isə məhsul yönümlüdür.'
     },
     {
         id: 2,
         category: 'qa_basics',
         difficulty: 'medium',
-        question: 'Verifikasiya və Validasiya arasında əsas fərq nədir?',
+        question: 'Verifikasiya və Validasiya arasındakı fərq hansıdır?',
         options: [
-            'Heç bir fərq yoxdur',
-            'Verifikasiya - "Düzgün qurulub?", Validasiya - "Düzgün məhsul qurulub?"',
-            'Validasiya daha vacibdir',
-            'Verifikasiya yalnız manual testləşdirmədə istifadə olunur'
+            'Verifikasiya istifadəçi mühitində, Validasiya test mühitində aparılır',
+            'Verifikasiya: "Biz məhsulu düzgün qururuq?" (Tələblərə uyğunluq); Validasiya: "Biz düzgün məhsulu qururuq?" (İstifadəçi ehtiyacı)',
+            'Verifikasiya dinamik testdir, Validasiya statik testdir',
+            'Validasiya yalnız sənədlər üzərində aparılır, Verifikasiya isə kod üzərində'
         ],
         correctAnswer: 1,
-        explanation: 'Verifikasiya - məhsulun tələblərə uyğun qurulub-qurulmadığını yoxlayır. Validasiya - məhsulun istifadəçi ehtiyaclarını ödəyib-ödəmədiyini yoxlayır.'
+        explanation: 'Verifikasiya (Verification) məhsulun spesifikasiyalara uyğunluğunu yoxlayır. Validasiya (Validation) isə məhsulun istifadəçinin real ehtiyaclarını ödəyib-ödəmədiyini yoxlayır.'
     },
     {
         id: 3,
         category: 'qa_basics',
-        difficulty: 'easy',
-        question: 'Bug və Defect arasında fərq nədir?',
+        difficulty: 'medium',
+        question: 'Səhv (Error), Qüsur (Defect/Bug) və Uğursuzluq (Failure) zənciri necədir?',
         options: [
-            'Bug - kod səhvi, Defect - tələbə uyğunsuzluq',
-            'Eyni şeydir',
-            'Defect daha ciddidir',
-            'Bug yalnız development mərhələsində tapılır'
+            'Qüsur -> Səhv -> Uğursuzluq',
+            'Uğursuzluq -> Qüsur -> Səhv',
+            'İnsan Səhvi -> Kodda Qüsur -> Proqramda Uğursuzluq',
+            'Kod Xətası -> Sistem Xətası -> İstifadəçi Xətası'
         ],
-        correctAnswer: 0,
-        explanation: 'Bug adətən kodda olan səhvdir. Defect isə məhsulun tələblərə uyğun olmaması deməkdir.'
+        correctAnswer: 2,
+        explanation: 'İnsan səhv edir (Error), bu kodda qüsur (Defect) yaradır, proqram işlədikdə isə bu qüsur uğursuzluğa (Failure) səbəb olur.'
     },
     {
         id: 4,
         category: 'qa_basics',
         difficulty: 'easy',
-        question: 'SDLC nədir?',
+        question: 'SDLC (Software Development Life Cycle) nədir?',
         options: [
-            'Software Development Life Cycle - Proqram təminatının həyat dövrü',
-            'System Design Language Code',
-            'Standard Data Loading Center',
-            'Secure Development License Contract'
+            'Proqram təminatının təhlükəsizlik lisenziyası',
+            'Sistem dizaynının kodlaşdırma standartları',
+            'Proqram təminatının planlaşdırılmasından istismardan çıxarılmasına qədər olan həyat dövrü',
+            'Yalnız kodlaşdırma və test mərhələlərini əhatə edən proses'
         ],
-        correctAnswer: 0,
-        explanation: 'SDLC (Software Development Life Cycle) - proqram təminatının planlaşdırılmasından istifadəyə verilməsinə qədər olan bütün mərhələləri əhatə edən prosesdir.'
+        correctAnswer: 2,
+        explanation: 'SDLC - proqramın ideya formasından başlayaraq, hazırlanması, test edilməsi, istifadəyə verilməsi və ləğv edilməsinə qədər olan prosesdir.'
     },
     {
         id: 5,
         category: 'qa_basics',
         difficulty: 'easy',
-        question: 'Test case nədir?',
+        question: 'Test Case-in əsas komponentləri hansılardır?',
         options: [
-            'Testləşdirmə üçün istifadə olunan kompüter',
-            'Müəyyən funksionallığı yoxlamaq üçün addım-addım təlimat',
-            'Baq hesabatı',
-            'Test planı'
+            'Test Addımları və Gözlənilən Nəticə',
+            'ID, Təsvir, İlkin Şərtlər (Pre-conditions), Addımlar, Gözlənilən Nəticə',
+            'Yalnız Gözlənilən Nəticə və Faktiki Nəticə',
+            'Baq Hesabatı, Status və Prioritet'
         ],
         correctAnswer: 1,
-        explanation: 'Test case - müəyyən bir funksiyanı və ya xüsusiyyəti yoxlamaq üçün hazırlanmış addım-addım təlimatdır.'
+        explanation: 'Test Case konkret bir ssenarini yoxlamaq üçün lazım olan addımları, ilkin şərtləri və gözlənilən nəticəni ehtiva edir.'
     },
     {
         id: 6,
         category: 'qa_basics',
         difficulty: 'medium',
-        question: 'Regression testing nə zaman aparılır?',
+        question: 'Reqressiya (Regression) testi nə zaman yerinə yetirilməlidir?',
         options: [
-            'Yalnız yeni layihələrdə',
-            'Kod dəyişikliyindən sonra köhnə funksionallığın işlədiyini yoxlamaq üçün',
-            'Heç vaxt',
-            'Yalnız production-da'
+            'Layihənin ən əvvəlində planlaşdırma zamanı',
+            'Kodda hər hansı dəyişiklik (bug fix, yeni funksiya) edildikdən sonra',
+            'Yalnız "Critical" prioritetli baqlar tapıldıqda',
+            'Müştəri rəsmi olaraq tələb etdikdə'
         ],
         correctAnswer: 1,
-        explanation: 'Regression testing - kod dəyişikliklərindən sonra mövcud funksionallığın hələ də düzgün işlədiyini yoxlamaq üçün aparılır.'
+        explanation: 'Reqressiya testi kod dəyişikliklərinin mövcud (işləyən) funksionallığa mənfi təsir etmədiyini yoxlamaq üçün aparılır.'
     },
     {
         id: 7,
         category: 'qa_basics',
-        difficulty: 'medium',
-        question: 'Black box testing nədir?',
+        difficulty: 'hard',
+        question: '"Pestisid Paradoksu" (Pesticide Paradox) prinsipi nəyi ifadə edir?',
         options: [
-            'Yalnız qaranlıq otaqda aparılan test',
-            'Daxili strukturu bilmədən, yalnız giriş və çıxışa əsasən test',
-            'Yalnız kod səviyyəsində test',
-            'Avtomatlaşdırılmış test'
+            'Kodda həmişə tapılmayan baqlar qalır',
+            'Eyni testləri təkrar-təkrar icra etdikdə, onlar yeni baqları tapmağı dayandırır',
+            'Testləri tam avtomatlaşdırmaq mümkün deyil',
+            'Baqlar adətən müəyyən modullarda toplanır'
         ],
         correctAnswer: 1,
-        explanation: 'Black box testing - sistemin daxili strukturunu bilmədən, yalnız giriş və çıxış məlumatlarına əsasən aparılan testdir.'
+        explanation: 'Pestisid paradoksu: Həşəratlar dərmana öyrəşdiyi kimi, proqram da eyni testlərə "öyrəşir". Yeni baqlar tapmaq üçün testlər mütəmadi yenilənməlidir.'
     },
     {
         id: 8,
         category: 'qa_basics',
         difficulty: 'medium',
-        question: 'White box testing nədir?',
+        question: 'White Box (Ağ Qutu) testi hansı bilikləri tələb edir?',
         options: [
-            'Ağ rəngli interfeysin testi',
-            'Kod strukturunu bilərək, daxili məntiqə əsasən test',
-            'Yalnız UI testi',
-            'Manual test'
+            'Yalnız biznes tələblərini və istifadəçi hekayələrini',
+            'Proqramın daxili kod strukturunu və məntiqini',
+            'İstifadəçi interfeysini və dizayn prinsiplərini',
+            'Heç bir texniki bilik tələb etmir, sadəcə məntiq'
         ],
         correctAnswer: 1,
-        explanation: 'White box testing - sistemin daxili strukturunu, kodunu bilərək aparılan testdir. Kod səviyyəsində məntiq yoxlanılır.'
+        explanation: 'White Box testing sistemin daxili strukturunu (kod, alqoritmlər) yoxlayır, buna görə proqramlaşdırma biliyi tələb edir.'
     },
     {
         id: 9,
         category: 'qa_basics',
         difficulty: 'hard',
-        question: 'Test coverage nədir?',
+        question: '"Tam Testləşdirmə" (Exhaustive Testing) niyə mümkün deyil?',
         options: [
-            'Testlərin neçə faiz kodunu əhatə etdiyi',
-            'Test planının ölçüsü',
-            'Baqların sayı',
-            'Testerin iş vaxtı'
+            'Testçilərin vaxtı və büdcəsi məhduddur',
+            'Kombinasiyaların sayı sonsuz ola bilər, bu isə resurs və vaxt baxımından qeyri-realdır',
+            'Mümkündür, sadəcə bahalıdır və uzun çəkir',
+            'Developerlər kodun tam test edilməsinə icazə vermir'
         ],
-        correctAnswer: 0,
-        explanation: 'Test coverage - testlərin kodun, tələblərin və ya funksionallığın neçə faizini əhatə etdiyini göstərən metrikadır.'
+        correctAnswer: 1,
+        explanation: 'Giriş məlumatlarının bütün mümkün kombinasiyalarını yoxlamaq (məsələn, sonsuz sayda rəqəm) fiziki olaraq mümkün deyil. Testlər riskə əsaslanmalıdır.'
     },
     {
         id: 10,
         category: 'qa_basics',
-        difficulty: 'easy',
-        question: 'Smoke test nədir?',
+        difficulty: 'medium',
+        question: 'Smoke Test (Tüstü Testi) nədir?',
         options: [
-            'Yanğın təhlükəsizliyi testi',
-            'Əsas funksionallığın işlədiyini yoxlayan sürətli test',
-            'Performance test',
-            'Security test'
+            'Sistemi maksimum yük altında yoxlayaraq dayanıklılığı ölçmək',
+            'Yeni build-in (versiyanın) əsas funksionallığının işlədiyini təsdiqləyən ilkin yoxlama',
+            'Təhlükəsizlik zəifliklərini və giriş nöqtələrini yoxlamaq',
+            'Detallı reqressiya testi aparmaq'
         ],
         correctAnswer: 1,
-        explanation: 'Smoke test - yeni build-in əsas funksionallığının işlədiyini yoxlamaq üçün aparılan sürətli, əsas testdir.'
+        explanation: 'Smoke Test - "build partlayır ya yox?" yoxlamasıdır. Əgər əsas funksiyalar işləmirsə, daha dərin testə ehtiyac yoxdur.'
+    },
+    {
+        id: 31,
+        category: 'qa_basics',
+        difficulty: 'hard',
+        question: 'Sazlama (Debugging) və Testləşdirmə arasındakı əsas fərq nədir?',
+        options: [
+            'Fərq yoxdur, eyni prosesin fərqli adlarıdır',
+            'Testləşdirmə səhvləri tapır, Sazlama isə səhvlərin səbəbini tapıb düzəldir',
+            'Testləşdirməni developerlər, Sazlamanı testçilər edir',
+            'Sazlama sənədləşdirmə prosesidir, Testləşdirmə isə icra prosesidir'
+        ],
+        correctAnswer: 1,
+        explanation: 'Testçilər qüsurları (failures) aşkar edir. Developerlər isə Debugging edərək kodun içindəki səhvi (root cause) tapıb düzəldirlər.'
+    },
+    {
+        id: 32,
+        category: 'qa_basics',
+        difficulty: 'medium',
+        question: 'Statik Test (Static Testing) nədir?',
+        options: [
+            'Kodu icra edərək real nəticələri yoxlamaq',
+            'Kodu icra etmədən sənədləri və ya kodu nəzərdən keçirmək (Review)',
+            'Performans və yük testlərini əhatə edir',
+            'Avtomatlaşdırılmış test skriptlərini işə salmaq'
+        ],
+        correctAnswer: 1,
+        explanation: 'Statik test proqramı işə salmadan aparılır (Review, Walkthrough, Inspection). Dinamik test isə proqramı işlətməyi tələb edir.'
     },
 
-    // Test növləri (Test Types) - 10 questions
+    // Test növləri (Test Types)
     {
         id: 11,
         category: 'test_types',
         difficulty: 'easy',
-        question: 'Funksional testləşdirmə nədir?',
+        question: 'Qeyri-funksional (Non-functional) testləşdirmə nəyi yoxlayır?',
         options: [
-            'Sistemin performansını yoxlamaq',
-            'Sistemin tələblərə uyğun işlədiyini yoxlamaq',
-            'Yalnız dizaynı yoxlamaq',
-            'Kodun strukturunu yoxlamaq'
+            'Sistem nə edir? (Funksional tələblər)',
+            'Sistem necə işləyir? (Performans, Təhlükəsizlik, Usability)',
+            'Kodun sintaksisini və strukturunu',
+            'Verilənlər bazasının tamlığını'
         ],
         correctAnswer: 1,
-        explanation: 'Funksional testləşdirmə - sistemin funksional tələblərə uyğun işləyib-işləmədiyini yoxlayır.'
+        explanation: 'Qeyri-funksional testlər sistemin atributlarını (sürət, etibarlılıq, təhlükəsizlik) yoxlayır.'
     },
     {
         id: 12,
         category: 'test_types',
         difficulty: 'medium',
-        question: 'Performance testing nə üçün aparılır?',
+        question: 'Stress Testing-in məqsədi nədir?',
         options: [
-            'Baqları tapmaq üçün',
-            'Sistemin sürətini, yükü və sabitliyini yoxlamaq üçün',
-            'Dizaynı yoxlamaq üçün',
-            'Kodun keyfiyyətini yoxlamaq üçün'
+            'Sistemin normal yük altında işini yoxlamaq',
+            'Sistemin limitlərini və limitdən artıq yükdə davranışını (qırılma nöqtəsini) yoxlamaq',
+            'Sistemin təhlükəsizlik boşluqlarını tapmaq',
+            'İstifadəçi interfeysinin rahatlığını yoxlamaq'
         ],
         correctAnswer: 1,
-        explanation: 'Performance testing - sistemin müxtəlif yük altında necə işlədiyini, sürətini və sabitliyini yoxlayır.'
+        explanation: 'Load test normal yükü, Stress test isə ekstremal yükü yoxlayır ki, sistemin dayanıqlığını və bərpa olunma qabiliyyətini görək.'
     },
     {
         id: 13,
         category: 'test_types',
-        difficulty: 'medium',
-        question: 'Security testing-in məqsədi nədir?',
+        difficulty: 'hard',
+        question: 'Sanity Test ilə Smoke Test arasındakı incə fərq nədir?',
         options: [
-            'Sistemin təhlükəsizlik zəifliklərini tapmaq',
-            'Yalnız parol yoxlamaq',
-            'UI-ı yoxlamaq',
-            'Performansı yoxlamaq'
+            'Heç bir fərq yoxdur, sinonimlərdir',
+            'Smoke test geniş və səthidir (bütün sistemi əhatə edir), Sanity test isə dar və dərindir (müəyyən funksiyanı yoxlayır)',
+            'Smoke test sənədləri yoxlayır, Sanity kodu yoxlayır',
+            'Sanity test layihənin əvvəlində, Smoke test sonunda edilir'
         ],
-        correctAnswer: 0,
-        explanation: 'Security testing - sistemdə təhlükəsizlik zəifliklərini, boşluqları tapmaq və məlumatların qorunmasını yoxlamaq üçün aparılır.'
+        correctAnswer: 1,
+        explanation: 'Smoke test "ümumi sağlamlığı" yoxlayır (General Health Check). Sanity test isə spesifik dəyişikliklərin (bug fix) düzgün işlədiyini yoxlayan alt çoxluqdur.'
     },
     {
         id: 14,
         category: 'test_types',
         difficulty: 'easy',
-        question: 'Usability testing nəyi yoxlayır?',
+        question: 'Usability Testing (İstifadə Rahatlığı) kim tərəfindən aparılsa daha effektiv olar?',
         options: [
-            'Kodun keyfiyyətini',
-            'İstifadəçi təcrübəsini və interfeysin rahatlığını',
-            'Verilənlər bazasını',
-            'Serverin sürətini'
+            'Yalnız kodun müəllifi olan developerlər',
+            'Real istifadəçilər və ya onları təmsil edən testçilər',
+            'Sistem administratorları və DevOps mühəndisləri',
+            'Mühasiblər və Maliyyəçilər'
         ],
         correctAnswer: 1,
-        explanation: 'Usability testing - sistemin istifadəçilər üçün nə qədər rahat və anlaşılan olduğunu yoxlayır.'
+        explanation: 'Usability testing məhsulun istifadəçi üçün nə qədər rahat olduğunu yoxlayır, buna görə real istifadəçi baxışı vacibdir.'
     },
     {
         id: 15,
         category: 'test_types',
         difficulty: 'hard',
-        question: 'Integration testing nə zaman aparılır?',
+        question: 'İnteqrasiya Testində (Integration Testing) "Top-down" yanaşması nədir?',
         options: [
-            'Yalnız layihənin sonunda',
-            'Müxtəlif modullar birləşdirildikdən sonra',
-            'Heç vaxt',
-            'Yalnız production-da'
+            'Aşağı səviyyəli modullardan başlayıb yuxarı qalxmaq',
+            'Yuxarı səviyyəli modullardan başlayıb aşağı enmək (Stub istifadə edərək)',
+            'Bütün modulları eyni anda birləşdirmək (Big Bang)',
+            'Yalnız ən vacib modulu yoxlamaq'
         ],
         correctAnswer: 1,
-        explanation: 'Integration testing - ayrı-ayrı modullar və ya komponentlər birləşdirildikdən sonra onların bir-biri ilə düzgün işlədiyini yoxlamaq üçün aparılır.'
+        explanation: 'Top-down yanaşmada əsas idarəetmə modulu birinci test edilir, aşağı səviyyəli modullar isə "Stub" (kötük) ilə əvəz olunur.'
     },
     {
         id: 16,
         category: 'test_types',
         difficulty: 'medium',
-        question: 'Unit testing nədir?',
+        question: 'Unit Testing (Komponent Testi) kimin məsuliyyətindədir?',
         options: [
-            'Bütün sistemin testi',
-            'Kodun ən kiçik hissələrinin (funksiya, metod) ayrı-ayrılıqda testi',
-            'UI testi',
-            'Manual test'
+            'Test Menecerin',
+            'Manual Testçinin',
+            'Developerin (Proqramçının)',
+            'Müştərinin'
         ],
-        correctAnswer: 1,
-        explanation: 'Unit testing - kodun ən kiçik hissələrinin (funksiya, metod, klass) ayrı-ayrılıqda test edilməsidir.'
+        correctAnswer: 2,
+        explanation: 'Unit testlər kodun ən kiçik hissələrini yoxlayır və kodu yazan şəxs (developer) tərəfindən yazılır.'
     },
     {
         id: 17,
         category: 'test_types',
         difficulty: 'hard',
-        question: 'Load testing və Stress testing arasında fərq nədir?',
+        question: 'Hansı test növü "Maintenance Testing" (Saxlama Testi) hesab olunur?',
         options: [
-            'Eyni şeydir',
-            'Load - normal yük, Stress - limit yük',
-            'Stress daha asandır',
-            'Load yalnız UI üçündür'
+            'Sistem istifadəyə verildikdən sonra edilən miqrasiya və ya dəyişiklik testləri',
+            'İlkin inkişaf zamanı edilən testlər',
+            'Yalnız Unit və İntegration testlər',
+            'Alpha və Beta testlər'
         ],
-        correctAnswer: 1,
-        explanation: 'Load testing - sistemin normal və gözlənilən yük altında necə işlədiyini yoxlayır. Stress testing - sistemin limit və həddindən artıq yük altında necə davrandığını yoxlayır.'
+        correctAnswer: 0,
+        explanation: 'Maintenance testing məhsul istismarda (production) olduqda edilən dəyişikliklər, yamalar (patches) və ya miqrasiya zamanı aparılır.'
     },
     {
         id: 18,
         category: 'test_types',
-        difficulty: 'hard',
-        question: 'Acceptance testing nə zaman aparılır?',
+        difficulty: 'medium',
+        question: 'UAT (User Acceptance Testing) nə zaman uğurlu sayılır?',
         options: [
-            'Development başlamazdan əvvəl',
-            'Məhsul istifadəyə verilməzdən əvvəl, müştəri tərəfindən',
-            'Heç vaxt',
-            'Yalnız bug tapıldıqda'
+            'Developer kodun bitdiyini deyəndə',
+            'Müştəri/İstifadəçi sistemin onların biznes ehtiyaclarını ödədiyini təsdiqləyəndə',
+            'Bütün Unit testlər keçəndə',
+            'Vaxt bitəndə və büdcə tükənəndə'
         ],
         correctAnswer: 1,
-        explanation: 'Acceptance testing (UAT - User Acceptance Testing) - məhsulun istifadəyə verilməzdən əvvəl müştəri və ya son istifadəçilər tərəfindən aparılan testdir.'
+        explanation: 'UAT-nin məqsədi məhsulun biznes ehtiyaclarını ödədiyini təsdiqləməkdir (Validation).'
     },
     {
         id: 19,
         category: 'test_types',
         difficulty: 'medium',
-        question: 'API testing nəyi yoxlayır?',
+        question: 'API Testing-də hansı status kodu "Uğurlu" nəticəni göstərir?',
         options: [
-            'Yalnız UI-ı',
-            'Tətbiqin proqramlaşdırma interfeyslərini (API)',
-            'Verilənlər bazasını',
-            'Dizaynı'
+            '404 Not Found',
+            '500 Internal Server Error',
+            '200 OK',
+            '403 Forbidden'
         ],
-        correctAnswer: 1,
-        explanation: 'API testing - tətbiqin proqramlaşdırma interfeyslərinin (API) düzgün işlədiyini, məlumat mübadiləsinin və cavabların doğruluğunu yoxlayır.'
+        correctAnswer: 2,
+        explanation: 'HTTP 200 OK - sorğunun uğurla yerinə yetirildiyini göstərir. 404 (Not Found), 500 (Server Error), 403 (Forbidden) xəta kodlarıdır.'
     },
     {
         id: 20,
         category: 'test_types',
         difficulty: 'hard',
-        question: 'Exploratory testing nədir?',
+        question: 'Kəşfiyyat Testi (Exploratory Testing) nə vaxt istifadə olunmalıdır?',
         options: [
-            'Test case olmadan, sərbəst araşdırma ilə test',
-            'Yalnız avtomatlaşdırılmış test',
-            'Yalnız regression test',
-            'Planlaşdırılmış test'
+            'Test sənədləri tam hazır və təsdiqlənmiş olduqda',
+            'Vaxt az olduqda və ya sənədləşmə natamam olduqda (testerin təcrübəsinə əsasən)',
+            'Yalnız avtomatlaşdırma mümkün olduqda',
+            'Heç vaxt, bu qeyri-peşəkar yanaşmadır'
         ],
-        correctAnswer: 0,
-        explanation: 'Exploratory testing - əvvəlcədən hazırlanmış test case-lər olmadan, testerin təcrübəsinə əsaslanaraq sərbəst araşdırma ilə aparılan testdir.'
+        correctAnswer: 1,
+        explanation: 'Exploratory testing formal ssenarilər olmadıqda və ya sürətli yoxlama lazım olduqda testerin intuisiyasına və təcrübəsinə əsaslanır.'
+    },
+    {
+        id: 33,
+        category: 'test_types',
+        difficulty: 'hard',
+        question: 'Alpha və Beta testləri arasındakı fərq nədir?',
+        options: [
+            'Alpha müştəri mühitində, Beta developer mühitində aparılır',
+            'Alpha developer mühitində (təşkilat daxilində), Beta real istifadəçi mühitində aparılır',
+            'Fərq yoxdur, sadəcə adları fərqlidir',
+            'Alpha pullu versiyadır, Beta pulsuz versiyadır'
+        ],
+        correctAnswer: 1,
+        explanation: 'Alpha test təşkilat daxilində, Beta test isə real istifadəçilər tərəfindən onların öz mühitlərində aparılır.'
+    },
+    {
+        id: 34,
+        category: 'test_types',
+        difficulty: 'hard',
+        question: 'Dinamik Testin (Dynamic Testing) 4 əsas mərhələsi hansılardır?',
+        options: [
+            'Planlaşdırma, Dizayn, Kodlaşdırma, Silmə',
+            'Komponent, İnteqrasiya, Sistem, Qəbul (Test Səviyyələri)',
+            'Baq tapma, Baq silmə, Baq yazma, Baq oxuma',
+            'Analiz, Dizayn, İcra, Hesabat'
+        ],
+        correctAnswer: 1,
+        explanation: 'ISTQB-yə görə test səviyyələri: Component Testing, Integration Testing, System Testing, Acceptance Testing.'
     },
 
-    // Baq hesabatı (Bug Reporting) - 5 questions
+    // Baq hesabatı (Bug Reporting)
     {
         id: 21,
         category: 'bug_reporting',
         difficulty: 'easy',
-        question: 'Baq hesabatında hansı məlumatlar mütləq olmalıdır?',
+        question: 'Baq hesabatının ən vacib hissəsi hansıdır?',
         options: [
-            'Yalnız baqın adı',
-            'Başlıq, addımlar, gözlənilən nəticə, faktiki nəticə, severity, priority',
-            'Yalnız screenshot',
-            'Yalnız tarix'
+            'Baqı tapanın adı və vəzifəsi',
+            'Addımlar (Steps to Reproduce) - baqı necə təkrarlamaq olar',
+            'Baqın yaranma tarixi və saatı',
+            'Layihə menecerinin şəxsi rəyi'
         ],
         correctAnswer: 1,
-        explanation: 'Keyfiyyətli baq hesabatı: başlıq, təkrarlama addımları, gözlənilən nəticə, faktiki nəticə, severity, priority, ekran görüntüsü və s. məlumatları ehtiva etməlidir.'
+        explanation: 'Əgər developer baqı təkrarlaya bilmirsə (reproduce), onu düzəldə bilməz. Ona görə "Addımlar" ən kritik hissədir.'
     },
     {
         id: 22,
         category: 'bug_reporting',
         difficulty: 'medium',
-        question: 'Bug Severity nədir?',
+        question: 'Severity (Ciddilik) və Priority (Prioritet) arasındakı fərq nədir?',
         options: [
-            'Baqın nə qədər tez düzəldilməli olduğu',
-            'Baqın sistemə təsirinin dərəcəsi',
-            'Baqı kimin tapdığı',
-            'Baqın rəngi'
+            'Severity biznesə təsirdir, Priority texniki təsirdir',
+            'Severity texniki təsirin dərəcəsidir (nə qədər pisdir), Priority düzəldilmə ardıcıllığıdır (nə qədər təcilidir)',
+            'Eyni şeydir, sadəcə fərqli alətlərdə fərqli adlanır',
+            'Priority tester tərəfindən təyin edilmir, yalnız developer təyin edir'
         ],
         correctAnswer: 1,
-        explanation: 'Severity - baqın sistemə və ya funksionallığa təsirinin dərəcəsidir (Critical, Major, Minor, Trivial).'
+        explanation: 'Severity - baqın sistemə vurduğu zərərdir (məs: sistem çökür). Priority - baqın nə vaxt düzəldilməli olduğudur (məs: dərhal).'
     },
     {
         id: 23,
         category: 'bug_reporting',
-        difficulty: 'medium',
-        question: 'Bug Priority nədir?',
+        difficulty: 'hard',
+        question: 'High Severity, Low Priority (Yüksək Ciddilik, Aşağı Prioritet) nümunəsi hansıdır?',
         options: [
-            'Baqın sistemə təsiri',
-            'Baqın nə qədər tez düzəldilməli olduğu (təcililik)',
-            'Baqın ölçüsü',
-            'Baqın növü'
+            'Sistemdə şirkət loqosu səhv rəngdədir',
+            'Çox nadir istifadə olunan köhnə bir modyulda sistem çökür (müştərilər artıq istifadə etmir)',
+            'Ana səhifədə hərf səhvi var',
+            'Login funksiyası işləmir'
         ],
         correctAnswer: 1,
-        explanation: 'Priority - baqın nə qədər tez düzəldilməli olduğunu göstərir (High, Medium, Low).'
+        explanation: 'Sistem çökür (High Severity), amma modul istifadə olunmadığı üçün biznes baxımından təcili deyil (Low Priority).'
     },
     {
         id: 24,
         category: 'bug_reporting',
         difficulty: 'hard',
-        question: 'Critical severity nə deməkdir?',
+        question: 'Low Severity, High Priority (Aşağı Ciddilik, Yüksək Prioritet) nümunəsi hansıdır?',
         options: [
-            'Kiçik dizayn problemi',
-            'Sistem işləmir və ya əsas funksionallıq əlçatmazdır',
-            'Yalnız mətn səhvi',
-            'Performans problemi'
+            'Sistem məlumatları silir və bərpa etmək olmur',
+            'Şirkətin əsas səhifəsində şirkət adı səhv yazılıb ("Goolge" əvəzinə "Google")',
+            'Server tamamilə cavab vermir',
+            'Hesablama modulunda ciddi səhv var'
         ],
         correctAnswer: 1,
-        explanation: 'Critical severity - sistem tamamilə işləmir, məlumat itkisi var və ya əsas funksionallıq tamamilə əlçatmazdır.'
+        explanation: 'Texniki olaraq sistem işləyir (Low Severity), amma brend imicinə zərər vurduğu üçün dərhal düzəldilməlidir (High Priority).'
     },
     {
         id: 25,
         category: 'bug_reporting',
         difficulty: 'hard',
-        question: 'Baq statusu "Resolved" nə deməkdir?',
+        question: 'Developer baqı "Works for Me" (Məndə işləyir) kimi qaytardı. Testçi nə etməlidir?',
         options: [
-            'Baq hələ açıqdır',
-            'Baq düzəldildi və yoxlanmaq üçün hazırdır',
-            'Baq rədd edildi',
-            'Baq təkrarlanmır'
+            'Baqı dərhal bağlamalıdır',
+            'Developerlə mübahisə etməli və şikayət etməlidir',
+            'Baqı yenidən yoxlamalı, mühit fərqlərini (Environment) analiz etməli və əlavə sübutlar (video/log) təqdim etməlidir',
+            'Baqı silməlidir'
+        ],
+        correctAnswer: 2,
+        explanation: 'Baqı dərhal bağlamaq olmaz. Testçi əmin olmalıdır ki, test mühiti ilə developer mühiti eynidir və baqın təkrarlanma addımlarını dəqiqləşdirməlidir.'
+    },
+    {
+        id: 35,
+        category: 'bug_reporting',
+        difficulty: 'medium',
+        question: 'Baqın Həyat Dövründə (Bug Life Cycle) "Deferred" statusu nə deməkdir?',
+        options: [
+            'Baq tamamilə düzəldilib və yoxlanılıb',
+            'Baq rədd edilib və bağlanıb',
+            'Baq təsdiqlənib, lakin düzəlişi gələcək versiyaya saxlanılıb (təxirə salınıb)',
+            'Baq təkrarlanmır və ignor edilir'
+        ],
+        correctAnswer: 2,
+        explanation: 'Deferred - baqın varlığı qəbul edilir, lakin resurs çatışmazlığı və ya prioritetin aşağı olması səbəbindən düzəliş sonraya saxlanılır.'
+    },
+    {
+        id: 36,
+        category: 'bug_reporting',
+        difficulty: 'medium',
+        question: 'Baqın "Duplicate" olması nə deməkdir?',
+        options: [
+            'Baq çox vacibdir və təcili düzəldilməlidir',
+            'Bu baq artıq sistemdə başqa bir ID ilə qeydiyyatdadır',
+            'Baq iki dəfə düzəldilib',
+            'Baqın iki fərqli həlli var'
         ],
         correctAnswer: 1,
-        explanation: 'Resolved statusu - developer baqı düzəltdiyini bildirdi və baq tester tərəfindən yoxlanmaq üçün hazırdır.'
+        explanation: 'Duplicate - eyni xətanın artıq başqa bir testçi tərəfindən report edildiyini bildirir. Belə baqlar bağlanır.'
     },
 
-    // Test planlaşdırması (Test Planning) - 5 questions
+    // Test planlaşdırması (Test Planning)
     {
         id: 26,
         category: 'test_planning',
         difficulty: 'easy',
-        question: 'Test plan nədir?',
+        question: 'Test Planı (Test Plan) nədir?',
         options: [
-            'Baq siyahısı',
-            'Testləşdirmə strategiyası, resurslar və qrafiki əhatə edən sənəd',
-            'Kod sənədi',
-            'Dizayn maketi'
+            'Konkret bir testin addımları',
+            'Test prosesinin əhatə dairəsini, yanaşmasını, resurslarını və qrafikini təsvir edən sənəd',
+            'Baqların siyahısı',
+            'Avtomatlaşdırma kodu'
         ],
         correctAnswer: 1,
-        explanation: 'Test plan - testləşdirmə prosesinin məqsədlərini, strategiyasını, resurslarını, qrafikini və yanaşmasını təsvir edən sənəddir.'
+        explanation: 'Test Planı - "Nəyi, necə, kim və nə vaxt test edəcəyik?" suallarına cavab verən əsas idarəetmə sənədidir.'
     },
     {
         id: 27,
         category: 'test_planning',
         difficulty: 'medium',
-        question: 'Test strategy nədir?',
+        question: 'Giriş Meyarları (Entry Criteria) nədir?',
         options: [
-            'Konkret test case',
-            'Testləşdirmə yanaşmasının ümumi planı',
-            'Baq hesabatı',
-            'Kod review'
+            'Testi bitirmək üçün şərtlər',
+            'Test fəaliyyətinə başlamaq üçün lazım olan ilkin şərtlər (məs: Mühit hazırdır, Kod deploy olunub)',
+            'İşə qəbul meyarları',
+            'Baqın bağlanma şərtləri'
         ],
         correctAnswer: 1,
-        explanation: 'Test strategy - layihədə istifadə olunacaq testləşdirmə yanaşmasının, metodlarının və alətlərinin ümumi planıdır.'
+        explanation: 'Entry Criteria - test prosesinə başlamaq üçün nələrin hazır olmalı olduğunu müəyyən edir.'
     },
     {
         id: 28,
         category: 'test_planning',
-        difficulty: 'hard',
-        question: 'Entry criteria nədir?',
+        difficulty: 'medium',
+        question: 'Çıxış Meyarları (Exit Criteria) nədir?',
         options: [
-            'Testləşdirməyə başlamaq üçün lazım olan şərtlər',
-            'Testləşdirməni bitirmək şərtləri',
-            'Baq düzəltmə şərtləri',
-            'Kod yazma şərtləri'
+            'Testi başlamaq üçün şərtlər',
+            'Testi dayandırmaq və ya tamamlamaq üçün şərtlər (məs: 100% testlər icra olunub, Kritik baq yoxdur)',
+            'İşdən çıxma şərtləri',
+            'Layihənin başlanğıc tarixi'
         ],
-        correctAnswer: 0,
-        explanation: 'Entry criteria - testləşdirmə mərhələsinə başlamaq üçün yerinə yetirilməli olan şərtlərdir (məs: kod hazırdır, test mühiti qurulub).'
+        correctAnswer: 1,
+        explanation: 'Exit Criteria (və ya Definition of Done) - testin nə vaxt bitmiş hesab ediləcəyini müəyyən edir.'
     },
     {
         id: 29,
         category: 'test_planning',
         difficulty: 'hard',
-        question: 'Exit criteria nədir?',
+        question: 'Test Strategiyası (Test Strategy) ilə Test Planı arasındakı fərq nədir?',
         options: [
-            'Testləşdirməyə başlama şərtləri',
-            'Testləşdirməni tamamlamaq və növbəti mərhələyə keçmək üçün şərtlər',
-            'Developer-in işini bitirmə şərtləri',
-            'Dizayn tamamlama şərtləri'
+            'Fərq yoxdur',
+            'Strategiya layihədən asılı olmayan ümumi yanaşmadır, Plan isə konkret layihə üçün detallardır',
+            'Plan ümumi, Strategiya detaldır',
+            'Strategiya yalnız avtomatlaşdırma üçündür'
         ],
         correctAnswer: 1,
-        explanation: 'Exit criteria - testləşdirməni tamamlanmış hesab etmək və növbəti mərhələyə keçmək üçün yerinə yetirilməli olan şərtlərdir.'
+        explanation: 'Strategiya daha yüksək səviyyəli sənəddir (məs: şirkət səviyyəsində). Plan isə konkret layihənin vaxtı, resursları və hədəfləri ilə bağlıdır.'
     },
     {
         id: 30,
         category: 'test_planning',
         difficulty: 'hard',
-        question: 'Test environment nədir?',
+        question: 'Məhsul Riski (Product Risk) nədir?',
         options: [
-            'Testerin iş otağı',
-            'Testlərin aparıldığı proqram və hardware mühiti',
-            'Test planı',
-            'Baq tracking sistemi'
+            'Layihənin gecikməsi',
+            'Büdcənin bitməsi',
+            'Sistemin istifadəçi gözləntilərini qarşılamaması (məs: səhv hesablama, çökmə)',
+            'Komanda üzvünün xəstələnməsi'
+        ],
+        correctAnswer: 2,
+        explanation: 'Məhsul riski birbaşa proqramın keyfiyyəti ilə bağlıdır. Digərləri (vaxt, büdcə, heyət) Layihə Riskləridir.'
+    },
+    {
+        id: 37,
+        category: 'test_planning',
+        difficulty: 'hard',
+        question: 'Konfiqurasiya İdarəetməsi (Configuration Management) testdə niyə vacibdir?',
+        options: [
+            'Testçilərin kompüterlərini idarə etmək üçün',
+            'Test edilən proqramın (testware) versiyalarını və mühitini nəzarətdə saxlamaq üçün',
+            'Baqları silmək üçün',
+            'Ofis ləvazimatlarını izləmək üçün'
         ],
         correctAnswer: 1,
-        explanation: 'Test environment - testlərin aparıldığı proqram təminatı, hardware, şəbəkə və digər konfiqurasiyaların birləşməsidir.'
+        explanation: 'CM (Configuration Management) təmin edir ki, biz hansı versiyanı test etdiyimizi bilək və proses təkrarlana bilsin.'
+    },
+    {
+        id: 38,
+        category: 'test_planning',
+        difficulty: 'medium',
+        question: 'Test Eforunun (Zəhmətinin) Qiymətləndirilməsi (Test Estimation) hansı metodla edilə bilər?',
+        options: [
+            'Yalnız təxmin etməklə',
+            'Mütəxəssis rəyi (Wideband Delphi) və Metrikalar əsasında',
+            'Zər atmaqla',
+            'Müştəridən soruşmaqla'
+        ],
+        correctAnswer: 1,
+        explanation: 'Qiymətləndirmə adətən təcrübəli ekspertlərin rəyi və ya əvvəlki layihələrin statistikası (metrikalar) əsasında aparılır.'
+    },
+    // More Hard/Medium questions to balance adaptability
+    {
+        id: 39,
+        category: 'qa_basics',
+        difficulty: 'hard',
+        question: 'Qüsurların Toplanması (Defect Clustering) prinsipi nə deyir?',
+        options: [
+            'Baqlar bütün sistemə bərabər paylanır',
+            'Baqların 80%-i modulların 20%-də cəmləşir (Pareto prinsipi)',
+            'Baqlar təsadüfi yerlərdə olur',
+            'Baqlar yalnız UI-da olur'
+        ],
+        correctAnswer: 1,
+        explanation: 'Defect Clustering prinsipinə görə, qüsurlar bərabər paylanmır, adətən ən mürəkkəb və ya dəyişən modullarda toplanır.'
+    },
+    {
+        id: 40,
+        category: 'test_types',
+        difficulty: 'medium',
+        question: 'Black Box texnikalarına hansı aiddir?',
+        options: [
+            'Statement Coverage',
+            'Boundary Value Analysis (Sərhəd Dəyərləri Analizi)',
+            'Branch Coverage',
+            'Code Review'
+        ],
+        correctAnswer: 1,
+        explanation: 'Boundary Value Analysis, Equivalence Partitioning kimi texnikalar Black Box (Qara Qutu) üsullarıdır. Digərləri White Box və ya Statik testdir.'
+    },
+    {
+        id: 41,
+        category: 'test_types',
+        difficulty: 'medium',
+        question: 'White Box texnikalarına hansı aiddir?',
+        options: [
+            'Use Case Testing',
+            'Decision Coverage (Qərar örtüyü)',
+            'State Transition Testing',
+            'User Story Testing'
+        ],
+        correctAnswer: 1,
+        explanation: 'Decision Coverage kodun məntiqi budaqlarını yoxlayır, bu White Box texnikasıdır.'
+    },
+    {
+        id: 42,
+        category: 'qa_basics',
+        difficulty: 'easy',
+        question: 'Hansı halda testləşdirmə dayandırılmalıdır?',
+        options: [
+            'Bütün baqlar tapılanda (Mümkünsüzdür)',
+            'Çıxış Meyarları (Exit Criteria) qarşılandıqda və risklər məqbul səviyyəyə endikdə',
+            'Tester yorulanda',
+            'Developer xahiş edəndə'
+        ],
+        correctAnswer: 1,
+        explanation: 'Testi dayandırma qərarı əvvəlcədən müəyyən edilmiş meyarlara (Exit Criteria) və risk analizinə əsaslanmalıdır.'
+    },
+    {
+        id: 43,
+        category: 'bug_reporting',
+        difficulty: 'medium',
+        question: 'Baq hesabatında "Reproducibility" (Təkrarlanma) nə üçün vacibdir?',
+        options: [
+            'Vacib deyil, əsas odur ki baq tapılıb',
+            'Baqın hər dəfə eyni addımlarla yarandığını göstərmək üçün (Developerin işini asanlaşdırır)',
+            'Baqın sayını süni şəkildə artırmaq üçün',
+            'Hesabatı daha uzun və ətraflı etmək üçün'
+        ],
+        correctAnswer: 1,
+        explanation: 'Əgər baq təkrarlanmırsa (intermittent), onu düzəltmək çox çətindir. Reproducible (Təkrarlanan) olması onun stabil olduğunu göstərir.'
+    },
+    {
+        id: 44,
+        category: 'test_planning',
+        difficulty: 'hard',
+        question: 'Layihə Riski (Project Risk) nümunəsi hansıdır?',
+        options: [
+            'Verilənlər bazasının məlumat itirməsi',
+            'Test mühitinin vaxtında hazır olmaması',
+            'Hesablama modulunda səhv',
+            'İstifadəçi interfeysinin çirkin olması'
+        ],
+        correctAnswer: 1,
+        explanation: 'Test mühitinin hazır olmaması layihənin gedişatına mane olur (Project Risk). Digərləri Məhsul riskləridir.'
+    },
+    {
+        id: 45,
+        category: 'test_types',
+        difficulty: 'hard',
+        question: '"End-to-End" (E2E) testləşdirmə nədir?',
+        options: [
+            'Yalnız sonuncu modulu yoxlamaq',
+            'Sistemin başlanğıcdan sona qədər bütöv bir biznes prosesi kimi düzgün işlədiyini yoxlamaq',
+            'Yalnız backend və verilənlər bazası testi',
+            'Bütün Unit testlərin cəmi'
+        ],
+        correctAnswer: 1,
+        explanation: 'E2E testi istifadəçinin sistemdəki tam yolunu (məs: Qeydiyyat -> Sifariş -> Ödəniş -> Çatdırılma) yoxlayır, bütün inteqrasiyaları əhatə edir.'
+    },
+    {
+        id: 46,
+        category: 'qa_basics',
+        difficulty: 'medium',
+        question: 'İzləniləbilirlik Matrisi (Traceability Matrix) nə işə yarayır?',
+        options: [
+            'Testçilərin iş saatlarını izləmək üçün',
+            'Tələblər (Requirements) ilə Test Case-lər arasındakı əlaqəni göstərmək və əhatəni (coverage) yoxlamaq üçün',
+            'Baqları izləmək və silmək üçün',
+            'Kodun versiyasını və tarixçəsini izləmək üçün'
+        ],
+        correctAnswer: 1,
+        explanation: 'Traceability Matrix (RTM) hansı tələbin hansı testlə yoxlandığını göstərir, heç bir tələbin testsiz qalmamasını təmin edir.'
+    },
+    {
+        id: 47,
+        category: 'test_types',
+        difficulty: 'easy',
+        question: 'GUI (Graphical User Interface) testi nəyi yoxlayır?',
+        options: [
+            'Serverin işini və cavab sürətini',
+            'Tətbiqin vizual elementlərini (düymələr, menyular, rənglər) və istifadəçi ilə qarşılıqlı əlaqəsini',
+            'Verilənlər bazasının tamlığını',
+            'API sorğularının düzgünlüyünü'
+        ],
+        correctAnswer: 1,
+        explanation: 'GUI testi istifadəçinin gördüyü interfeys elementlərinin dizayna uyğunluğunu və işləkliyini yoxlayır.'
+    },
+    {
+        id: 48,
+        category: 'test_types',
+        difficulty: 'hard',
+        question: 'Localization (L10n) vs Internationalization (I18n) fərqi nədir?',
+        options: [
+            'Eyni şeydir',
+            'I18n tətbiqi müxtəlif dillərə uyğunlaşdırmaq üçün hazırlamaqdır, L10n isə konkret bir dilə/regiona uyğunlaşdırmaqdır',
+            'L10n proqramlaşdırmadır, I18n tərcümədir',
+            'I18n yalnız tərcümədir, L10n isə valyuta dəyişimidir'
+        ],
+        correctAnswer: 1,
+        explanation: 'Internationalization (I18n) - proqramın arxitekturasını elə qurmaqdır ki, fərqli dilləri dəstəkləsin. Localization (L10n) isə məzmunun konkret dilə tərcüməsi və formatlanmasıdır.'
+    },
+    {
+        id: 49,
+        category: 'bug_reporting',
+        difficulty: 'medium',
+        question: 'Baqın "Reopened" statusu nə vaxt verilir?',
+        options: [
+            'Baq ilk dəfə tapılanda',
+            'Developer baqı düzəltdiyini deyib, amma testçi yoxlayanda baq hələ də mövcud olarsa',
+            'Baq düzəldiləndə və bağlandıqda',
+            'Baq rədd ediləndə və silinəndə'
+        ],
+        correctAnswer: 1,
+        explanation: 'Əgər "Fixed" statuslu baq Retest zamanı uğursuz olarsa, o yenidən açılır (Reopened).'
+    },
+    {
+        id: 50,
+        category: 'test_planning',
+        difficulty: 'medium',
+        question: '"Risk-Based Testing" (Riskə əsaslanan test) yanaşmasının əsas prinsipi nədir?',
+        options: [
+            'Bütün testləri eyni dərəcədə vacib saymaq',
+            'Test səylərini risk səviyyəsi yüksək olan sahələrə yönəltmək (daha vacib və riskli yerləri daha çox test etmək)',
+            'Risklərə fikir verməmək, yalnız funksionallığı yoxlamaq',
+            'Yalnız asan və sürətli yerləri test etmək'
+        ],
+        correctAnswer: 1,
+        explanation: 'Resurslar məhdud olduğu üçün, Risk-Based Testing ən çox problem çıxa biləcək və biznesə ən çox zərər vura biləcək hissələri prioritetləşdirir.'
+    },
+    // New Questions 51-60 to reach ~60 total pool
+    {
+        id: 51,
+        category: 'test_planning',
+        difficulty: 'hard',
+        question: 'V-Model inkişaf modelində Testləşdirmə ilə İnkişaf (Development) arasındakı əlaqə necədir?',
+        options: [
+            'Testləşdirmə yalnız kod yazıldıqdan sonra başlayır',
+            'Hər inkişaf mərhələsinin (Tələb, Dizayn, Kod) özünə uyğun test səviyyəsi var (Qəbul, Sistem, Unit)',
+            'Testləşdirmə və inkişaf tamamilə ayrı proseslərdir',
+            'V-Model yalnız şəlalə (Waterfall) modelidir'
+        ],
+        correctAnswer: 1,
+        explanation: 'V-Modeldə hər inkişaf mərhələsinin qarşısında müvafiq test mərhələsi durur (Məs: Tələblər <-> Qəbul Testi, Kod <-> Unit Test).'
+    },
+    {
+        id: 52,
+        category: 'qa_basics',
+        difficulty: 'medium',
+        question: 'Kəşfiyyat (Exploratory) Testi ilə Ad-hoc Testi arasındakı fərq nədir?',
+        options: [
+            'Fərq yoxdur',
+            'Ad-hoc tamamilə təsadüfidir, Exploratory isə strukturlaşdırılmış öyrənmə və test dizaynı prosesidir',
+            'Ad-hoc sənədləşdirilir, Exploratory sənədləşdirilmir',
+            'Exploratory yalnız avtomatlaşdırılmış testdir'
+        ],
+        correctAnswer: 1,
+        explanation: 'Exploratory Testing planlı və məqsədyönlüdür, Ad-hoc isə tamamilə plansız və sistemsizdir ("monkey testing").'
+    },
+    {
+        id: 53,
+        category: 'test_types',
+        difficulty: 'hard',
+        question: 'Hansı test "Statik Analiz" alətləri ilə avtomatlaşdırıla bilər?',
+        options: [
+            'Funksional Test',
+            'Kod standartlarına uyğunluq, ölü kod (dead code), təhlükəsizlik boşluqları',
+            'İstifadəçi Qəbul Testi (UAT)',
+            'Performans Testi'
+        ],
+        correctAnswer: 1,
+        explanation: 'Statik analiz alətləri (məs: SonarQube) kodu işə salmadan onun strukturunu, standartlara uyğunluğunu və potensial səhvlərini yoxlayır.'
+    },
+    {
+        id: 54,
+        category: 'qa_basics',
+        difficulty: 'medium',
+        question: '"Shift Left" (Sola sürüşdürmə) yanaşması nə deməkdir?',
+        options: [
+            'Testləşdirməni layihənin sonuna saxlamaq',
+            'Testləşdirmə fəaliyyətlərini SDLC-nin mümkün qədər erkən mərhələlərində başlatmaq',
+            'Testçilərin sol tərəfdə oturması',
+            'Yalnız Unit testlərə fokuslanmaq'
+        ],
+        correctAnswer: 1,
+        explanation: 'Shift Left - səhvləri erkən tapmaq və düzəltmək üçün test fəaliyyətlərini inkişaf dövrünün əvvəlinə (sola) çəkməkdir.'
+    },
+    {
+        id: 55,
+        category: 'bug_reporting',
+        difficulty: 'hard',
+        question: 'Baq hesabatında "Əlavələr" (Attachments) nə üçün vacibdir?',
+        options: [
+            'Hesabatı bəzəmək üçün',
+            'Sözlə təsvir edilməsi çətin olan vizual sübutları (screenshot, video, loglar) təmin etmək üçün',
+            'Serverdə yer tutmaq üçün',
+            'Developerə hörmət əlaməti olaraq'
+        ],
+        correctAnswer: 1,
+        explanation: 'Bir şəkil min sözə bərabərdir. Loglar və screenshotlar developerə problemin kökünü tapmaqda əvəzsiz kömək edir.'
+    },
+    {
+        id: 56,
+        category: 'test_planning',
+        difficulty: 'medium',
+        question: 'Test Mühiti (Test Environment) ilə Canlı Mühit (Production Environment) arasındakı ideal əlaqə necə olmalıdır?',
+        options: [
+            'Test mühiti daha zəif olmalıdır',
+            'Test mühiti mümkün qədər Canlı mühitə (Production) bənzəməlidir (Data, Konfiqurasiya)',
+            'Test mühiti tamamilə fərqli olmalıdır',
+            'Test mühiti developerin kompüterində olmalıdır'
+        ],
+        correctAnswer: 1,
+        explanation: 'Əgər Test mühiti Production mühitindən çox fərqlidirsə, test nəticələri etibarsız ola bilər (məs: Production-da çıxan səhv Test-də çıxmaz).'
+    },
+    {
+        id: 57,
+        category: 'test_types',
+        difficulty: 'hard',
+        question: 'Hansı test növü "Regressiya" (Regression) testindən fərqlidir?',
+        options: [
+            'Təkrar test (Re-testing / Confirmation Testing)',
+            'Avtomatlaşdırılmış test',
+            'Funksional test',
+            'Qeyri-funksional test'
+        ],
+        correctAnswer: 0,
+        explanation: 'Re-testing (Təkrar test) konkret bir baqın düzəldiyini yoxlayır. Regressiya isə bu düzəlişin başqa yerləri sındırmadığını yoxlayır.'
+    },
+    {
+        id: 58,
+        category: 'qa_basics',
+        difficulty: 'easy',
+        question: 'QA mühəndisinin ən vacib "yumşaq bacarığı" (soft skill) hansıdır?',
+        options: [
+            'Yalnız kod yaza bilmək',
+            'Effektiv ünsiyyət (Communication) və detallara diqqət',
+            'Sürətli yazmaq',
+            'Dizayn edə bilmək'
+        ],
+        correctAnswer: 1,
+        explanation: 'QA texniki bacarıqlar qədər, tapdığı səhvləri düzgün izah etməli və komanda ilə effektiv ünsiyyət qurmalıdır.'
+    },
+    {
+        id: 59,
+        category: 'test_planning',
+        difficulty: 'hard',
+        question: 'Test Piramidasının (Test Pyramid) əsas prinsipi nədir?',
+        options: [
+            'Çoxlu UI test, az Unit test',
+            'Çoxlu Unit test (təməl), orta sayda İnteqrasiya test, az sayda UI test (zirvə)',
+            'Bütün testlər bərabər sayda olmalıdır',
+            'Yalnız manual test olmalıdır'
+        ],
+        correctAnswer: 1,
+        explanation: 'Test Piramidası: Unit testlər sürətli və ucuzdur (çox olmalıdır), UI testlər yavaş və bahalıdır (az olmalıdır).'
+    },
+    {
+        id: 60,
+        category: 'bug_reporting',
+        difficulty: 'medium',
+        question: 'Baqın "Priority" (Prioritet) səviyyəsini kim təyin edir?',
+        options: [
+            'Yalnız Developer',
+            'Adətən Məhsul Sahibi (Product Owner) və ya Biznes tərəf (testçi ilə məsləhətləşərək)',
+            'Yalnız Testçi',
+            'Müştəri Xidmətləri'
+        ],
+        correctAnswer: 1,
+        explanation: 'Prioritet biznesin ehtiyaclarına əsaslanır (nə vaxt düzəlməlidir?), buna görə biznes tərəfi və ya PO qərar verir.'
     }
 ];
 

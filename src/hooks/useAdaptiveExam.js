@@ -17,7 +17,8 @@ export function useAdaptiveExam() {
             setConsecutiveCorrect(newConsecutiveCorrect);
             setConsecutiveWrong(0);
 
-            if (newConsecutiveCorrect >= 2 && currentDifficulty !== 'hard') {
+            // Increase difficulty after 3 consecutive correct answers
+            if (newConsecutiveCorrect >= 3 && currentDifficulty !== 'hard') {
                 nextDifficulty = currentDifficulty === 'easy' ? 'medium' : 'hard';
                 setCurrentDifficulty(nextDifficulty);
                 setConsecutiveCorrect(0);
@@ -27,7 +28,8 @@ export function useAdaptiveExam() {
             setConsecutiveWrong(newConsecutiveWrong);
             setConsecutiveCorrect(0);
 
-            if (newConsecutiveWrong >= 2 && currentDifficulty !== 'easy') {
+            // Decrease difficulty after 3 consecutive wrong answers
+            if (newConsecutiveWrong >= 3 && currentDifficulty !== 'easy') {
                 nextDifficulty = currentDifficulty === 'hard' ? 'medium' : 'easy';
                 setCurrentDifficulty(nextDifficulty);
                 setConsecutiveWrong(0);

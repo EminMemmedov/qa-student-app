@@ -53,26 +53,26 @@ export const istqbQuestions = [
         question: "Aşağıdakılardan hansı testləşdirmənin əsas məqsədlərindən biri DEYİL?",
         options: [
             "Qüsurların (defektlərin) qarşısını almaq",
-            "Proqram təminatına inam yaratmaq",
-            "Proqramda heç bir səhvin olmadığını sübut etmək",
-            "Qərar qəbulu üçün məlumat təmin etmək"
+            "Proqram təminatının keyfiyyətinə inam yaratmaq",
+            "Proqramdakı bütün səhvləri tapmaq və onların olmadığını sübut etmək",
+            "Maraqlı tərəflərə qərar qəbulu üçün məlumat vermək"
         ],
         correctAnswer: 2,
-        explanation: "Testləşdirmə qüsurların olduğunu göstərə bilər, amma onların yoxluğunu sübut edə bilməz (Testin 7 Prinsipi)."
+        explanation: "Testləşdirmə qüsurların olduğunu göstərə bilər, amma onların yoxluğunu və ya bütün səhvlərin tapıldığını sübut edə bilməz (Testin 7 Prinsipi)."
     },
     {
         id: 102,
         chapterId: 1,
         level: "K2",
-        question: "Səhv (Error), Qüsur (Defect) və Uğursuzluq (Failure) arasındakı fərq nədir?",
+        question: "Səhv (Error), Qüsur (Defect) və Uğursuzluq (Failure) arasındakı səbəb-nəticə əlaqəsi hansıdır?",
         options: [
-            "Səhv insan tərəfindən edilir, bu qüsuru yaradır, qüsur isə uğursuzluğa səbəb olur.",
-            "Qüsur insan tərəfindən edilir, bu səhvi yaradır, səhv isə uğursuzluğa səbəb olur.",
-            "Uğursuzluq insan tərəfindən edilir, bu səhvi yaradır, səhv isə qüsuru yaradır.",
-            "Bunların hamısı sinonimdir."
+            "İnsan səhvi -> Kodda qüsur -> Proqramda uğursuzluq",
+            "Kodda qüsur -> Proqramda uğursuzluq -> İnsan səhvi",
+            "Proqramda uğursuzluq -> İnsan səhvi -> Kodda qüsur",
+            "İnsan səhvi -> Proqramda uğursuzluq -> Kodda qüsur"
         ],
         correctAnswer: 0,
-        explanation: "İnsan SƏHV edir -> kodda QÜSUR yaranır -> proqram işlədikdə UĞURSUZLUQ baş verir."
+        explanation: "Düzgün ardıcıllıq: İnsan SƏHV edir (Error), bu kodda QÜSUR (Defect/Bug) yaradır, proqram işlədikdə isə bu qüsur UĞURSUZLUĞA (Failure) səbəb olur."
     },
     // Chapter 4
     {
@@ -125,15 +125,15 @@ export const istqbQuestions = [
         chapterId: 4,
         level: "K3",
         topic: "Sərhəd Dəyərləri (BVA)",
-        question: "Bir imtahanın nəticəsi 0-100 bal aralığında qiymətləndirilir. Keçid balı 60-dır. Hansı test dəyərləri Sərhəd Dəyərləri Analizi (3-value) üçün ən uyğundur?",
+        question: "Bir imtahanın nəticəsi 0-100 bal aralığında qiymətləndirilir. Keçid balı 60-dır. Hansı test dəyərləri Sərhəd Dəyərləri Analizi (2-value approach) üçün ən uyğundur?",
         options: [
             "-1, 0, 59, 60, 100, 101",
             "0, 59, 60, 61, 100",
             "0, 1, 60, 99, 100",
-            "-1, 0, 60, 100, 101"
+            "-1, 0, 60, 99, 100, 101"
         ],
         correctAnswer: 0,
-        explanation: "3-value BVA üçün sərhədlər və onların ətrafı yoxlanılır: min-1, min, min+1, max-1, max, max+1. Bu sualda həm şkalanın sərhədləri (0, 100), həm də keçid balı (60) vacibdir. Keçid balı üçün 59, 60, 61 yoxlanmalıdır. Lakin ən tam cavab sərhədlərin aşılmasını da əhatə edən variantdır: -1, 0, 100, 101 və keçid nöqtəsi 59, 60."
+        explanation: "2-value BVA üçün hər sərhəd üçün 2 dəyər (limit və limitdən kənar) yoxlanılır. Şkala: 0-100 (Min: 0, Max: 100). Keçid: 60. Dəyərlər: Min sərhəd (-1, 0), Max sərhəd (100, 101), Keçid sərhədi (59, 60)."
     },
     {
         id: 405,
@@ -185,9 +185,9 @@ export const istqbQuestions = [
         chapterId: 4,
         level: "K3",
         topic: "Qərar Cədvəli (Decision Table)",
-        question: "Qərar Cədvəli (Decision Table): Bir kluba giriş qaydası: Yaş >= 18 VƏ (Bilet var VƏ YA Dəvətnamə var). Girişin 'İCAZƏ VERİLİR' olması üçün hansı kombinasiya lazımdır?",
+        question: "Qərar Cədvəli: Bir kluba giriş qaydası: Yaş >= 18 VƏ (Bilet var VƏ YA Dəvətnamə var). Girişin 'İCAZƏ VERİLİR' olması üçün hansı kombinasiya lazımdır?",
         options: [
-            "Yaş: 17, Bilet: Var, Dəvətnamə: Yox",
+            "Yaş: 17, Bilet: Var, Dəvətnamə: Var",
             "Yaş: 20, Bilet: Yox, Dəvətnamə: Yox",
             "Yaş: 18, Bilet: Yox, Dəvətnamə: Var",
             "Yaş: 25, Bilet: Yox, Dəvətnamə: Yox"
@@ -662,15 +662,15 @@ export const istqbQuestions = [
         id: 114,
         chapterId: 1,
         level: "K2",
-        question: "Təsdiqləmə (Verification) və Validasiya (Validation) fərqi?",
+        question: "Təsdiqləmə (Verification) və Validasiya (Validation) fərqi nədədir?",
         options: [
-            "Verification: 'Biz düzgün məhsul qururuq?', Validation: 'Biz məhsulu düzgün qururuq?'",
-            "Verification: 'Biz məhsulu düzgün qururuq?', Validation: 'Biz düzgün məhsul qururuq?'",
-            "Fərq yoxdur",
-            "Validation sənədlər üçündür"
+            "Verification: Məhsulun müştəri ehtiyaclarına uyğunluğu; Validation: Sənədlərə uyğunluq",
+            "Verification: 'Biz məhsulu düzgün qururuq?'; Validation: 'Biz düzgün məhsul qururuq?'",
+            "Verification: Kodun yoxlanması; Validation: Testlərin yazılması",
+            "Verification: Dinamik test; Validation: Statik test"
         ],
         correctAnswer: 1,
-        explanation: "Verification (Təsdiqləmə): Tələblərə uyğundurmu? (Building the product right). Validation (Validasiya): İstifadəçi ehtiyacını ödəyirmi? (Building the right product)."
+        explanation: "Verification (Təsdiqləmə): Tələblərə və spesifikasiyalara uyğundurmu? (Building the product right). Validation (Validasiya): İstifadəçi ehtiyacını və gözləntisini ödəyirmi? (Building the right product)."
     },
     {
         id: 115,
@@ -733,15 +733,15 @@ export const istqbQuestions = [
         id: 207,
         chapterId: 2,
         level: "K2",
-        question: "Qeyri-funksional test (Non-functional testing) nəyi yoxlayır?",
+        question: "Qeyri-funksional test (Non-functional testing) sistemin hansı aspektini yoxlayır?",
         options: [
-            "Sistemin nə etdiyini",
-            "Sistemin necə işlədiyini (Performans, Təhlükəsizlik, İstifadə rahatlığı)",
-            "Kodun strukturunu",
-            "Sənədləri"
+            "Sistemin funksional tələblərini",
+            "Sistemin xarakteristikalarını (Necə işlədiyini - sürət, təhlükəsizlik, etibarlılıq)",
+            "Sistemin daxili kod strukturunu",
+            "İstifadəçi interfeysinin rənglərini"
         ],
         correctAnswer: 1,
-        explanation: "Funksional test 'Nə işləyir?' sualına, Qeyri-funksional test isə 'Necə işləyir?' (sürət, təhlükəsizlik) sualına cavab verir."
+        explanation: "Funksional test 'Sistem nə edir?' sualına, Qeyri-funksional test isə 'Sistem bunu necə edir?' (sürət, performans, security) sualına cavab verir."
     },
     {
         id: 208,
@@ -888,15 +888,15 @@ export const istqbQuestions = [
         id: 305,
         chapterId: 3,
         level: "K2",
-        question: "Aşağıdakılardan hansı Rəsmi Review (Formal Review) növü DEYİL?",
+        question: "Rəsmi Review (Formal Review) növlərinə aşağıdakılardan hansı DAXİL DEYİL?",
         options: [
             "İnspeksiya (Inspection)",
             "Texniki Baxış (Technical Review)",
             "Cütləşmiş Proqramlaşdırma (Pair Programming)",
-            "Walkthrough"
+            "Gəzinti (Walkthrough)"
         ],
         correctAnswer: 2,
-        explanation: "Pair Programming bir inkişaf texnikasıdır. Review növləri: Informal, Walkthrough, Technical Review, Inspection."
+        explanation: "Pair Programming bir inkişaf (development) texnikasıdır, baxmayaraq ki, review elementi var. ISTQB-də əsas Review növləri: Informal, Walkthrough, Technical Review, Inspection."
     },
     {
         id: 306,
@@ -1283,15 +1283,15 @@ export const istqbQuestions = [
         id: 609,
         chapterId: 6,
         level: "K2",
-        question: "Davamlı İnteqrasiya (CI/CD) alətlərinin testdə rolu nədir?",
+        question: "Davamlı İnteqrasiya (CI/CD) alətlərinin (məs: Jenkins) test prosesindəki əsas rolu nədir?",
         options: [
-            "Kodu avtomatik olaraq hər dəyişiklikdən sonra test etmək və build almaq",
-            "Kodu yazmaq",
-            "Dizayn etmək",
-            "Layihəni idarə etmək"
+            "Kodu hər dəfə yenilədikdə avtomatik testləri işə salmaq və build prosesini idarə etmək",
+            "Test keysləri avtomatik yazmaq",
+            "Baqları avtomatik düzəltmək",
+            "Test planını hazırlamaq"
         ],
         correctAnswer: 0,
-        explanation: "Jenkins, GitLab CI kimi alətlər kod repozitoriyaya düşən kimi avtomatik testləri işə salır və sürətli rəy verir."
+        explanation: "CI alətləri (Jenkins, GitLab CI) kod repozitoriyaya (məs: Git) düşən kimi avtomatik olaraq build alır və testləri (unit, integration) işə salır."
     },
     {
         id: 610,
