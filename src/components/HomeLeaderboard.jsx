@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { Trophy, Crown, ChevronRight, Sparkles } from 'lucide-react';
+import { Trophy, Crown, ChevronRight, User, Sparkles } from 'lucide-react';
 import { useLeaderboard } from '../hooks/useLeaderboard';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 const getAvatarColor = (name) => {
-    if (!name) return 'bg-slate-500';
+    if (!name) return 'bg-slate-200';
     const colors = [
         'bg-red-500', 'bg-orange-500', 'bg-amber-500', 
         'bg-green-500', 'bg-emerald-500', 'bg-teal-500', 
@@ -17,31 +17,101 @@ const getAvatarColor = (name) => {
     return colors[index];
 };
 
+const PodiumStep = ({ rank, user, delay }) => {
+    const isFirst = rank === 1;
+    const isSecond = rank === 2;
+    const isThird = rank === 3;
+
+    // Heights and Styles
+    const heightClass = isFirst ? 'h-36' : isSecond ? 'h-24' : 'h-20';
+    const gradientClass = isFirst 
+        ? 'bg-gradient-to-b from-yellow-300 to-yellow-500 shadow-yellow-500/20' 
+        : isSecond 
+            ? 'bg-gradient-to-b from-slate-300 to-slate-400 dark:from-slate-600 dark:to-slate-700 shadow-slate-500/20' 
+            : 'bg-gradient-to-b from-orange-300 to-orange-400 dark:from-orange-700 dark:to-orange-800 shadow-orange-500/20';
+    
+    const numberColor = isFirst ? 'text-yellow-700/20' : isSecond ? 'text-slate-600/20 dark:text-slate-900/30' : 'text-orange-800/20 dark:text-orange-900/30';
+
+    return (
+        <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay, type: "spring", stiffness: 200, damping: 20 }}
+            className={`flex flex-col items-center justify-end w-1/3 relative ${isFirst ? 'z-20' : 'z-10'}`}
+        >
+            {/* Avatar Container - Sitting on top of the block */}
+            <div className={`flex flex-col items-center mb-[-10px] relative z-20 transition-transform ${isFirst ? 'scale-110' : 'scale-90'}`}>
+                {isFirst && (
+                    <Crown className="text-yellow-400 drop-shadow-sm animate-bounce mb-1" size={24} fill="currentColor" />
+                )}
+                
+                <div className={`
+                    relative flex items-center justify-center rounded-2xl text-white font-black shadow-md
+                    ${user ? getAvatarColor(user.name) : 'bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-600'}
+                    ${isFirst ? 'w-16 h-16 text-2xl border-4 border-white dark:border-slate-900' : 'w-12 h-12 text-lg border-2 border-white dark:border-slate-900'}
+                `}>
+                    {user ? (
+                        user.name.charAt(0)
+                    ) : (
+                        <User className="text-slate-300 dark:text-slate-600" size={isFirst ? 24 : 20} />
+                    )}
+
+                    {/* XP Badge Pill */}
+                    {user && (
+                        <div className={`
+                            absolute -bottom-2 left-1/2 -translate-x-1/2 
+                            bg-white dark:bg-slate-800 px-2 py-0.5 rounded-full 
+                            shadow-sm border border-slate-100 dark:border-slate-600
+                            flex items-center justify-center min-w-[40px]
+                        `}>
+                            <span className="text-[9px] font-bold text-slate-900 dark:text-white whitespace-nowrap">
+                                {user.xp} XP
+                            </span>
+                        </div>
+                    )}
+                </div>
+
+                {/* Name */}
+                <div className={`mt-3 font-bold text-slate-700 dark:text-slate-200 text-center truncate w-20 ${isFirst ? 'text-xs' : 'text-[10px]'}`}>
+                    {user ? user.name.split(' ')[0] : ''}
+                </div>
+            </div>
+
+            {/* The Block */}
+            <div className={`w-full ${heightClass} ${gradientClass} rounded-t-xl relative flex justify-center pt-2 shadow-xl`}>
+                {/* Shine overlay */}
+                <div className="absolute inset-0 bg-white/10 rounded-t-xl pointer-events-none"></div>
+                <span className={`font-black text-4xl ${numberColor}`}>{rank}</span>
+            </div>
+        </motion.div>
+    );
+};
+
 export default function HomeLeaderboard() {
     const { t } = useTranslation();
     const { leaders, loading, userProfile } = useLeaderboard();
 
     if (loading) return (
-        <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] p-6 shadow-xl border border-slate-100 dark:border-slate-700 mb-8 animate-pulse">
-            <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded-full w-1/2 mb-6 mx-auto"></div>
-            <div className="h-32 bg-slate-200 dark:bg-slate-700 rounded-2xl mb-4"></div>
-            <div className="space-y-2">
-                <div className="h-12 bg-slate-200 dark:bg-slate-700 rounded-xl"></div>
-                <div className="h-12 bg-slate-200 dark:bg-slate-700 rounded-xl"></div>
-            </div>
-        </div>
+        <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] p-6 shadow-xl border border-slate-100 dark:border-slate-700 mb-8 animate-pulse h-64"></div>
     );
 
     if (leaders.length === 0) return null;
 
     const currentUserRank = leaders.findIndex(u => u.uid === userProfile?.uid) + 1;
     const currentUser = leaders.find(u => u.uid === userProfile?.uid);
-    const top3 = leaders.slice(0, 3);
-    const rest = leaders.slice(3, 8); // Show next 5
+    
+    // Always have 3 spots for the podium, fill with null if fewer users
+    const top3 = [
+        leaders[0] || null, // 1st
+        leaders[1] || null, // 2nd
+        leaders[2] || null  // 3rd
+    ];
+    
+    const rest = leaders.slice(3, 8);
 
     return (
         <div className="relative mb-8">
-            {/* Section Header */}
+            {/* Header */}
             <div className="flex items-center justify-between mb-4 px-2">
                 <Link to="/leaderboard" className="flex items-center gap-3 group w-full">
                     <div className="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-xl group-hover:scale-110 transition-transform shrink-0">
@@ -53,100 +123,33 @@ export default function HomeLeaderboard() {
                         </h3>
                         <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-none mt-0.5">Top QA Mütəxəssisləri</p>
                     </div>
-                    {currentUserRank > 0 && (
-                        <div className="text-right shrink-0">
-                            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider group-hover:text-indigo-500 transition-colors">Sənin yerin</div>
-                            <div className="text-xl font-black text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform origin-right">#{currentUserRank}</div>
-                        </div>
-                    )}
                 </Link>
             </div>
 
             <Link to="/leaderboard" className="block">
-                <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] pt-6 px-6 pb-0 shadow-xl shadow-slate-200/50 dark:shadow-black/20 border border-slate-100 dark:border-slate-700 overflow-hidden relative hover:shadow-2xl hover:shadow-indigo-500/10 transition-shadow duration-300 group">
-                    {/* Decorative Background */}
-                    <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-indigo-50/50 to-transparent dark:from-indigo-900/10 pointer-events-none"></div>
-
-                    {/* PODIUM (LADDER) */}
-                    <div className="flex justify-center items-end gap-2 relative z-10 px-2">
+                <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] pt-8 px-4 pb-0 shadow-xl shadow-slate-200/50 dark:shadow-black/20 border border-slate-100 dark:border-slate-700 overflow-hidden relative group">
+                    
+                    {/* PODIUM CONTAINER */}
+                    <div className="flex items-end justify-center gap-1 mb-0 px-2">
                         {/* 2nd Place */}
-                        {top3[1] && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                className="flex flex-col items-center w-1/3"
-                            >
-                                <div className={`w-12 h-12 rounded-2xl ${getAvatarColor(top3[1].name)} flex items-center justify-center text-white font-black text-lg shadow-lg mb-2 z-10 relative border-2 border-white dark:border-slate-700`}>
-                                    {top3[1].name.charAt(0)}
-                                </div>
-                                <div className="text-center mb-1 w-full">
-                                    <div className="text-[10px] font-bold text-slate-700 dark:text-slate-300 truncate">{top3[1].name.split(' ')[0]}</div>
-                                    <div className="text-[9px] font-bold text-slate-400">{top3[1].xp} XP</div>
-                                </div>
-                                {/* Step Block */}
-                                <div className="w-full h-24 bg-gradient-to-b from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-t-2xl flex items-start justify-center pt-2 relative shadow-inner">
-                                    <span className="text-3xl font-black text-slate-400/30 dark:text-slate-500/30">2</span>
-                                </div>
-                            </motion.div>
-                        )}
-
+                        <PodiumStep rank={2} user={top3[1]} delay={0.1} />
+                        
                         {/* 1st Place */}
-                        {top3[0] && (
-                            <motion.div 
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="flex flex-col items-center w-1/3 z-20"
-                            >
-                                <div className="relative mb-2">
-                                    <Crown className="absolute -top-6 left-1/2 -translate-x-1/2 text-yellow-400 drop-shadow-md animate-bounce" size={24} fill="currentColor" />
-                                    <div className={`w-16 h-16 rounded-3xl ${getAvatarColor(top3[0].name)} flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-indigo-500/20 border-4 border-white dark:border-slate-800 relative`}>
-                                        {top3[0].name.charAt(0)}
-                                    </div>
-                                </div>
-                                <div className="text-center mb-1 w-full">
-                                    <div className="text-xs font-black text-slate-900 dark:text-white truncate">{top3[0].name.split(' ')[0]}</div>
-                                    <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-lg inline-block mt-0.5">
-                                        {top3[0].xp} XP
-                                    </div>
-                                </div>
-                                {/* Step Block */}
-                                <div className="w-full h-32 bg-gradient-to-b from-yellow-300 to-yellow-500 rounded-t-2xl flex items-start justify-center pt-2 shadow-lg shadow-yellow-500/20 relative">
-                                    <span className="text-4xl font-black text-yellow-700/30">1</span>
-                                    <div className="absolute inset-0 bg-white/20 rounded-t-2xl pointer-events-none"></div>
-                                </div>
-                            </motion.div>
-                        )}
-
+                        <PodiumStep rank={1} user={top3[0]} delay={0} />
+                        
                         {/* 3rd Place */}
-                        {top3[2] && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="flex flex-col items-center w-1/3"
-                            >
-                                <div className={`w-12 h-12 rounded-2xl ${getAvatarColor(top3[2].name)} flex items-center justify-center text-white font-black text-lg shadow-lg mb-2 z-10 relative border-2 border-white dark:border-slate-700`}>
-                                    {top3[2].name.charAt(0)}
-                                </div>
-                                <div className="text-center mb-1 w-full">
-                                    <div className="text-[10px] font-bold text-slate-700 dark:text-slate-300 truncate">{top3[2].name.split(' ')[0]}</div>
-                                    <div className="text-[9px] font-bold text-slate-400">{top3[2].xp} XP</div>
-                                </div>
-                                {/* Step Block */}
-                                <div className="w-full h-16 bg-gradient-to-b from-orange-200 to-orange-300 dark:from-orange-900/50 dark:to-orange-900 rounded-t-2xl flex items-start justify-center pt-2 relative shadow-inner">
-                                    <span className="text-2xl font-black text-orange-700/30 dark:text-orange-500/30">3</span>
-                                </div>
-                            </motion.div>
-                        )}
+                        <PodiumStep rank={3} user={top3[2]} delay={0.2} />
                     </div>
 
-                    {/* List (Overlapping the podium bottom slightly or just below) */}
-                    <div className="bg-slate-50 dark:bg-slate-900/50 -mx-6 p-6 space-y-3 relative z-10 border-t border-slate-100 dark:border-slate-700">
-                        {rest.map((user, index) => (
+                    {/* The "Ground" connecting the podium */}
+                    <div className="h-4 bg-gradient-to-b from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 relative z-20 -mt-1"></div>
+
+                    {/* Rest of the list */}
+                    <div className="bg-slate-50 dark:bg-slate-900/50 px-5 py-4 space-y-3 relative z-10">
+                        {rest.length > 0 ? rest.map((user, index) => (
                             <div key={user.id} className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm">
                                 <div className="text-xs font-bold text-slate-400 w-4 text-center">#{index + 4}</div>
-                                <div className={`w-8 h-8 min-w-[2rem] rounded-lg ${getAvatarColor(user.name)} flex items-center justify-center text-white text-xs font-bold shadow-sm`}>
+                                <div className={`w-8 h-8 rounded-lg ${getAvatarColor(user.name)} flex items-center justify-center text-white text-xs font-bold shadow-sm`}>
                                     {user.name.charAt(0)}
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -157,9 +160,13 @@ export default function HomeLeaderboard() {
                                 </div>
                                 <div className="text-xs font-bold text-indigo-500 dark:text-indigo-400 whitespace-nowrap">{user.xp} XP</div>
                             </div>
-                        ))}
+                        )) : (
+                            <div className="text-center py-2 text-slate-400 text-xs font-medium">
+                                Digər iştirakçılar hələ qoşulmayıb
+                            </div>
+                        )}
                         
-                        {/* Sticky User Rank */}
+                        {/* Current User Sticky (if not in view) */}
                         {currentUserRank > 8 && currentUser && (
                             <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
                                  <div className="flex items-center gap-3 p-3 bg-indigo-600 text-white rounded-2xl shadow-lg shadow-indigo-500/30">
