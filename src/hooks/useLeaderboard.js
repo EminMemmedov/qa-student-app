@@ -103,18 +103,26 @@ export function useLeaderboard() {
             
             const profile = { uid, name: cleanName };
             setStorageItem('qa_user_profile', profile);
-            setUserProfile(profile);
+            
+            // Logic to determine what data to use
+            let finalXP = xp;
+            let finalLevel = currentLevel;
+            let finalBadges = unlockedAchievements;
+            let shouldReload = false;
 
-            // If restored, check if we need to pull data from DB to LocalStorage
             if (!isNewUser && remoteData) {
-                const currentXP = xp || 0;
                 const remoteXP = remoteData.xp || 0;
+                const currentXP = xp || 0;
 
-                // If remote progress is better, sync it to local
+                // If remote is ahead of local (which is 0 on fresh login), use remote
                 if (remoteXP > currentXP) {
                     console.log("Syncing from DB to LocalStorage...");
+                    finalXP = remoteXP;
+                    finalLevel = remoteData.level || 1;
+                    finalBadges = remoteData.badges || [];
+                    shouldReload = true;
                     
-                    // Update XP
+                    // Update LocalStorage immediately
                     const gameProgress = getStorageItem('qa_game_progress', { 
                         xp: 0, 
                         level: 1, 
@@ -125,35 +133,13 @@ export function useLeaderboard() {
                     gameProgress.level = remoteData.level || 1;
                     setStorageItem('qa_game_progress', gameProgress);
 
-                    // Update Badges
                     if (remoteData.badges && remoteData.badges.length > 0) {
                         setStorageItem('qa_achievements', remoteData.badges);
                     }
-
-                    // Force reload to apply changes to hooks
-                    window.location.reload();
-                    return true;
                 }
             }
 
-            // Determine best data to sync back to DB
-            // If we restored from remote, use remote data to avoid overwriting with local 0s
-            // If local data is actually ahead (e.g. user played offline), keep local.
-            let finalXP = xp;
-            let finalLevel = currentLevel;
-            let finalBadges = unlockedAchievements;
-
-            if (!isNewUser && remoteData) {
-                const remoteXP = remoteData.xp || 0;
-                // If remote is ahead of local (which is 0 on fresh login), use remote
-                if (remoteXP > (xp || 0)) {
-                    finalXP = remoteXP;
-                    finalLevel = remoteData.level || 1;
-                    finalBadges = remoteData.badges || [];
-                }
-            }
-
-            // Sync to DB (Update XP/Level/Badges to current local state or merge)
+            // Sync to DB FIRST to ensure remote state is preserved/updated correctly
             const userData = {
                 name: cleanName,
                 name_lower: nameLower,
@@ -168,6 +154,15 @@ export function useLeaderboard() {
             }
 
             await setDoc(doc(db, COLLECTION_NAME, uid), userData, { merge: true });
+
+            // Only set user profile state if we are NOT going to reload immediately
+            // This prevents the 'syncUser' effect from firing with stale state before reload
+            if (shouldReload) {
+                window.location.reload();
+            } else {
+                setUserProfile(profile);
+            }
+
             return true;
         } catch (error) {
             console.error("Error saving/restoring profile:", error);
