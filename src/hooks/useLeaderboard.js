@@ -136,13 +136,30 @@ export function useLeaderboard() {
                 }
             }
 
+            // Determine best data to sync back to DB
+            // If we restored from remote, use remote data to avoid overwriting with local 0s
+            // If local data is actually ahead (e.g. user played offline), keep local.
+            let finalXP = xp;
+            let finalLevel = currentLevel;
+            let finalBadges = unlockedAchievements;
+
+            if (!isNewUser && remoteData) {
+                const remoteXP = remoteData.xp || 0;
+                // If remote is ahead of local (which is 0 on fresh login), use remote
+                if (remoteXP > (xp || 0)) {
+                    finalXP = remoteXP;
+                    finalLevel = remoteData.level || 1;
+                    finalBadges = remoteData.badges || [];
+                }
+            }
+
             // Sync to DB (Update XP/Level/Badges to current local state or merge)
             const userData = {
                 name: cleanName,
                 name_lower: nameLower,
-                xp: xp, 
-                level: currentLevel,
-                badges: unlockedAchievements,
+                xp: finalXP, 
+                level: finalLevel,
+                badges: finalBadges,
                 lastActive: new Date().toISOString()
             };
 
