@@ -10,7 +10,7 @@ export function useLeaderboard() {
     const [loading, setLoading] = useState(true);
     const [userProfile, setUserProfile] = useState(() => getStorageItem('qa_user_profile', null));
     
-    const { xp } = useGameProgress();
+    const { xp, foundBugs } = useGameProgress();
     const { unlockedAchievements } = useAchievements();
 
     // Calculate level manually since it's not returned by useGameProgress
@@ -48,12 +48,29 @@ export function useLeaderboard() {
             if (!userProfile?.uid) return;
 
             try {
+                // Gather all progress data from LocalStorage
+                const dbLevels = getStorageItem('qa_db_completed_levels', []);
+                const autoLevels = getStorageItem('qa_automation_completed_levels', []);
+                const apiLevels = getStorageItem('qa_api_completed_levels', []);
+                const mobileLevels = getStorageItem('qa_mobile_completed_levels', []);
+
+                const progressData = {
+                    foundBugs: foundBugs || [],
+                    completedLevels: {
+                        sql: dbLevels,
+                        automation: autoLevels,
+                        api: apiLevels,
+                        mobile: mobileLevels
+                    }
+                };
+
                 await setDoc(doc(db, COLLECTION_NAME, userProfile.uid), {
                     name: userProfile.name,
-                    name_lower: userProfile.name.toLowerCase().trim(), // For case-insensitive search
+                    name_lower: userProfile.name.toLowerCase().trim(),
                     xp: xp,
                     level: currentLevel,
                     badges: unlockedAchievements,
+                    progress: progressData, // Store full progress
                     lastActive: new Date().toISOString()
                 }, { merge: true });
             } catch (error) {
@@ -61,9 +78,9 @@ export function useLeaderboard() {
             }
         };
 
-        const timeoutId = setTimeout(syncUser, 2000); // Debounce sync to avoid too many writes
+        const timeoutId = setTimeout(syncUser, 2000); // Debounce sync
         return () => clearTimeout(timeoutId);
-    }, [xp, currentLevel, unlockedAchievements, userProfile]);
+    }, [xp, currentLevel, unlockedAchievements, userProfile, foundBugs]); // Added foundBugs dependency
 
     // 3. Create or Restore User Profile
     const saveProfile = async (name) => {
@@ -108,6 +125,16 @@ export function useLeaderboard() {
             let finalXP = xp;
             let finalLevel = currentLevel;
             let finalBadges = unlockedAchievements;
+            // Capture current local state for fallback/merge
+            let finalProgress = {
+                foundBugs: foundBugs || [],
+                completedLevels: {
+                    sql: getStorageItem('qa_db_completed_levels', []),
+                    automation: getStorageItem('qa_automation_completed_levels', []),
+                    api: getStorageItem('qa_api_completed_levels', []),
+                    mobile: getStorageItem('qa_mobile_completed_levels', [])
+                }
+            };
             let shouldReload = false;
 
             if (!isNewUser && remoteData) {
@@ -120,21 +147,29 @@ export function useLeaderboard() {
                     finalXP = remoteXP;
                     finalLevel = remoteData.level || 1;
                     finalBadges = remoteData.badges || [];
+                    if (remoteData.progress) finalProgress = remoteData.progress;
                     shouldReload = true;
                     
-                    // Update LocalStorage immediately
-                    const gameProgress = getStorageItem('qa_game_progress', { 
-                        xp: 0, 
-                        level: 1, 
-                        foundBugs: [],
-                        completedLevels: { sql: [], automation: [], api: [], mobile: [] } 
-                    });
-                    gameProgress.xp = remoteXP;
-                    gameProgress.level = remoteData.level || 1;
-                    setStorageItem('qa_game_progress', gameProgress);
+                    // 1. Sync XP
+                    setStorageItem('qa_game_xp', remoteXP);
 
+                    // 2. Sync Badges
                     if (remoteData.badges && remoteData.badges.length > 0) {
                         setStorageItem('qa_achievements', remoteData.badges);
+                    }
+
+                    // 3. Sync Progress (Bugs & Levels)
+                    if (remoteData.progress) {
+                        if (remoteData.progress.foundBugs) {
+                            setStorageItem('qa_game_progress', remoteData.progress.foundBugs);
+                        }
+                        if (remoteData.progress.completedLevels) {
+                            const { sql, automation, api, mobile } = remoteData.progress.completedLevels;
+                            if (sql) setStorageItem('qa_db_completed_levels', sql);
+                            if (automation) setStorageItem('qa_automation_completed_levels', automation);
+                            if (api) setStorageItem('qa_api_completed_levels', api);
+                            if (mobile) setStorageItem('qa_mobile_completed_levels', mobile);
+                        }
                     }
                 }
             }
@@ -146,6 +181,7 @@ export function useLeaderboard() {
                 xp: finalXP, 
                 level: finalLevel,
                 badges: finalBadges,
+                progress: finalProgress,
                 lastActive: new Date().toISOString()
             };
 
