@@ -178,7 +178,7 @@ export default function Interview() {
                             className="space-y-6"
                         >
                             <div className="p-4 bg-slate-50 dark:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-600">
-                                <p className="text-slate-600 dark:text-slate-300 italic">"{userAnswer}"</p>
+                                <p className="text-slate-600 dark:text-slate-300 italic break-words whitespace-pre-wrap">"{userAnswer}"</p>
                             </div>
 
                             <div className="flex items-center gap-4">

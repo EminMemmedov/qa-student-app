@@ -98,7 +98,7 @@ export default function InterviewResults() {
                                 </div>
                             </div>
 
-                            <div className="mb-4 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl text-sm text-slate-600 dark:text-slate-300">
+                            <div className="mb-4 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl text-sm text-slate-600 dark:text-slate-300 break-words whitespace-pre-wrap">
                                 {result.userAnswer}
                             </div>
 
