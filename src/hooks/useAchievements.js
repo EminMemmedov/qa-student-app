@@ -148,12 +148,31 @@ export function useAchievements() {
         removeStorageItem('qa_hints_used');
     };
 
+    const unlockAchievement = (achievementId) => {
+        if (!unlockedAchievements.includes(achievementId)) {
+            setUnlockedAchievements(prev => [...prev, achievementId]);
+            
+            // Find achievement details for notification
+            const achievement = achievements.find(a => a.id === achievementId);
+            if (achievement) {
+                setNewAchievement(achievement);
+                setTimeout(() => setNewAchievement(null), 5000);
+            }
+        }
+    };
+
+    const removeAchievement = (achievementId) => {
+        setUnlockedAchievements(prev => prev.filter(id => id !== achievementId));
+    };
+
     return {
         unlockedAchievements,
         newAchievement,
         checkAchievements,
         incrementHintsUsed,
         resetAchievements,
-        hintsUsed
+        hintsUsed,
+        unlockAchievement,
+        removeAchievement
     };
 }

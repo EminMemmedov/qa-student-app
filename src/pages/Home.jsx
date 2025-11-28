@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/PageTransition';
-import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target, MessageSquare, Linkedin, Instagram, Phone, ExternalLink, Newspaper, PieChart, FileText, Bot } from 'lucide-react';
+import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target, MessageSquare, Linkedin, Instagram, Phone, ExternalLink, Newspaper, PieChart, FileText, Bot, GraduationCap } from 'lucide-react';
 import { useGameProgress } from '../hooks/useGameProgress';
 import { useAchievements } from '../hooks/useAchievements';
 import { achievements } from '../data/achievements';
@@ -37,6 +37,7 @@ export default function Home() {
   const progress = (xp % 500) / 500 * 100;
   const nextLevelXp = 500 - (xp % 500);
   const unlockedCount = unlockedAchievements.length;
+  const isISTQBCertified = unlockedAchievements.includes('istqb_certified');
 
   // LinkedIn Articles
   const articles = [
@@ -101,6 +102,31 @@ export default function Home() {
               >
                 👋
               </motion.span>
+              {isISTQBCertified && (
+                <div className="group relative inline-block ml-3 align-middle z-50">
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="p-2 bg-gradient-to-br from-amber-300 to-yellow-500 dark:from-amber-400 dark:to-yellow-600 rounded-xl shadow-lg shadow-amber-500/30 cursor-help relative overflow-hidden"
+                    >
+                      {/* Shine effect */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      
+                      <GraduationCap size={22} className="text-white dark:text-amber-50 drop-shadow-sm" />
+                    </motion.div>
+
+                    {/* Tooltip */}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-48 p-3 bg-slate-900/95 backdrop-blur-md text-white text-center rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none shadow-xl border border-slate-700/50 z-50 whitespace-normal tracking-normal">
+                        <p className="font-bold text-amber-400 mb-1 text-sm">ISTQB Sertifikatlı</p>
+                        <p className="text-slate-200 text-xs leading-relaxed">Bu tələbə sınaq imtahanını uğurla keçmişdir.</p>
+                        
+                        {/* Arrow */}
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-8 border-transparent border-b-slate-900/95"></div>
+                    </div>
+                </div>
+              )}
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-lg font-medium">
               {t('home.subtitle')}
@@ -352,28 +378,29 @@ export default function Home() {
 
         {/* Recent Activity / Stats Row */}
         <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4 mb-8">
-          <div className="bg-white dark:bg-slate-800 p-5 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm flex items-center gap-4 transition-colors">
-            <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 dark:text-green-400">
-              <Bug size={20} />
-            </div>
-            <div>
-              <div className="text-2xl font-black text-slate-900 dark:text-white">{foundBugs.length}</div>
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{t('home.stats.foundBugs')}</div>
-            </div>
+          <div className="bg-white dark:bg-slate-800 p-5 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col justify-between h-full transition-colors">
+             <div className="flex items-center gap-4 mb-2">
+                <div className="w-10 h-10 shrink-0 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 dark:text-green-400">
+                  <Bug size={20} />
+                </div>
+                <div className="text-2xl font-black text-slate-900 dark:text-white">{foundBugs.length}</div>
+             </div>
+             <div className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{t('home.stats.foundBugs')}</div>
           </div>
-          <Link to="/achievements">
+
+          <Link to="/achievements" className="block h-full">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white dark:bg-slate-800 p-5 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm flex items-center gap-4 cursor-pointer hover:border-yellow-300 dark:hover:border-yellow-700 hover:shadow-lg transition-all"
+              className="bg-white dark:bg-slate-800 p-5 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col justify-between h-full cursor-pointer hover:border-yellow-300 dark:hover:border-yellow-700 hover:shadow-lg transition-all"
             >
-              <div className="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center text-yellow-600 dark:text-yellow-400">
-                <Medal size={20} />
+              <div className="flex items-center gap-4 mb-2">
+                  <div className="w-10 h-10 shrink-0 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center text-yellow-600 dark:text-yellow-400">
+                    <Medal size={20} />
+                  </div>
+                  <div className="text-2xl font-black text-slate-900 dark:text-white">{unlockedCount}</div>
               </div>
-              <div>
-                <div className="text-2xl font-black text-slate-900 dark:text-white">{unlockedCount}</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{t('home.stats.achievements')}</div>
-              </div>
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{t('home.stats.achievements')}</div>
             </motion.div>
           </Link>
         </motion.div>

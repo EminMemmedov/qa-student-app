@@ -112,6 +112,14 @@ export const achievements = [
         reward: 250
     },
     {
+        id: 'istqb_certified',
+        title: 'ISTQB Sertifikatlı',
+        description: 'ISTQB sınaq imtahanından uğurla keçin',
+        icon: '🎓',
+        requirement: { type: 'istqb_exam_passed' },
+        reward: 300
+    },
+    {
         id: 'xp_collector',
         title: 'XP Toplayıcı',
         description: '1000 XP toplayın',

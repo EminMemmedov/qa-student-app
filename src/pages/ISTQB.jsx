@@ -6,10 +6,12 @@ import PageTransition from '../components/PageTransition';
 import { istqbChapters, istqbQuestions } from '../data/istqb';
 import { glossaryTerms } from '../data/glossary';
 import { getStorageItem, setStorageItem } from '../utils/storage';
+import { useAchievements } from '../hooks/useAchievements';
 import confetti from 'canvas-confetti';
 
 export default function ISTQB() {
     const { t, i18n } = useTranslation();
+    const { unlockAchievement } = useAchievements();
     const lang = i18n.language || 'az';
     const [mode, setMode] = useState('dashboard'); // dashboard, chapters, quiz, flashcards, analytics
     const [selectedChapter, setSelectedChapter] = useState(null);
@@ -125,6 +127,12 @@ export default function ISTQB() {
         });
         setScore(calculatedScore);
         setShowResults(true);
+        
+        // Check for achievement
+        const percentage = Math.round((calculatedScore / 40) * 100);
+        if (percentage >= 65) {
+            unlockAchievement('istqb_certified');
+        }
         
         // Save to history? Maybe separate exam history?
         // For now, let's not mix exam attempts with learning history to avoid skewing analytics
