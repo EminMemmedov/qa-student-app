@@ -107,7 +107,7 @@ export default function Leaderboard() {
           )}
       </AnimatePresence>
 
-      <div className="bg-indigo-600 pt-16 pb-16 px-6 rounded-b-[2.5rem] shadow-xl relative overflow-hidden">
+      <div className="bg-indigo-600 pt-16 pb-32 px-6 rounded-b-[3rem] shadow-xl relative overflow-hidden mb-[-60px]">
         {/* Background decorative circles */}
         <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -ml-20 -mt-20"></div>
         <div className="absolute bottom-0 right-0 w-48 h-48 bg-purple-500/20 rounded-full blur-2xl -mr-10 -mb-10"></div>
@@ -123,17 +123,17 @@ export default function Leaderboard() {
         </div>
       </div>
 
-      <div className="px-4 -mt-8">
+      <div className="px-4 relative z-20">
         {leaders.length === 0 ? (
-             <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 text-center shadow-lg border border-slate-100 dark:border-slate-700">
+             <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 text-center shadow-lg border border-slate-100 dark:border-slate-700 mt-8">
                 <Trophy size={48} className="mx-auto text-slate-300 dark:text-slate-600 mb-4" />
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Hələ ki, boşdur</h3>
                 <p className="text-slate-500 dark:text-slate-400 text-sm">İlk lider sən ola bilərsən!</p>
              </div>
         ) : (
         <>
-        {/* Top 3 Podium */}
-        <div className="flex justify-center items-end gap-4 mb-8 relative z-10 mt-6">
+        {/* Top 3 Podium (LADDER STYLE) */}
+        <div className="flex justify-center items-end gap-2 mb-4">
             {/* 2nd Place */}
             {top3[1] && (
                 <motion.div 
@@ -142,15 +142,16 @@ export default function Leaderboard() {
                     transition={{ delay: 0.1 }}
                     className="flex flex-col items-center w-1/3"
                 >
-                    <div className="relative flex flex-col items-center">
-                        <div className={`w-14 h-14 rounded-2xl ${getAvatarColor(top3[1].name)} flex items-center justify-center text-white font-black text-lg shadow-lg rotate-3 border-4 border-white dark:border-slate-800 z-10 relative`}>
-                            {top3[1].name.charAt(0)}
-                        </div>
-                        <div className="absolute -bottom-2 bg-slate-200 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm border-2 border-white dark:border-slate-800 z-20">#2</div>
+                    <div className={`w-12 h-12 rounded-2xl ${getAvatarColor(top3[1].name)} flex items-center justify-center text-white font-black text-lg shadow-lg mb-2 z-10 relative border-2 border-white dark:border-slate-700`}>
+                        {top3[1].name.charAt(0)}
                     </div>
-                    <div className="mt-3 text-center w-full">
-                        <div className="text-xs font-bold text-slate-700 dark:text-slate-300 truncate px-1">{top3[1].name.split(' ')[0]}</div>
-                        <div className="text-[10px] font-bold text-slate-400">{top3[1].xp} XP</div>
+                    <div className="text-center mb-1 w-full">
+                        <div className="text-[10px] font-bold text-indigo-100 truncate px-1">{top3[1].name.split(' ')[0]}</div>
+                        <div className="text-[9px] font-bold text-indigo-200/70">{top3[1].xp} XP</div>
+                    </div>
+                    {/* Step Block */}
+                    <div className="w-full h-24 bg-gradient-to-b from-slate-300 to-slate-400 dark:from-slate-600 dark:to-slate-800 rounded-t-2xl flex items-start justify-center pt-2 relative shadow-lg border-t border-white/20">
+                        <span className="text-3xl font-black text-slate-500/30 dark:text-slate-400/30">2</span>
                     </div>
                 </motion.div>
             )}
@@ -160,26 +161,24 @@ export default function Leaderboard() {
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="flex flex-col items-center w-1/3 -translate-y-6 z-10"
+                    className="flex flex-col items-center w-1/3 z-20"
                 >
-                    <div className="relative flex flex-col items-center">
-                        {/* Crown */}
-                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-20">
-                            <Crown className="text-yellow-400 drop-shadow-md animate-bounce" size={28} fill="currentColor" />
-                        </div>
-                        
-                        <div className={`w-20 h-20 rounded-3xl ${getAvatarColor(top3[0].name)} flex items-center justify-center text-white font-black text-3xl shadow-xl shadow-indigo-500/20 border-4 border-white dark:border-slate-800 z-10 relative`}>
+                    <div className="relative mb-2">
+                        <Crown className="absolute -top-6 left-1/2 -translate-x-1/2 text-yellow-300 drop-shadow-md animate-bounce" size={24} fill="currentColor" />
+                        <div className={`w-16 h-16 rounded-3xl ${getAvatarColor(top3[0].name)} flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-indigo-900/50 border-4 border-indigo-500 z-10 relative`}>
                             {top3[0].name.charAt(0)}
-                            <div className="absolute inset-0 bg-white/10 rounded-2xl pointer-events-none"></div>
                         </div>
-                        
-                        <div className="absolute -bottom-3 bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1 rounded-full shadow-md border-2 border-white dark:border-slate-800 z-20 min-w-[2rem] text-center whitespace-nowrap">#1</div>
                     </div>
-                    <div className="mt-5 text-center w-full">
-                        <div className="text-sm font-black text-slate-900 dark:text-white truncate px-1">{top3[0].name.split(' ')[0]}</div>
-                        <div className="text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-lg mt-1 inline-block">
+                    <div className="text-center mb-1 w-full">
+                        <div className="text-xs font-black text-white truncate px-1">{top3[0].name.split(' ')[0]}</div>
+                        <div className="text-[10px] font-bold text-yellow-300 bg-indigo-800/50 px-2 py-0.5 rounded-lg inline-block mt-0.5 backdrop-blur-sm">
                             {top3[0].xp} XP
                         </div>
+                    </div>
+                    {/* Step Block */}
+                    <div className="w-full h-32 bg-gradient-to-b from-yellow-400 to-orange-500 rounded-t-2xl flex items-start justify-center pt-2 shadow-xl shadow-orange-500/30 relative border-t border-yellow-200">
+                        <span className="text-4xl font-black text-yellow-800/30">1</span>
+                        <div className="absolute inset-0 bg-white/20 rounded-t-2xl pointer-events-none"></div>
                     </div>
                 </motion.div>
             )}
@@ -192,22 +191,23 @@ export default function Leaderboard() {
                     transition={{ delay: 0.2 }}
                     className="flex flex-col items-center w-1/3"
                 >
-                    <div className="relative flex flex-col items-center">
-                        <div className={`w-14 h-14 rounded-2xl ${getAvatarColor(top3[2].name)} flex items-center justify-center text-white font-black text-lg shadow-lg -rotate-3 border-4 border-white dark:border-slate-800 z-10 relative`}>
-                            {top3[2].name.charAt(0)}
-                        </div>
-                        <div className="absolute -bottom-2 bg-orange-200 text-orange-700 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm border-2 border-white dark:border-slate-800 z-20">#3</div>
+                    <div className={`w-12 h-12 rounded-2xl ${getAvatarColor(top3[2].name)} flex items-center justify-center text-white font-black text-lg shadow-lg mb-2 z-10 relative border-2 border-white dark:border-slate-700`}>
+                        {top3[2].name.charAt(0)}
                     </div>
-                    <div className="mt-3 text-center w-full">
-                        <div className="text-xs font-bold text-slate-700 dark:text-slate-300 truncate px-1">{top3[2].name.split(' ')[0]}</div>
-                        <div className="text-xs font-bold text-indigo-500 dark:text-indigo-400">{top3[2].xp} XP</div>
+                    <div className="text-center mb-1 w-full">
+                        <div className="text-[10px] font-bold text-indigo-100 truncate px-1">{top3[2].name.split(' ')[0]}</div>
+                        <div className="text-[9px] font-bold text-indigo-200/70">{top3[2].xp} XP</div>
+                    </div>
+                    {/* Step Block */}
+                    <div className="w-full h-16 bg-gradient-to-b from-orange-300 to-orange-400 dark:from-orange-800 dark:to-orange-900 rounded-t-2xl flex items-start justify-center pt-2 relative shadow-lg border-t border-white/20">
+                        <span className="text-2xl font-black text-orange-800/30 dark:text-orange-500/30">3</span>
                     </div>
                 </motion.div>
             )}
         </div>
 
         {/* List */}
-        <div className="space-y-3 pb-8">
+        <div className="space-y-3 pb-8 bg-slate-50 dark:bg-slate-900 rounded-t-[2.5rem] pt-6 -mx-4 px-4 min-h-[200px]">
           {rest.map((user, index) => (
             <motion.div
               key={user.id}
