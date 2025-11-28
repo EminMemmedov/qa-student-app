@@ -50,6 +50,7 @@ export function useLeaderboard() {
             try {
                 await setDoc(doc(db, COLLECTION_NAME, userProfile.uid), {
                     name: userProfile.name,
+                    name_lower: userProfile.name.toLowerCase().trim(), // For case-insensitive search
                     xp: xp,
                     level: currentLevel,
                     badges: unlockedAchievements,
@@ -66,35 +67,46 @@ export function useLeaderboard() {
 
     // 3. Create or Restore User Profile
     const saveProfile = async (name) => {
+        const cleanName = name.trim();
+        const nameLower = cleanName.toLowerCase();
+
         try {
             // Check if user with this name already exists (Login Logic)
-            const q = query(collection(db, COLLECTION_NAME), where("name", "==", name));
-            const querySnapshot = await getDocs(q);
+            // Try searching by lowercase name first (preferred)
+            let q = query(collection(db, COLLECTION_NAME), where("name_lower", "==", nameLower));
+            let querySnapshot = await getDocs(q);
+
+            // Fallback: Try searching by exact name (for legacy records without name_lower)
+            if (querySnapshot.empty) {
+                q = query(collection(db, COLLECTION_NAME), where("name", "==", cleanName));
+                querySnapshot = await getDocs(q);
+            }
 
             let uid;
             let isNewUser = true;
 
             if (!querySnapshot.empty) {
                 // User exists! Restore account
-                const existingUser = querySnapshot.docs[0].data();
-                uid = querySnapshot.docs[0].id; // Use the Document ID as UID
+                // Prefer the user with the highest XP if duplicates exist
+                const docs = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                const bestMatch = docs.sort((a, b) => (b.xp || 0) - (a.xp || 0))[0];
+                
+                uid = bestMatch.id; 
                 isNewUser = false;
-                console.log("User restored:", name, uid);
+                console.log("User restored:", cleanName, uid);
             } else {
                 // New User
                 uid = userProfile?.uid || `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             }
             
-            const profile = { uid, name };
+            const profile = { uid, name: cleanName };
             setStorageItem('qa_user_profile', profile);
             setUserProfile(profile);
 
-            // Sync to DB (Update XP/Level/Badges to current local state or merge)
-            // Note: Ideally we should pull remote XP if it's higher, but for simplicity we sync current local state
-            // or keep remote state if local is fresh (0 XP).
-            
+            // Sync to DB
             const userData = {
-                name: name,
+                name: cleanName,
+                name_lower: nameLower,
                 xp: xp, 
                 level: currentLevel,
                 badges: unlockedAchievements,
