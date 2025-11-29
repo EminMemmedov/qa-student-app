@@ -4,6 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/qa-student-app/', // Base URL for GitHub Pages deployment
   plugins: [
     react(),
     VitePWA({

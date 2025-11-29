@@ -3,14 +3,15 @@ import { Trophy, Crown, ChevronRight, User, Sparkles } from 'lucide-react';
 import { useLeaderboard } from '../hooks/useLeaderboard';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const getAvatarColor = (name) => {
     if (!name) return 'bg-slate-200';
     const colors = [
-        'bg-red-500', 'bg-orange-500', 'bg-amber-500', 
-        'bg-green-500', 'bg-emerald-500', 'bg-teal-500', 
-        'bg-cyan-500', 'bg-blue-500', 'bg-indigo-500', 
-        'bg-violet-500', 'bg-purple-500', 'bg-fuchsia-500', 
+        'bg-red-500', 'bg-orange-500', 'bg-amber-500',
+        'bg-green-500', 'bg-emerald-500', 'bg-teal-500',
+        'bg-cyan-500', 'bg-blue-500', 'bg-indigo-500',
+        'bg-violet-500', 'bg-purple-500', 'bg-fuchsia-500',
         'bg-pink-500', 'bg-rose-500'
     ];
     const index = name.length % colors.length;
@@ -24,17 +25,17 @@ const PodiumStep = ({ rank, user, delay }) => {
 
     // Adjusted heights for better proportions
     const heightClass = isFirst ? 'h-32' : isSecond ? 'h-20' : 'h-16';
-    
-    const gradientClass = isFirst 
-        ? 'bg-gradient-to-b from-yellow-300 to-yellow-500 shadow-yellow-500/20' 
-        : isSecond 
-            ? 'bg-gradient-to-b from-slate-300 to-slate-400 dark:from-slate-600 dark:to-slate-700 shadow-slate-500/20' 
+
+    const gradientClass = isFirst
+        ? 'bg-gradient-to-b from-yellow-300 to-yellow-500 shadow-yellow-500/20'
+        : isSecond
+            ? 'bg-gradient-to-b from-slate-300 to-slate-400 dark:from-slate-600 dark:to-slate-700 shadow-slate-500/20'
             : 'bg-gradient-to-b from-orange-300 to-orange-400 dark:from-orange-700 dark:to-orange-800 shadow-orange-500/20';
-    
+
     const numberColor = isFirst ? 'text-yellow-700/20' : isSecond ? 'text-slate-600/20 dark:text-slate-900/30' : 'text-orange-800/20 dark:text-orange-900/30';
 
     return (
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay, type: "spring", stiffness: 200, damping: 20 }}
@@ -45,7 +46,7 @@ const PodiumStep = ({ rank, user, delay }) => {
                 {isFirst && (
                     <Crown className="text-yellow-400 drop-shadow-sm animate-bounce mb-0.5" size={20} fill="currentColor" />
                 )}
-                
+
                 <div className={`
                     relative flex items-center justify-center rounded-2xl text-white font-black shadow-md
                     ${user ? getAvatarColor(user.name) : 'bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-600'}
@@ -96,7 +97,20 @@ const PodiumStep = ({ rank, user, delay }) => {
 
 const HomeLeaderboard = () => {
     const { t } = useTranslation();
-    const { leaders, loading, userProfile } = useLeaderboard();
+    const { leaders, loading, userProfile, refreshLeaderboard } = useLeaderboard();
+
+    // Listen for profile updates from Home.jsx
+    useEffect(() => {
+        const handleProfileUpdate = () => {
+            // Refresh leaderboard data when profile is updated
+            if (refreshLeaderboard) {
+                refreshLeaderboard();
+            }
+        };
+
+        window.addEventListener('profile-updated', handleProfileUpdate);
+        return () => window.removeEventListener('profile-updated', handleProfileUpdate);
+    }, [refreshLeaderboard]);
 
     if (loading) return (
         <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] p-6 shadow-xl border border-slate-100 dark:border-slate-700 mb-8 animate-pulse h-64"></div>
@@ -106,14 +120,14 @@ const HomeLeaderboard = () => {
 
     const currentUserRank = leaders.findIndex(u => u.uid === userProfile?.uid) + 1;
     const currentUser = leaders.find(u => u.uid === userProfile?.uid);
-    
+
     // Always have 3 spots for the podium, fill with null if fewer users
     const top3 = [
         leaders[0] || null, // 1st
         leaders[1] || null, // 2nd
         leaders[2] || null  // 3rd
     ];
-    
+
     const rest = leaders.slice(3, 8);
 
     return (
@@ -135,15 +149,15 @@ const HomeLeaderboard = () => {
 
             <Link to="/leaderboard" className="block">
                 <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] pt-8 px-4 pb-0 shadow-xl shadow-slate-200/50 dark:shadow-black/20 border border-slate-100 dark:border-slate-700 overflow-hidden relative group">
-                    
+
                     {/* PODIUM CONTAINER */}
                     <div className="flex items-end justify-center gap-1 mb-0 px-2">
                         {/* 2nd Place */}
                         <PodiumStep rank={2} user={top3[1]} delay={0.1} />
-                        
+
                         {/* 1st Place */}
                         <PodiumStep rank={1} user={top3[0]} delay={0} />
-                        
+
                         {/* 3rd Place */}
                         <PodiumStep rank={3} user={top3[2]} delay={0.2} />
                     </div>
@@ -182,11 +196,11 @@ const HomeLeaderboard = () => {
                                 Digər iştirakçılar hələ qoşulmayıb
                             </div>
                         )}
-                        
+
                         {/* Current User Sticky (if not in view) */}
                         {currentUserRank > 8 && currentUser && (
                             <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
-                                 <div className="flex items-center gap-3 p-3 bg-indigo-600 text-white rounded-2xl shadow-lg shadow-indigo-500/30">
+                                <div className="flex items-center gap-3 p-3 bg-indigo-600 text-white rounded-2xl shadow-lg shadow-indigo-500/30">
                                     <div className="text-xs font-bold text-indigo-200 w-4 text-center">#{currentUserRank}</div>
                                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold bg-white/20 text-white`}>
                                         {currentUser.name.charAt(0)}

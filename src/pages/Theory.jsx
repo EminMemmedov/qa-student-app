@@ -22,18 +22,17 @@ const moduleImages = {
     'test-planning': '/theory-test-planning.png'
 };
 
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 const SimpleMarkdown = memo(({ content }) => {
-    // Split content into logical blocks (sections) for better scroll performance
-    // Using a more robust regex to catch headers without losing them
-    const blocks = content.split(/(?=^### )/gm);
+    // Memoize the split operation to avoid recalculating on every render
+    const blocks = useMemo(() => content.split(/(?=^### )/gm), [content]);
 
     return (
         <div className="prose prose-slate dark:prose-invert prose-lg max-w-none">
             {blocks.map((block, blockIndex) => {
                 if (!block.trim()) return null;
-                
+
                 const lines = block.split('\n');
                 return (
                     <div key={blockIndex} className="content-visibility-auto contain-strict mb-8">
@@ -72,12 +71,12 @@ const SimpleMarkdown = memo(({ content }) => {
 
                             // Code blocks (simplified)
                             if (line.trim().startsWith('```')) {
-                                return null; 
+                                return null;
                             }
 
                             // Empty lines
                             if (line.trim() === '') {
-                                return null; 
+                                return null;
                             }
 
                             // Regular paragraphs
@@ -168,8 +167,8 @@ const QuizComponent = ({ quiz, onComplete }) => {
                     onClick={handleSubmit}
                     disabled={!isComplete}
                     className={`mt-8 w-full py-4 rounded-xl font-bold text-lg transition-all ${isComplete
-                            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-700 transform hover:-translate-y-1'
-                            : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
+                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-700 transform hover:-translate-y-1'
+                        : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
                         }`}
                 >
                     {t('theory.quiz.checkResults')}

@@ -7,7 +7,7 @@ import { useOfflineSync } from '../hooks/useOfflineSync';
 import { useAchievements } from '../hooks/useAchievements';
 import { motion, useAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { WifiOff } from 'lucide-react';
 
 export default function Layout() {
@@ -35,6 +35,11 @@ export default function Layout() {
     useEffect(() => {
         controls.start({ x: 0 });
     }, [location.pathname, controls]);
+
+    // Memoized callback for achievement close handler
+    const handleAchievementClose = useCallback(() => {
+        // Achievement close logic can be added here if needed
+    }, []);
 
     const isWidePage = ['/practice/database', '/practice/automation'].includes(location.pathname);
     const isHomePage = location.pathname === '/';
@@ -69,7 +74,7 @@ export default function Layout() {
                     )} */}
 
                     {/* Achievement Notification */}
-                    <AchievementUnlocked achievement={newAchievement} onClose={() => { }} />
+                    <AchievementUnlocked achievement={newAchievement} onClose={handleAchievementClose} />
 
                     <Outlet />
                 </div>

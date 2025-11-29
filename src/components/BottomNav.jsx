@@ -1,6 +1,5 @@
 import { Home, BookOpen, Bug, LibraryBig, GraduationCap, Trophy } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import clsx from 'clsx';
 
 export default function BottomNav() {
@@ -15,15 +14,8 @@ export default function BottomNav() {
         { icon: LibraryBig, label: 'Lüğət', path: '/glossary' },
     ];
 
-    // Handle browser back/forward navigation and provide haptic feedback
-    useEffect(() => {
-        const handlePopState = (event) => {
-            // Navigate back in history when user presses back button on Android
-            navigate(-1);
-        };
-        window.addEventListener('popstate', handlePopState);
-        return () => window.removeEventListener('popstate', handlePopState);
-    }, [navigate]);
+    // REMOVED: Problematic popstate handler that was causing double navigation
+    // React Router already handles browser back/forward navigation correctly
 
     const handleNavigation = (path) => {
         if (location.pathname !== path) {
@@ -36,8 +28,8 @@ export default function BottomNav() {
     return (
         <nav
             className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 z-[100] transition-colors duration-300 shadow-[0_-1px_10px_rgba(0,0,0,0.05)]"
-            style={{ 
-                paddingBottom: 'max(env(safe-area-inset-bottom), 16px)', 
+            style={{
+                paddingBottom: 'max(env(safe-area-inset-bottom), 16px)',
                 paddingTop: '8px',
                 // Prevent iOS bottom bar jumpiness
                 height: 'calc(60px + max(env(safe-area-inset-bottom), 16px))'
@@ -49,7 +41,9 @@ export default function BottomNav() {
                     return (
                         <button
                             key={item.path}
-                            onClick={() => handleNavigation(item.path)} aria-label={item.label}
+                            onClick={() => handleNavigation(item.path)}
+                            aria-label={item.label}
+                            aria-current={isActive ? 'page' : undefined}
                             className={clsx(
                                 "flex flex-col items-center gap-1 p-3 rounded-xl transition-all duration-300 min-w-[60px] min-h-[60px] justify-center touch-manipulation",
                                 isActive

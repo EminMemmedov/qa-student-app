@@ -15,6 +15,7 @@ import BugReportModal from '../../components/BugReportModal';
 import { celebrateCompletion } from '../../utils/confetti';
 import { practiceSpecs } from '../../data/practiceSpecs';
 import { getBugsForModule } from '../../data/bugs';
+import { logger } from '../../utils/logger';
 
 export default function Payment() {
     const { foundBugs, addBug, resetProgress, getBugDifficulty, xp, getBugPoints, deductXP } = useGameProgress();
@@ -217,7 +218,7 @@ export default function Payment() {
         // Bug: No success message shown
         if (!foundNew) {
             // Just silently "succeed" - this is the bug
-            console.log('Payment processed (but no message shown to user)');
+            logger.log('Payment processed (but no message shown to user)');
         }
     };
 
@@ -305,10 +306,10 @@ export default function Payment() {
                             <input
                                 type="text"
                                 placeholder="0000 0000 0000 0000"
-                                className={`w-full pl-10 p-3 border-2 rounded-xl outline-none transition-colors ${touched.cardNumber && errors.cardNumber
+                                className={`w - full pl - 10 p - 3 border - 2 rounded - xl outline - none transition - colors ${touched.cardNumber && errors.cardNumber
                                     ? 'border-red-300 focus:border-red-500'
                                     : 'border-slate-200 focus:border-green-500'
-                                    }`}
+                                    } `}
                                 value={cardNumber}
                                 onChange={(e) => setCardNumber(e.target.value)}
                                 onBlur={() => handleBlur('cardNumber')}
@@ -336,10 +337,10 @@ export default function Payment() {
                             <input
                                 type="text"
                                 placeholder="Ad Soyad"
-                                className={`w-full pl-10 p-3 border-2 rounded-xl outline-none transition-colors ${touched.cardName && errors.cardName
+                                className={`w - full pl - 10 p - 3 border - 2 rounded - xl outline - none transition - colors ${touched.cardName && errors.cardName
                                     ? 'border-red-300 focus:border-red-500'
                                     : 'border-slate-200 focus:border-purple-500'
-                                    }`}
+                                    } `}
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onBlur={() => handleBlur('cardName')}
@@ -365,10 +366,10 @@ export default function Payment() {
                                 <Calendar className="absolute left-3 top-3.5 text-slate-400" size={18} />
                                 <input
                                     type="month"
-                                    className={`w-full pl-10 p-3 border-2 rounded-xl outline-none transition-colors ${touched.expiry && errors.expiry
+                                    className={`w - full pl - 10 p - 3 border - 2 rounded - xl outline - none transition - colors ${touched.expiry && errors.expiry
                                         ? 'border-red-300 focus:border-red-500'
                                         : 'border-slate-200 focus:border-purple-500'
-                                        }`}
+                                        } `}
                                     value={expiry}
                                     onChange={(e) => setExpiry(e.target.value)}
                                     onBlur={() => handleBlur('expiry')}
@@ -390,10 +391,10 @@ export default function Payment() {
                                 <input
                                     type="text"
                                     placeholder="123"
-                                    className={`w-full pl-10 p-3 border-2 rounded-xl outline-none transition-colors ${touched.cvv && errors.cvv
+                                    className={`w - full pl - 10 p - 3 border - 2 rounded - xl outline - none transition - colors ${touched.cvv && errors.cvv
                                         ? 'border-red-300 focus:border-red-500'
                                         : 'border-slate-200 focus:border-purple-500'
-                                        }`}
+                                        } `}
                                     value={cvv}
                                     onChange={(e) => {
                                         setCvv(e.target.value);
