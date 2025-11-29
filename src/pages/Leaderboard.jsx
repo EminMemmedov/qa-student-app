@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, User, Loader2, ChevronRight, Sparkles, Crown, Edit2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLeaderboard } from '../hooks/useLeaderboard';
-import { FixedSizeList as List } from 'react-window';
+import { FixedSizeList } from 'react-window';
 
 const getAvatarColor = (name) => {
     if (!name) return 'bg-slate-200';
@@ -304,7 +304,7 @@ export default function Leaderboard() {
         {/* Virtualized List */}
         <div className="pb-8 bg-white dark:bg-slate-800 rounded-t-[2.5rem] pt-8 -mx-4 min-h-[200px] shadow-xl border-t border-slate-100 dark:border-slate-700 relative z-10">
           {rest.length > 0 ? (
-            <List
+            <FixedSizeList
               height={Math.min(rest.length * 85, 600)} // Max height of 600px or total items height
               itemCount={rest.length}
               itemSize={85} // Height of each item (including margin)
@@ -312,7 +312,7 @@ export default function Leaderboard() {
               className="scrollbar-thin scrollbar-thumb-indigo-200 dark:scrollbar-thumb-indigo-800 scrollbar-track-transparent"
             >
               {ListItem}
-            </List>
+            </FixedSizeList>
           ) : (
              <div className="text-center py-8 text-slate-400 text-sm font-medium px-6">
                  Digər iştirakçılar hələ qoşulmayıb.
