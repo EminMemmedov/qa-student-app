@@ -1,10 +1,11 @@
 import { Component } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import { trackEvent } from '../lib/firebase';
 
 class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: null, errorInfo: null };
   }
 
   static getDerivedStateFromError(error) {
@@ -12,7 +13,19 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
+    // Log error to console
     console.error("Uncaught error:", error, errorInfo);
+    
+    // Track error in analytics
+    trackEvent('app_error', {
+      error_message: error.toString(),
+      error_stack: error.stack?.substring(0, 500), // Limit stack trace length
+      component_stack: errorInfo.componentStack?.substring(0, 500),
+      user_agent: navigator.userAgent,
+      timestamp: new Date().toISOString(),
+    });
+
+    this.setState({ errorInfo });
   }
 
   handleReset = () => {

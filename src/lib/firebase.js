@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAnalytics, logEvent, isSupported } from "firebase/analytics";
+import { getPerformance } from "firebase/performance";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAFAoHsh7rQ32qvIUqdyRaIZkGRjKI2t8M",
@@ -16,3 +18,38 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore
 export const db = getFirestore(app);
+
+// Initialize Analytics (only in browser and if supported)
+let analytics = null;
+let performance = null;
+
+if (typeof window !== 'undefined') {
+  isSupported().then((supported) => {
+    if (supported) {
+      analytics = getAnalytics(app);
+      performance = getPerformance(app);
+    }
+  });
+}
+
+// Analytics Helper Functions
+export const trackEvent = (eventName, params = {}) => {
+  if (analytics) {
+    logEvent(analytics, eventName, params);
+  }
+};
+
+export const trackPageView = (pageName) => {
+  trackEvent('page_view', { page_name: pageName });
+};
+
+export const trackUserAction = (action, category, label, value) => {
+  trackEvent('user_action', {
+    action,
+    category,
+    label,
+    value
+  });
+};
+
+export { analytics, performance };

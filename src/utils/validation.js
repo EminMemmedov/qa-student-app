@@ -82,3 +82,66 @@ export function validateAddress(address) {
         errors
     };
 }
+
+// Validate user name (for leaderboard)
+export function validateName(name) {
+    if (!name || typeof name !== 'string') {
+        return { isValid: false, error: 'Ad daxil edilməlidir' };
+    }
+
+    const trimmed = name.trim();
+    
+    if (trimmed.length < 2) {
+        return { isValid: false, error: 'Ad ən azı 2 simvol olmalıdır' };
+    }
+
+    if (trimmed.length > 50) {
+        return { isValid: false, error: 'Ad maksimum 50 simvol ola bilər' };
+    }
+
+    if (containsXSS(trimmed)) {
+        return { isValid: false, error: 'Adda icazəsiz simvollar var' };
+    }
+
+    // Only letters, spaces, and common name characters
+    if (!/^[a-zA-ZəƏıİüÜöÖğĞşŞçÇ\s\-\']+$/.test(trimmed)) {
+        return { isValid: false, error: 'Adda yalnız hərf və boşluq ola bilər' };
+    }
+
+    return { isValid: true, value: trimmed };
+}
+
+// Validate feedback text
+export function validateFeedback(text, maxLength = 1000) {
+    if (!text || typeof text !== 'string') {
+        return { isValid: false, error: 'Rəy daxil edilməlidir' };
+    }
+
+    const trimmed = text.trim();
+
+    if (trimmed.length === 0) {
+        return { isValid: false, error: 'Rəy boş ola bilməz' };
+    }
+
+    if (trimmed.length > maxLength) {
+        return { isValid: false, error: `Rəy maksimum ${maxLength} simvol ola bilər` };
+    }
+
+    if (containsXSS(trimmed)) {
+        return { isValid: false, error: 'Rəydə icazəsiz simvollar var' };
+    }
+
+    return { isValid: true, value: trimmed };
+}
+
+// Sanitize user input
+export function sanitizeInput(input) {
+    if (typeof input !== 'string') return input;
+    
+    return input
+        .trim()
+        .replace(/<script.*?>.*?<\/script>/gi, '')
+        .replace(/<.*?>/g, '')
+        .replace(/javascript:/gi, '')
+        .replace(/on\w+\s*=/gi, '');
+}

@@ -7,6 +7,12 @@ import './i18n/i18n'
 import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary'
 import OfflineIndicator from './components/OfflineIndicator'
+import CookieConsent from './components/CookieConsent'
+import PWAInstallPrompt from './components/PWAInstallPrompt'
+import { initWebVitals } from './utils/webVitals'
+
+// Initialize Web Vitals monitoring
+initWebVitals();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -14,6 +20,8 @@ createRoot(document.getElementById('root')).render(
       <ThemeProvider>
         <HashRouter>
           <OfflineIndicator />
+          <CookieConsent />
+          <PWAInstallPrompt />
           <App />
         </HashRouter>
       </ThemeProvider>

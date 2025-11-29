@@ -5,11 +5,13 @@ import { Search, LibraryBig, Filter, Sparkles, ChevronLeft, ChevronDown, Lightbu
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import { glossaryTerms, categories } from '../data/glossary';
+import { useDebounce } from '../hooks/useDebounce';
 
 export default function Glossary() {
     const { t, i18n } = useTranslation();
     const lang = i18n.language || 'az';
     const [search, setSearch] = useState('');
+    const debouncedSearch = useDebounce(search, 300); // Debounce search input
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [expandedTerm, setExpandedTerm] = useState(null);
 
@@ -19,13 +21,15 @@ export default function Glossary() {
         return glossaryTerms[today % glossaryTerms.length];
     }, []);
 
-    const filteredTerms = glossaryTerms.filter(item => {
-        const matchesSearch = item.term.toLowerCase().includes(search.toLowerCase()) || 
-                              item.definition[lang]?.toLowerCase().includes(search.toLowerCase()) ||
-                              item.definition['en'].toLowerCase().includes(search.toLowerCase()); // Search in EN as well
-        const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
-        return matchesSearch && matchesCategory;
-    });
+    const filteredTerms = useMemo(() => {
+        return glossaryTerms.filter(item => {
+            const matchesSearch = item.term.toLowerCase().includes(debouncedSearch.toLowerCase()) || 
+                                  item.definition[lang]?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+                                  item.definition['en'].toLowerCase().includes(debouncedSearch.toLowerCase());
+            const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+            return matchesSearch && matchesCategory;
+        });
+    }, [debouncedSearch, selectedCategory, lang]);
 
     const categoryColors = {
         basics: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',

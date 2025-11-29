@@ -5,15 +5,15 @@ import Layout from './components/Layout';
 import { AnimatePresence } from 'framer-motion';
 import { DevToolsProvider } from './context/DevToolsContext';
 
-// Lazy load pages for better performance
-const Home = lazy(() => import('./pages/Home' /* webpackPrefetch: true */));
-const Theory = lazy(() => import('./pages/Theory' /* webpackPrefetch: true */));
-const PracticeHub = lazy(() => import('./pages/practice/PracticeHub' /* webpackPrefetch: true */));
+// Lazy load pages for better performance with prefetching
+const Home = lazy(() => import(/* webpackPrefetch: true */ './pages/Home'));
+const Theory = lazy(() => import(/* webpackPrefetch: true */ './pages/Theory'));
+const PracticeHub = lazy(() => import(/* webpackPrefetch: true */ './pages/practice/PracticeHub'));
+const Leaderboard = lazy(() => import(/* webpackPrefetch: true */ './pages/Leaderboard'));
 const Registration = lazy(() => import('./pages/practice/Registration'));
 const Payment = lazy(() => import('./pages/practice/Payment'));
 const Banking = lazy(() => import('./pages/practice/Banking'));
 const Ecommerce = lazy(() => import('./pages/practice/Ecommerce'));
-const Exam = lazy(() => import('./pages/practice/Exam' /* webpackPrefetch: true */));
 const ExamResults = lazy(() => import('./pages/practice/ExamResults'));
 const API = lazy(() => import('./pages/practice/API'));
 const Achievements = lazy(() => import('./pages/Achievements'));
@@ -24,17 +24,18 @@ const Interview = lazy(() => import('./pages/Interview'));
 const InterviewResults = lazy(() => import('./pages/InterviewResults'));
 const Automation = lazy(() => import('./pages/practice/Automation'));
 const Database = lazy(() => import('./pages/practice/Database'));
-const Glossary = lazy(() => import('./pages/Glossary' /* webpackPrefetch: true */));
-const ISTQB = lazy(() => import('./pages/ISTQB' /* webpackPrefetch: true */));
-const Leaderboard = lazy(() => import('./pages/Leaderboard' /* webpackPrefetch: true */));
+const Glossary = lazy(() => import(/* webpackPrefetch: true */ './pages/Glossary'));
+const ISTQB = lazy(() => import(/* webpackPrefetch: true */ './pages/ISTQB'));
+const Exam = lazy(() => import(/* webpackPrefetch: true */ './pages/practice/Exam'));
+
+// Import skeleton components
+import { SkeletonHome } from './components/Skeleton';
 
 // Loading fallback component
 const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-900">
-    <div className="space-y-4">
-      <div className="w-24 h-6 bg-gray-300 dark:bg-gray-700 rounded animate-pulse" />
-      <div className="w-48 h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse" />
-      <div className="w-32 h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse" />
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6 pt-24">
+    <div className="max-w-4xl mx-auto">
+      <SkeletonHome />
     </div>
   </div>
 );
