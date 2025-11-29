@@ -147,8 +147,8 @@ export default function BugReportModal({ isOpen, onClose, onSubmit, bug }) {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: "100%", opacity: 0 }}
                     transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                    className="bg-white rounded-t-2xl md:rounded-2xl shadow-2xl w-full max-w-2xl h-[85vh] md:h-auto md:max-h-[90vh] flex flex-col"
-                    style={{ height: '85dvh' }} // Better mobile support
+                    className="bg-white rounded-t-2xl md:rounded-2xl shadow-2xl w-full max-w-2xl md:h-auto md:max-h-[90vh] flex flex-col"
+                    style={{ height: 'calc(100vh - 80px)', maxHeight: 'calc(100vh - 80px)' }} // Leave space for bottom nav
                 >
                     {/* Header */}
                     <div className="bg-slate-900 text-white p-4 md:p-6 flex justify-between items-start shrink-0">
@@ -314,7 +314,7 @@ export default function BugReportModal({ isOpen, onClose, onSubmit, bug }) {
                     </div>
 
                     {/* Footer - Fixed Button */}
-                    <div className="px-4 pt-4 pb-6 md:p-6 border-t border-slate-100 bg-white shrink-0" style={{ paddingBottom: 'max(1.5rem, calc(env(safe-area-inset-bottom) + 1.5rem))' }}>
+                    <div className="px-4 pt-4 md:p-6 border-t border-slate-100 bg-white shrink-0" style={{ paddingBottom: '6rem' }}>
                         <button
                             type="submit"
                             form="bug-report-form"
