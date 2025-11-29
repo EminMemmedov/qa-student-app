@@ -9,7 +9,8 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', '*.png', '*.jpg', '*.jpeg', '*.webp', '*.svg'],
+      injectRegister: 'auto',
+      includeAssets: ['vite.svg', '*.png'],
       manifest: {
         name: 'QA Student App',
         short_name: 'QA Student',
@@ -18,9 +19,11 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait-primary',
+        start_url: '/qa-student-app/',
+        scope: '/qa-student-app/',
         icons: [
           {
-            src: 'vite.svg',
+            src: '/qa-student-app/vite.svg',
             sizes: 'any',
             type: 'image/svg+xml',
             purpose: 'any maskable'
@@ -28,17 +31,16 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}'], // Cache ALL static assets aggressively
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}'],
         runtimeCaching: [
           {
-            // Cache Google Fonts
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -46,14 +48,13 @@ export default defineConfig({
             }
           },
           {
-            // Cache Google Fonts (Static)
             urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'gstatic-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -61,22 +62,20 @@ export default defineConfig({
             }
           },
           {
-            // Cache Images (External & Local) - StaleWhileRevalidate strategy
-            // Serve from cache immediately, then update in background
             urlPattern: /\.(?:png|jpg|jpeg|svg|webp)$/i,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'images-cache',
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30
               }
             }
           }
         ]
       },
       devOptions: {
-        enabled: true
+        enabled: false // Disable PWA in development to avoid these errors
       }
     })
   ],
