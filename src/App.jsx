@@ -6,14 +6,14 @@ import { AnimatePresence } from 'framer-motion';
 import { DevToolsProvider } from './context/DevToolsContext';
 
 // Lazy load pages for better performance
-const Home = lazy(() => import('./pages/Home'));
-const Theory = lazy(() => import('./pages/Theory'));
-const PracticeHub = lazy(() => import('./pages/practice/PracticeHub'));
+const Home = lazy(() => import('./pages/Home' /* webpackPrefetch: true */));
+const Theory = lazy(() => import('./pages/Theory' /* webpackPrefetch: true */));
+const PracticeHub = lazy(() => import('./pages/practice/PracticeHub' /* webpackPrefetch: true */));
 const Registration = lazy(() => import('./pages/practice/Registration'));
 const Payment = lazy(() => import('./pages/practice/Payment'));
 const Banking = lazy(() => import('./pages/practice/Banking'));
 const Ecommerce = lazy(() => import('./pages/practice/Ecommerce'));
-const Exam = lazy(() => import('./pages/practice/Exam'));
+const Exam = lazy(() => import('./pages/practice/Exam' /* webpackPrefetch: true */));
 const ExamResults = lazy(() => import('./pages/practice/ExamResults'));
 const API = lazy(() => import('./pages/practice/API'));
 const Achievements = lazy(() => import('./pages/Achievements'));
@@ -24,9 +24,9 @@ const Interview = lazy(() => import('./pages/Interview'));
 const InterviewResults = lazy(() => import('./pages/InterviewResults'));
 const Automation = lazy(() => import('./pages/practice/Automation'));
 const Database = lazy(() => import('./pages/practice/Database'));
-const Glossary = lazy(() => import('./pages/Glossary'));
-const ISTQB = lazy(() => import('./pages/ISTQB'));
-const Leaderboard = lazy(() => import('./pages/Leaderboard'));
+const Glossary = lazy(() => import('./pages/Glossary' /* webpackPrefetch: true */));
+const ISTQB = lazy(() => import('./pages/ISTQB' /* webpackPrefetch: true */));
+const Leaderboard = lazy(() => import('./pages/Leaderboard' /* webpackPrefetch: true */));
 
 // Loading fallback component
 const PageLoader = () => (
