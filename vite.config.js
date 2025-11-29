@@ -23,7 +23,7 @@ export default defineConfig({
         scope: '/qa-student-app/',
         icons: [
           {
-            src: '/qa-student-app/vite.svg',
+            src: 'vite.svg',
             sizes: 'any',
             type: 'image/svg+xml',
             purpose: 'any maskable'
