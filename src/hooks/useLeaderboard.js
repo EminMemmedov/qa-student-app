@@ -74,7 +74,11 @@ export function useLeaderboard() {
                     lastActive: new Date().toISOString()
                 }, { merge: true });
             } catch (error) {
-                console.error("Error syncing user data:", error);
+                if (error.code === 'permission-denied') {
+                    console.error("Sync Failed: Security Rules prevented this update. Are you cheating? 😉");
+                } else {
+                    console.error("Error syncing user data:", error);
+                }
             }
         };
 
@@ -128,6 +132,13 @@ export function useLeaderboard() {
                     // Reload to apply changes immediately
                     window.location.reload();
                 }
+            }
+        }, (error) => {
+            // Handle permission errors gracefully (e.g. if Security Rules block read/write)
+            if (error.code === 'permission-denied') {
+               console.warn("Firestore Permission Denied: Check your Security Rules.");
+            } else {
+               console.error("Firestore Error:", error);
             }
         });
 

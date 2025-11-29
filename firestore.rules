@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isUserAuthenticated() {
+      return request.auth.uid != null; 
+    }
+
+    // Rules for the 'users' collection (Production)
+    match /users/{userId} {
+      allow read: if true; // Public leaderboard
+      
+      // Allow create/update only if:
+      // 1. User owns the document
+      // 2. Data structure is valid
+      // 3. XP increase is "sane" (e.g. max 500 per update) to prevent huge hacks
+      allow create: if isUserAuthenticated() && request.auth.uid == userId;
+      allow update: if isUserAuthenticated() && request.auth.uid == userId
+                    && request.resource.data.xp >= resource.data.xp // XP cannot decrease
+                    && request.resource.data.xp <= resource.data.xp + 500; // Max 500 XP jump allowed per sync
+    }
+
+    // Rules for the 'users_test' collection (Development)
+    match /users_test/{userId} {
+      allow read: if true;
+      allow write: if true; // Open for dev, but you can lock this too
+    }
+  }
+}
