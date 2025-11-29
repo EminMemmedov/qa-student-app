@@ -80,7 +80,7 @@ export function useLeaderboard() {
 
         const timeoutId = setTimeout(syncUser, 2000); // Debounce sync
         return () => clearTimeout(timeoutId);
-    }, [xp, currentLevel, unlockedAchievements, userProfile, foundBugs]); // Added foundBugs dependency
+    }, [xp, currentLevel, unlockedAchievements, userProfile, foundBugs]);
 
     // 4. Listen for remote changes (Admin updates or multi-device sync)
     useEffect(() => {
@@ -230,10 +230,39 @@ export function useLeaderboard() {
         }
     };
 
+    // 5. Update Name (Rename existing user)
+    const updateName = async (newName) => {
+        if (!userProfile?.uid) return false;
+        
+        const cleanName = newName.trim();
+        const nameLower = cleanName.toLowerCase();
+        
+        try {
+            // Update Local State & Storage
+            const updatedProfile = { ...userProfile, name: cleanName };
+            // Update local storage first
+            setStorageItem('qa_user_profile', updatedProfile);
+            // Update state
+            setUserProfile(updatedProfile);
+            
+            // Update Firestore
+            await setDoc(doc(db, COLLECTION_NAME, userProfile.uid), {
+                name: cleanName,
+                name_lower: nameLower
+            }, { merge: true });
+            
+            return true;
+        } catch (error) {
+            console.error("Error updating name:", error);
+            return false;
+        }
+    };
+
     return {
         leaders,
         loading,
         userProfile,
-        saveProfile
+        saveProfile,
+        updateName
     };
 }

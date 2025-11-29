@@ -68,8 +68,19 @@ const PodiumStep = ({ rank, user, delay }) => {
                 )}
 
                 {/* Name - Clear separation */}
-                <div className={`mt-1 font-bold text-slate-700 dark:text-slate-200 text-center truncate w-full px-1 ${isFirst ? 'text-xs' : 'text-[10px]'}`}>
-                    {user ? user.name.split(' ')[0] : ''}
+                <div className={`mt-1 font-bold text-slate-700 dark:text-slate-200 text-center w-full px-1 ${isFirst ? 'text-xs' : 'text-[10px]'} flex items-center justify-center gap-0.5`}>
+                    <span className="truncate max-w-[80%]">
+                        {user ? user.name.split(' ')[0] : ''}
+                    </span>
+                    {user?.badges?.includes('istqb_certified') && (
+                        <div className="relative group/home-podium shrink-0">
+                            <Sparkles size={12} className="text-yellow-500" />
+                            {/* Tooltip */}
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-1.5 py-0.5 bg-slate-900/90 text-white text-[8px] rounded opacity-0 group-hover/home-podium:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+                                ISTQB
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -83,7 +94,7 @@ const PodiumStep = ({ rank, user, delay }) => {
     );
 };
 
-export default function HomeLeaderboard() {
+const HomeLeaderboard = () => {
     const { t } = useTranslation();
     const { leaders, loading, userProfile } = useLeaderboard();
 
@@ -149,9 +160,19 @@ export default function HomeLeaderboard() {
                                     {user.name.charAt(0)}
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <div className="text-sm font-bold text-slate-700 dark:text-slate-200 truncate flex items-center gap-1">
-                                        {user.name}
-                                        {user.badges?.includes('istqb_certified') && <Sparkles size={10} className="text-yellow-500" />}
+                                    <div className="text-sm font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1">
+                                        <span className="truncate">
+                                            {user.name}
+                                        </span>
+                                        {user.badges?.includes('istqb_certified') && (
+                                            <div className="relative group/home-list shrink-0">
+                                                <Sparkles size={12} className="text-yellow-500" />
+                                                {/* Tooltip */}
+                                                <div className="absolute left-0 top-full mt-1 px-1.5 py-0.5 bg-slate-900/90 text-white text-[9px] rounded opacity-0 group-hover/home-list:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+                                                    ISTQB
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="text-xs font-bold text-indigo-500 dark:text-indigo-400 whitespace-nowrap">{user.xp} XP</div>
@@ -183,3 +204,5 @@ export default function HomeLeaderboard() {
         </div>
     );
 }
+
+export default HomeLeaderboard;

@@ -1,20 +1,16 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/PageTransition';
-import { Sparkles, Trophy, Quote, BookOpen, Bug, ArrowRight, Star, Zap, Medal, Target, MessageSquare, Linkedin, Instagram, Phone, ExternalLink, Newspaper, PieChart, FileText, Bot, GraduationCap } from 'lucide-react';
+import { Sparkles, Trophy, BookOpen, Bug, ArrowRight, Target, MessageSquare, Linkedin, Instagram, Phone, ExternalLink, Newspaper, FileText, Bot, GraduationCap, User, ChevronRight, Loader2, Edit2, X, PieChart, Medal } from 'lucide-react';
 import { useGameProgress } from '../hooks/useGameProgress';
 import { useAchievements } from '../hooks/useAchievements';
-import { achievements } from '../data/achievements';
 import { useStreak } from '../hooks/useStreak';
 import LearningProgress from '../components/LearningProgress';
 import HomeLeaderboard from '../components/HomeLeaderboard';
-import { Flame } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import { useLeaderboard } from '../hooks/useLeaderboard';
 import { useState, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { User, ChevronRight, Loader2 } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -35,11 +31,11 @@ export default function Home() {
   const { t } = useTranslation();
   const { xp, foundBugs } = useGameProgress();
   const { unlockedAchievements } = useAchievements();
-  const { currentStreak, longestStreak } = useStreak();
-
+  
   // Leaderboard & Registration Logic
-  const { loading: leaderboardLoading, userProfile, saveProfile } = useLeaderboard();
+  const { loading: leaderboardLoading, userProfile, saveProfile, updateName } = useLeaderboard();
   const [showRegistration, setShowRegistration] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [nameInput, setNameInput] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -49,13 +45,36 @@ export default function Home() {
       }
   }, [leaderboardLoading, userProfile]);
 
+  // Handle opening edit mode
+  const handleEditClick = () => {
+      if (userProfile) {
+          setNameInput(userProfile.name || '');
+          setIsEditing(true);
+          setShowRegistration(true);
+      }
+  };
+
   const handleRegister = async (e) => {
       e.preventDefault();
       if (!nameInput.trim()) return;
+      
       setIsSubmitting(true);
-      const success = await saveProfile(nameInput.trim());
+      
+      let success;
+      if (isEditing && userProfile) {
+          success = await updateName(nameInput.trim());
+      } else {
+          success = await saveProfile(nameInput.trim());
+      }
+      
       setIsSubmitting(false);
-      if (success) setShowRegistration(false);
+      
+      if (success) {
+          setShowRegistration(false);
+          setIsEditing(false);
+          // Force reload to ensure all components (like Leaderboard widget) update their independent states
+          window.location.reload();
+      }
   };
 
   // Level calculation: 1 level per 500 XP
@@ -95,7 +114,7 @@ export default function Home() {
 
   return (
     <PageTransition className="p-6 pb-24 min-h-screen bg-slate-50/50 dark:bg-slate-900 transition-colors duration-300">
-      {/* Registration Modal */}
+      {/* Registration/Edit Modal */}
       <AnimatePresence>
           {showRegistration && (
               <motion.div
@@ -107,29 +126,53 @@ export default function Home() {
                   <motion.div
                       initial={{ scale: 0.9, y: 20 }}
                       animate={{ scale: 1, y: 0 }}
-                      className="bg-white dark:bg-slate-800 w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700"
+                      className="bg-white dark:bg-slate-800 w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 relative"
                   >
+                      {/* Close button for editing mode */}
+                      {isEditing && (
+                          <button 
+                              onClick={() => {
+                                  setShowRegistration(false);
+                                  setIsEditing(false);
+                              }}
+                              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 transition-colors"
+                          >
+                              <X size={20} />
+                          </button>
+                      )}
+
                       <div className="text-center mb-6">
                           <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-indigo-600 dark:text-indigo-400">
                               <User size={32} />
                           </div>
-                          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">Tanış olaq!</h2>
-                          <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">Liderlər cədvəlində iştirak etmək üçün adınızı daxil edin.</p>
-                          <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-xl border border-blue-100 dark:border-blue-800">
-                              <p className="text-xs text-blue-600 dark:text-blue-300 font-medium">
-                                  ℹ️ Əgər əvvəllər daxil olmusunuzsa, sadəcə eyni adınızı yazın – sistem sizi tanıyacaq və proqresinizi bərpa edəcək.
-                              </p>
-                          </div>
+                          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
+                              {isEditing ? 'Profil Düzəlişi' : 'Tanış olaq!'}
+                          </h2>
+                          <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
+                              {isEditing ? 'Məlumatlarınızı yeniləyin.' : 'Liderlər cədvəlində iştirak etmək üçün adınızı daxil edin.'}
+                          </p>
+                          {!isEditing && (
+                              <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-xl border border-blue-100 dark:border-blue-800">
+                                  <p className="text-xs text-blue-600 dark:text-blue-300 font-medium">
+                                      ℹ️ Əgər əvvəllər daxil olmusunuzsa, sadəcə eyni adınızı yazın – sistem sizi tanıyacaq və proqresinizi bərpa edəcək.
+                                  </p>
+                              </div>
+                          )}
                       </div>
 
-                      <form onSubmit={handleRegister}>
+                      <form onSubmit={handleRegister} autoComplete="off">
                           <input
-                              type="text"
+                              type="search"
+                              id="user_display_name_field"
+                              name="user_display_name_field"
+                              autoComplete="off"
+                              data-lpignore="true"
+                              data-form-type="other"
+                              spellCheck="false"
                               value={nameInput}
                               onChange={(e) => setNameInput(e.target.value)}
                               placeholder="Ad və Soyad"
                               className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-700 focus:border-indigo-500 focus:ring-0 outline-none transition-all text-slate-900 dark:text-white font-medium mb-4 placeholder:text-slate-400"
-                              autoFocus
                           />
                           <button
                               type="submit"
@@ -138,7 +181,7 @@ export default function Home() {
                           >
                               {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : (
                                   <>
-                                      Davam et <ChevronRight size={20} />
+                                      {isEditing ? 'Yadda Saxla' : 'Davam et'} <ChevronRight size={20} />
                                   </>
                               )}
                           </button>
@@ -178,11 +221,18 @@ export default function Home() {
                 </div>
             </div>
 
-            <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-2">
+            <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-2 flex items-center flex-wrap gap-2">
               {userProfile ? (
-                  <>
-                    Salam, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">{userProfile.name.split(' ')[0]}</span>!
-                  </>
+                  <div className="flex items-center gap-2">
+                    <span>Salam, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">{userProfile.name.split(' ')[0]}</span>!</span>
+                    <button 
+                        onClick={handleEditClick}
+                        className="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all"
+                        aria-label="Adı dəyiş"
+                    >
+                        <Edit2 size={16} />
+                    </button>
+                  </div>
               ) : (
                   <>
                     {t('home.greeting').split(',')[0]}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">{t('home.greeting').split(' ')[1]}</span>
@@ -191,7 +241,7 @@ export default function Home() {
               <motion.span
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ repeat: Infinity, duration: 2, repeatDelay: 3 }}
-                className="inline-block ml-2 origin-bottom-right"
+                className="inline-block origin-bottom-right"
               >
                 👋
               </motion.span>
@@ -211,12 +261,12 @@ export default function Home() {
                     </motion.div>
 
                     {/* Tooltip */}
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-48 p-3 bg-slate-900/95 backdrop-blur-md text-white text-center rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none shadow-xl border border-slate-700/50 z-50 whitespace-normal tracking-normal">
+                    <div className="absolute top-full mt-3 w-48 p-3 bg-slate-900/95 backdrop-blur-md text-white text-center rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none shadow-xl border border-slate-700/50 z-50 whitespace-normal tracking-normal right-0 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto">
                         <p className="font-bold text-amber-400 mb-1 text-sm">ISTQB Sertifikatlı</p>
                         <p className="text-slate-200 text-xs leading-relaxed">Bu tələbə sınaq imtahanını uğurla keçmişdir.</p>
                         
                         {/* Arrow */}
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-8 border-transparent border-b-slate-900/95"></div>
+                        <div className="absolute bottom-full border-8 border-transparent border-b-slate-900/95 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto"></div>
                     </div>
                 </div>
               )}

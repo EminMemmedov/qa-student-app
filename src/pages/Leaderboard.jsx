@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, User, Loader2, ChevronRight, Sparkles, Crown, Edit2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +16,11 @@ const getAvatarColor = (name) => {
     ];
     const index = name.length % colors.length;
     return colors[index];
+};
+
+const Portal = ({ children }) => {
+    if (typeof document === 'undefined') return null;
+    return createPortal(children, document.body);
 };
 
 const PodiumStep = ({ rank, user, delay }) => {
@@ -66,8 +72,19 @@ const PodiumStep = ({ rank, user, delay }) => {
                 )}
 
                 {/* Name - Clear separation */}
-                <div className={`mt-2 font-bold text-slate-700 dark:text-slate-200 text-center truncate w-full px-1 ${isFirst ? 'text-sm' : 'text-xs'} drop-shadow-sm`}>
-                    {user ? user.name.split(' ')[0] : ''}
+                <div className={`mt-2 font-bold text-slate-700 dark:text-slate-200 text-center w-full px-1 ${isFirst ? 'text-sm' : 'text-xs'} drop-shadow-sm flex items-center justify-center gap-1`}>
+                    <span className="truncate max-w-[80%]">
+                        {user ? user.name.split(' ')[0] : ''}
+                    </span>
+                    {user?.badges?.includes('istqb_certified') && (
+                        <div className="relative group/name shrink-0">
+                            <Sparkles size={14} className="text-yellow-500" />
+                            {/* Tooltip */}
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 bg-slate-900/90 text-white text-[10px] rounded-lg opacity-0 group-hover/name:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+                                ISTQB Sertifikatlı
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -83,7 +100,7 @@ const PodiumStep = ({ rank, user, delay }) => {
 
 export default function Leaderboard() {
   const { t } = useTranslation();
-  const { leaders, loading, userProfile, saveProfile } = useLeaderboard();
+  const { leaders, loading, userProfile, saveProfile, updateName } = useLeaderboard();
   
   // Registration/Editing State
   const [showRegistration, setShowRegistration] = useState(false);
@@ -110,7 +127,14 @@ export default function Leaderboard() {
       if (!nameInput.trim()) return;
 
       setIsSubmitting(true);
-      const success = await saveProfile(nameInput.trim());
+      
+      let success;
+      if (isEditing && userProfile) {
+          success = await updateName(nameInput.trim());
+      } else {
+          success = await saveProfile(nameInput.trim());
+      }
+      
       setIsSubmitting(false);
       
       if (success) {
@@ -141,11 +165,12 @@ export default function Leaderboard() {
       {/* Registration Modal */}
       <AnimatePresence>
           {showRegistration && (
+            <Portal>
               <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm"
+                  className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm"
               >
                   <motion.div
                       initial={{ scale: 0.9, y: 20 }}
@@ -202,6 +227,7 @@ export default function Leaderboard() {
                       </form>
                   </motion.div>
               </motion.div>
+            </Portal>
           )}
       </AnimatePresence>
 
@@ -236,7 +262,11 @@ export default function Leaderboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className={`rounded-2xl p-4 flex items-center gap-4 shadow-sm border ${user.uid === userProfile?.uid ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800 ring-1 ring-indigo-500/30' : 'bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-700'}`}
+              className={`rounded-2xl p-4 flex items-center gap-4 shadow-sm border transition-all ${
+                  user.uid === userProfile?.uid 
+                  ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800 ring-1 ring-indigo-500/30' 
+                  : 'bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-700'
+              }`}
             >
               <div className="font-bold text-slate-400 w-6 text-center">{index + 4}</div>
               
@@ -245,10 +275,18 @@ export default function Leaderboard() {
               </div>
 
               <div className="flex-1 min-w-0">
-                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2 truncate">
-                    {user.name} {user.uid === userProfile?.uid && <span className="text-[10px] bg-indigo-100 text-indigo-600 px-1.5 rounded font-bold">(Sən)</span>}
+                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span className="truncate">
+                        {user.name} {user.uid === userProfile?.uid && <span className="text-[10px] bg-indigo-100 text-indigo-600 px-1.5 rounded font-bold">(Sən)</span>}
+                    </span>
                     {user.badges && user.badges.includes('istqb_certified') && (
-                       <Sparkles size={14} className="text-yellow-500 shrink-0" />
+                       <div className="relative group/list-item shrink-0">
+                           <Sparkles size={16} className="text-yellow-500" />
+                           {/* Tooltip */}
+                           <div className="absolute left-0 top-full mt-1 px-2 py-1 bg-slate-900/90 text-white text-[10px] rounded-lg opacity-0 group-hover/list-item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+                               ISTQB Sertifikatlı
+                           </div>
+                       </div>
                     )}
                 </div>
                 <div className="text-xs text-slate-500 font-medium">Level {user.level}</div>
@@ -265,57 +303,48 @@ export default function Leaderboard() {
         </div>
       </div>
 
-      {/* STICKY CURRENT USER BAR */}
-      <AnimatePresence>
-        {currentUserRank > 3 && currentUser && (
-            <motion.div 
-                initial={{ y: 100 }}
-                animate={{ y: 0 }}
-                exit={{ y: 100 }}
-                className="fixed bottom-20 left-4 right-4 z-40"
-            >
-                <div className="bg-indigo-900/90 backdrop-blur-md text-white rounded-2xl p-4 shadow-2xl shadow-indigo-900/50 flex items-center gap-4 border border-indigo-500/30">
-                    <div className="font-black text-indigo-300 w-8 text-center text-lg">#{currentUserRank}</div>
-                    <div className={`w-10 h-10 min-w-[2.5rem] rounded-xl ${getAvatarColor(currentUser.name)} flex items-center justify-center text-white font-bold shadow-sm border-2 border-white/20`}>
-                        {currentUser.name.charAt(0)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                        <div className="font-bold text-white truncate flex items-center gap-2">
-                            {currentUser.name} <span className="text-[10px] bg-white/20 px-1.5 rounded font-bold">(Sən)</span>
-                        </div>
-                        <div className="text-xs text-indigo-200 font-medium">Sənin nəticən</div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <div className="text-white font-black whitespace-nowrap bg-white/10 px-3 py-1 rounded-lg">
-                            {currentUser.xp} XP
-                        </div>
-                        <button 
-                            onClick={() => setIsEditing(true)}
-                            className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-                        >
-                            <Edit2 size={16} className="text-white" />
-                        </button>
-                    </div>
-                </div>
-            </motion.div>
-        )}
-        
-        {/* Add Edit Button to Header if not in Sticky Mode (Rank <= 3) */}
-        {currentUserRank <= 3 && currentUser && (
-             <motion.div 
-                initial={{ y: 100 }}
-                animate={{ y: 0 }}
-                className="fixed bottom-20 right-4 z-40"
-            >
-                <button 
-                    onClick={() => setIsEditing(true)}
-                    className="p-4 bg-indigo-600 text-white rounded-full shadow-xl shadow-indigo-500/40 hover:bg-indigo-700 transition-all hover:scale-110"
+      {/* STICKY CURRENT USER BAR (NO EDIT BUTTON) */}
+      <Portal>
+        <AnimatePresence>
+            {currentUserRank > 3 && currentUser && (
+                <motion.div 
+                    initial={{ y: 100 }}
+                    animate={{ y: 0 }}
+                    exit={{ y: 100 }}
+                    className="fixed bottom-24 left-4 right-4 z-[60]"
                 >
-                    <Edit2 size={24} />
-                </button>
-            </motion.div>
-        )}
-      </AnimatePresence>
+                    <div className="bg-indigo-900/90 backdrop-blur-md text-white rounded-2xl p-4 shadow-2xl shadow-indigo-900/50 flex items-center gap-4 border border-indigo-500/30 max-w-md mx-auto">
+                        <div className="font-black text-indigo-300 w-8 text-center text-lg">#{currentUserRank}</div>
+                        <div className={`w-10 h-10 min-w-[2.5rem] rounded-xl ${getAvatarColor(currentUser.name)} flex items-center justify-center text-white font-bold shadow-sm border-2 border-white/20`}>
+                            {currentUser.name.charAt(0)}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <div className="font-bold text-white flex items-center gap-2">
+                                <span className="truncate">
+                                    {currentUser.name} <span className="text-[10px] bg-white/20 px-1.5 rounded font-bold">(Sən)</span>
+                                </span>
+                                {currentUser.badges && currentUser.badges.includes('istqb_certified') && (
+                                   <div className="relative group/sticky-item shrink-0">
+                                       <Sparkles size={16} className="text-yellow-500" />
+                                       {/* Tooltip */}
+                                       <div className="absolute left-0 top-full mt-1 px-2 py-1 bg-slate-900/90 text-white text-[10px] rounded-lg opacity-0 group-hover/sticky-item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+                                           ISTQB Sertifikatlı
+                                       </div>
+                                   </div>
+                                )}
+                            </div>
+                            <div className="text-xs text-indigo-200 font-medium">Sənin nəticən</div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <div className="text-white font-black whitespace-nowrap bg-white/10 px-3 py-1 rounded-lg">
+                                {currentUser.xp} XP
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+      </Portal>
     </div>
   );
 }
