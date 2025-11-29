@@ -140,9 +140,9 @@ export default function BugReportModal({ isOpen, onClose, onSubmit, bug }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/50 backdrop-blur-sm p-0 md:p-6 overflow-hidden touch-none"
+                className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/50 backdrop-blur-sm p-0 md:p-6 overflow-hidden"
                 onClick={onClose}
-                style={{ overscrollBehavior: 'contain' }}
+                style={{ overscrollBehavior: 'contain', touchAction: 'none' }}
             >
                 <motion.div
                     initial={{ y: "100%", opacity: 0 }}
@@ -163,7 +163,11 @@ export default function BugReportModal({ isOpen, onClose, onSubmit, bug }) {
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
-                    <div className="bg-slate-900 text-white p-4 md:p-6 flex justify-between items-start shrink-0 rounded-t-3xl md:rounded-t-2xl">
+                    <div 
+                        className="bg-slate-900 text-white p-4 md:p-6 flex justify-between items-start shrink-0 rounded-t-3xl md:rounded-t-2xl"
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
+                    >
                         <div className="flex-1 pr-4">
                             <h2 className="text-xl font-bold flex items-center gap-2">
                                 <AlertTriangle className="text-yellow-400" />
