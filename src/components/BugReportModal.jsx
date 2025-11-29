@@ -314,18 +314,18 @@ export default function BugReportModal({ isOpen, onClose, onSubmit, bug }) {
                     </div>
 
                     {/* Footer - Fixed Button */}
-                    <div className="p-4 md:p-6 border-t border-slate-100 bg-white shrink-0 pb-8 md:pb-6">
+                    <div className="p-4 md:p-6 border-t border-slate-100 bg-white shrink-0 safe-area-bottom">
                         <button
                             type="submit"
                             form="bug-report-form"
                             disabled={isChecking || !reportData.severity || !reportData.priority}
-                            className={`w-full py-3 md:py-4 rounded-xl font-black text-base md:text-lg shadow-xl transition-all flex items-center justify-center gap-2 ${
+                            className={`w-full py-4 rounded-xl font-black text-base md:text-lg shadow-xl transition-all flex items-center justify-center gap-2 ${
                                 isChecking 
                                     ? 'bg-slate-100 text-slate-400 cursor-wait'
                                     : feedback?.type === 'success'
                                         ? 'bg-green-500 text-white hover:bg-green-600'
                                         : 'bg-slate-900 text-white hover:bg-slate-800 hover:shadow-2xl hover:-translate-y-1'
-                            }`}
+                            } disabled:opacity-50 disabled:cursor-not-allowed`}
                         >
                             {isChecking ? (
                                 <>

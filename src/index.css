@@ -31,3 +31,8 @@ html, body {
 .will-change-scroll {
   will-change: scroll-position;
 }
+
+/* Safe area support for mobile devices */
+.safe-area-bottom {
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
