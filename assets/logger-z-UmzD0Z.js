@@ -1,0 +1,1 @@
+const e={log:(...e)=>{},warn:(...e)=>{},error:(...e)=>{console.error(...e)},debug:(...e)=>{}};export{e as t};
