@@ -35,8 +35,13 @@ export default function BottomNav() {
 
     return (
         <nav
-            className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-700 z-50 transition-colors duration-300"
-            style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 0.5rem)', paddingTop: '0.5rem' }}
+            className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 z-[100] transition-colors duration-300 shadow-[0_-1px_10px_rgba(0,0,0,0.05)]"
+            style={{ 
+                paddingBottom: 'max(env(safe-area-inset-bottom), 16px)', 
+                paddingTop: '8px',
+                // Prevent iOS bottom bar jumpiness
+                height: 'calc(60px + max(env(safe-area-inset-bottom), 16px))'
+            }}
         >
             <div className="flex justify-around items-center max-w-md mx-auto px-4">
                 {navItems.map((item) => {
