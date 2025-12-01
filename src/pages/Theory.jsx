@@ -98,15 +98,12 @@ const QuizComponent = ({ quiz, onComplete }) => {
     const [answers, setAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
 
-    const handleSelect = (qIndex, optionIndex) => {
-        if (showResults) return;
-        setAnswers(prev => ({ ...prev, [qIndex]: optionIndex }));
-    };
-
     const handleSubmit = () => {
+        const score = quiz.reduce((acc, q, index) => {
+            return acc + (answers[index] === q.correct ? 1 : 0);
+        }, 0);
         setShowResults(true);
-        const allCorrect = quiz.every((q, i) => answers[i] === q.correct);
-        if (allCorrect) {
+        if (score === quiz.length) {
             confetti({
                 particleCount: 100,
                 spread: 70,
@@ -116,7 +113,7 @@ const QuizComponent = ({ quiz, onComplete }) => {
         }
     };
 
-    const isComplete = Object.keys(answers).length === quiz.length;
+    const allAnswered = quiz.every((_, index) => answers[index] !== undefined);
 
     return (
         <div className="mt-12 bg-slate-50 dark:bg-slate-900/50 rounded-3xl p-8 border border-slate-200 dark:border-slate-700">
@@ -125,48 +122,92 @@ const QuizComponent = ({ quiz, onComplete }) => {
                 {t('theory.quiz.title')}
             </h3>
 
-            <div className="space-y-8">
-                {quiz.map((q, qIndex) => (
-                    <div key={qIndex} className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
-                        <p className="font-bold text-lg text-slate-800 dark:text-slate-200 mb-4">{qIndex + 1}. {q.question}</p>
+            <div className="space-y-6">
+                {quiz.map((q, index) => (
+                    <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700"
+                    >
+                        <h4 className="font-bold text-lg mb-4 text-slate-900 dark:text-white">
+                            {index + 1}. {q.question}
+                        </h4>
                         <div className="space-y-3">
-                            {q.options.map((option, oIndex) => {
-                                const isSelected = answers[qIndex] === oIndex;
-                                const isCorrect = q.correct === oIndex;
-                                let buttonClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center justify-between ";
-
-                                if (showResults) {
-                                    if (isCorrect) buttonClass += "border-green-500 bg-green-50 dark:bg-green-900/30 text-green-900 dark:text-green-300";
-                                    else if (isSelected) buttonClass += "border-red-500 bg-red-50 dark:bg-red-900/30 text-red-900 dark:text-red-300";
-                                    else buttonClass += "border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-500 opacity-50";
-                                } else {
-                                    if (isSelected) buttonClass += "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-900 dark:text-indigo-300";
-                                    else buttonClass += "border-slate-100 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300";
-                                }
+                            {q.options.map((option, optIndex) => {
+                                const isSelected = answers[index] === optIndex;
+                                const isCorrect = q.correct === optIndex;
+                                const showCorrect = showResults && isCorrect;
+                                const showWrong = showResults && isSelected && !isCorrect;
 
                                 return (
                                     <button
-                                        key={oIndex}
-                                        onClick={() => handleSelect(qIndex, oIndex)}
+                                        key={optIndex}
+                                        onClick={() => !showResults && setAnswers({ ...answers, [index]: optIndex })}
                                         disabled={showResults}
-                                        className={buttonClass}
+                                        className={`w-full text-left p-4 rounded-xl border-2 transition-all ${showCorrect
+                                            ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
+                                            : showWrong
+                                                ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                                                : isSelected
+                                                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
+                                                    : 'border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-600'
+                                            }`}
                                     >
-                                        <span className="font-medium">{option}</span>
-                                        {showResults && isCorrect && <CheckCircle size={20} className="text-green-500" />}
-                                        {showResults && isSelected && !isCorrect && <XCircle size={20} className="text-red-500" />}
+                                        <div className="flex items-start gap-3">
+                                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${showCorrect
+                                                    ? 'border-green-500 bg-green-500'
+                                                    : showWrong
+                                                        ? 'border-red-500 bg-red-500'
+                                                        : isSelected
+                                                            ? 'border-indigo-500 bg-indigo-500'
+                                                            : 'border-slate-300 dark:border-slate-600'
+                                                }`}>
+                                                {(showCorrect || (isSelected && !showResults)) && (
+                                                    <CheckCircle size={12} className="text-white" />
+                                                )}
+                                                {showWrong && (
+                                                    <XCircle size={12} className="text-white" />
+                                                )}
+                                            </div>
+                                            <span className={`font-medium ${showCorrect || showWrong ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300'
+                                                }`}>
+                                                {option}
+                                            </span>
+                                        </div>
                                     </button>
                                 );
                             })}
                         </div>
-                    </div>
+
+                        {/* Show explanation after answering */}
+                        {showResults && q.explanation && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded-r-xl"
+                            >
+                                <div className="flex items-start gap-2">
+                                    <Lightbulb size={20} className="text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                                    <div>
+                                        <p className="font-bold text-blue-900 dark:text-blue-200 text-sm mb-1">İzah:</p>
+                                        <p className="text-blue-800 dark:text-blue-300 text-sm leading-relaxed">
+                                            {q.explanation}
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </motion.div>
                 ))}
             </div>
 
             {!showResults && (
                 <button
                     onClick={handleSubmit}
-                    disabled={!isComplete}
-                    className={`mt-8 w-full py-4 rounded-xl font-bold text-lg transition-all ${isComplete
+                    disabled={!allAnswered}
+                    className={`mt-8 w-full py-4 rounded-xl font-bold text-lg transition-all ${allAnswered
                         ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-700 transform hover:-translate-y-1'
                         : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
                         }`}
@@ -372,7 +413,17 @@ export default function Theory() {
                                                 return <Icon size={32} className="text-white" strokeWidth={2.5} />;
                                             })()}
                                         </div>
-                                        <h1 className="text-2xl sm:text-3xl font-black text-white mb-2">{selectedModule.title}</h1>
+                                        <div className="flex items-center justify-between mb-4">
+                                            <h3 className="text-2xl font-black text-white">{selectedModule.title}</h3>
+                                            {selectedModule.readingTime && (
+                                                <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                                                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <span className="text-sm font-bold text-white">{selectedModule.readingTime} dəq</span>
+                                                </div>
+                                            )}
+                                        </div>
                                         <p className="text-indigo-100 text-base sm:text-lg">{selectedModule.description}</p>
                                     </div>
                                 </div>

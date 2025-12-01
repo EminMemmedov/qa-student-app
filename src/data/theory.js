@@ -91,7 +91,8 @@ Proqram səhvsiz işləyir, amma istifadəçi tələblərini ödəmir.
           "Dizayn etmək",
           "Layihəni idarə etmək"
         ],
-        correct: 1
+        correct: 1,
+        explanation: "QA (Quality Assurance) məhsulun keyfiyyətini təmin etmək üçün həyata keçirilən proseslər toplusudur. QA mühəndisi proqramda səhvləri tapır və onların düzəldilməsini təmin edir."
       },
       {
         question: "Erkən testləmənin faydası nədir?",
@@ -101,7 +102,8 @@ Proqram səhvsiz işləyir, amma istifadəçi tələblərini ödəmir.
           "Səhvlərin düzəldilməsi daha ucuz başa gəlir",
           "Heç bir faydası yoxdur"
         ],
-        correct: 2
+        correct: 2,
+        explanation: "Erkən testləmə prinsipi - nə qədər tez test etsən, səhvlərin düzəldilməsi o qədər ucuz başa gələr. Dizayn mərhələsində tapılan səhv 5 dəqiqədə düzəlir, amma production-da tapsan, bütün testləri yenidən keçməli olacaqsan."
       },
       {
         question: "Pareto prinsipinə görə səhvlərin 80%-i harada olur?",
@@ -111,9 +113,11 @@ Proqram səhvsiz işləyir, amma istifadəçi tələblərini ödəmir.
           "Dizaynda",
           "Database-də"
         ],
-        correct: 0
+        correct: 0,
+        explanation: "Səhvlərin klasterləşməsi prinsipi (Pareto prinsipi) - səhvlərin 80%-i kodun 20%-ində olur. Məsələn, Banking modulunda transfer funksiyasında 10 səhv tapsan, həmin funksiyaya daha çox diqqət yetir - daha çox səhv ola bilər."
       }
-    ]
+    ],
+    readingTime: 8
   },
   {
     id: 'test-types',
@@ -262,7 +266,8 @@ Düzəliş işləyirmi?
           "İstifadəçi təcrübəsini",
           "Təhlükəsizliyi"
         ],
-        correct: 1
+        correct: 1,
+        explanation: "Unit Testing kodun ən kiçik hissəsini (funksiya, metod) ayrı-ayrılıqda test edir. Məsələn, validateEmail() funksiyasnı test etmək."
       },
       {
         question: "Regression Testing nə vaxt aparılır?",
@@ -272,7 +277,8 @@ Düzəliş işləyirmi?
           "Yeni dəyişiklikdən sonra köhnə funksiyaları yoxlamaq üçün",
           "Heç vaxt"
         ],
-        correct: 2
+        correct: 2,
+        explanation: "Regression Testing yeni dəyişiklik köhnə funksiyaları pozmayıb yoxlamaq üçün aparılır. Məsələn, Banking-ə 'Kredit' funksiyası əlavə etdinsə, Transfer hələ də işləyirmi yoxla."
       },
       {
         question: "Hansı test növü proqramın sürətini yoxlayır?",
@@ -282,9 +288,11 @@ Düzəliş işləyirmi?
           "Performance Testing",
           "Functional Testing"
         ],
-        correct: 2
+        correct: 2,
+        explanation: "Performance Testing proqramın NECƏ İŞLƏDİYİNİ yoxlayır - sürət, yüklənmə və stabillik. Məsələn, Banking-də transfer 3 saniyədən çox çəkməməlidir."
       }
-    ]
+    ],
+    readingTime: 10
   },
   {
     id: 'bug-reporting',
@@ -496,7 +504,8 @@ Mühit:
           "Müəllifin adı",
           "Tarix"
         ],
-        correct: 1
+        correct: 1,
+        explanation: "Təkrarlana bilən addımlar baq reportunun ən vacib hissəsidir. Başqası baqı təkrar edə bilməlidir. Məsələn: 1) Registration səhifəsinə get, 2) Email: 'test@test' daxil et, 3) 'Göndər' klikə."
       },
       {
         question: "Severity nəyi göstərir?",
@@ -506,7 +515,8 @@ Mühit:
           "Developerin adını",
           "Testin növünü"
         ],
-        correct: 1
+        correct: 1,
+        explanation: "Severity baqın sistemə təsir dərəcəsini (ciddiliyini) göstərir. Critical - sistem çökür, Major - əsas funksiya işləmir, Minor - kiçik problem, Trivial - kosmetik səhv."
       },
       {
         question: "Əgər proqram çökürsə, bu hansı Severity-dir?",
@@ -516,9 +526,11 @@ Mühit:
           "Critical",
           "Major"
         ],
-        correct: 2
+        correct: 2,
+        explanation: "Proqram çökürsə, bu Critical Severity-dir. Critical - sistem çökür, məlumat itirilir, dərhal düzəldilməlidir. Məsələn, Ödəniş sistemi işləmir."
       }
-    ]
+    ],
+    readingTime: 9
   },
   {
     id: 'test-planning',
@@ -779,7 +791,8 @@ Sərhəd dəyərlərini test edir.
           "Kodun bir hissəsi",
           "Dizayn sənədi"
         ],
-        correct: 1
+        correct: 1,
+        explanation: "Test Planı testləşdirmə prosesinin yol xəritəsidir. Nə test edəcəyini, necə test edəcəyini və nə vaxt test edəcəyini müəyyənləşdirir."
       },
       {
         question: "Test Scope nəyi müəyyən edir?",
@@ -789,7 +802,8 @@ Sərhəd dəyərlərini test edir.
           "Developerlərin adlarını",
           "Layihənin bitmə tarixini"
         ],
-        correct: 0
+        correct: 0,
+        explanation: "Test Scope nəyin test ediləcəyini və edilməyəcəyini müəyyən edir. Məsələn, Registration modulunda email validasiyası test ediləcək, amma Backend API ayrıca test ediləcək."
       },
       {
         question: "Boundary Testing nəyi yoxlayır?",
@@ -799,8 +813,10 @@ Sərhəd dəyərlərini test edir.
           "Sürəti",
           "Təhlükəsizliyi"
         ],
-        correct: 1
+        correct: 1,
+        explanation: "Boundary Testing sərhəd dəyərlərini (minimum və maksimum) yoxlayır. Məsələn, Şifrə 5-20 simvol olarsa, 4, 5, 6, 19, 20, 21 dəyərlərini test et."
       }
-    ]
+    ],
+    readingTime: 12
   }
 ];
