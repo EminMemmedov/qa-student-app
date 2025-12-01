@@ -44,9 +44,15 @@ export default function Glossary() {
             const matchesSearch = item.term.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
                 item.definition[lang]?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
                 item.definition['en'].toLowerCase().includes(debouncedSearch.toLowerCase());
+
+            // If favorites filter is selected, only show favorited items
+            if (selectedCategory === 'favorites') {
+                return matchesSearch && favorites.includes(item.id);
+            }
+
+            // Otherwise, filter by category
             const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
-            const matchesFavorites = selectedCategory !== 'favorites' || favorites.includes(item.id);
-            return matchesSearch && matchesCategory && matchesFavorites;
+            return matchesSearch && matchesCategory;
         });
         return terms.sort((a, b) => a.term.localeCompare(b.term));
     }, [debouncedSearch, selectedCategory, lang, favorites]);
@@ -158,8 +164,8 @@ export default function Glossary() {
                                             onClick={() => scrollToLetter(letter)}
                                             disabled={!hasTerms}
                                             className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${hasTerms
-                                                    ? 'text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30'
-                                                    : 'text-slate-300 dark:text-slate-600 cursor-not-allowed'
+                                                ? 'text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30'
+                                                : 'text-slate-300 dark:text-slate-600 cursor-not-allowed'
                                                 }`}
                                         >
                                             {letter}
@@ -195,8 +201,8 @@ export default function Glossary() {
                                             <Star
                                                 size={20}
                                                 className={`transition-all ${favorites.includes(item.id)
-                                                        ? 'fill-yellow-400 text-yellow-400'
-                                                        : 'text-slate-300 dark:text-slate-600 hover:text-yellow-400'
+                                                    ? 'fill-yellow-400 text-yellow-400'
+                                                    : 'text-slate-300 dark:text-slate-600 hover:text-yellow-400'
                                                     }`}
                                             />
                                         </button>
