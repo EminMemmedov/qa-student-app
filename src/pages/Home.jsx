@@ -10,7 +10,9 @@ import LearningProgress from '../components/LearningProgress';
 import HomeLeaderboard from '../components/HomeLeaderboard';
 import ThemeToggle from '../components/ThemeToggle';
 import { useLeaderboard } from '../hooks/useLeaderboard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
+import StatsCard from '../components/StatsCard';
+import SkeletonStatsCard from '../components/SkeletonStatsCard';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -141,9 +143,10 @@ export default function Home() {
                     setShowRegistration(false);
                     setIsEditing(false);
                   }}
-                  className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 transition-colors"
+                  className="absolute top-4 right-4 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  aria-label="Bağla"
                 >
-                  <X size={20} />
+                  <X size={20} className="text-slate-400 dark:text-slate-500" />
                 </button>
               )}
 
@@ -158,7 +161,7 @@ export default function Home() {
                   {isEditing ? 'Məlumatlarınızı yeniləyin.' : 'Liderlər cədvəlində iştirak etmək üçün adınızı daxil edin.'}
                 </p>
                 {!isEditing && (
-                  <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-xl border border-blue-100 dark:border-blue-800">
+                  <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-xl border border-blue-100 dark:border-blue-800 mb-6">
                     <p className="text-xs text-blue-600 dark:text-blue-300 font-medium">
                       ℹ️ Əgər əvvəllər daxil olmusunuzsa, sadəcə eyni adınızı yazın – sistem sizi tanıyacaq və proqresinizi bərpa edəcək.
                     </p>
@@ -336,6 +339,36 @@ export default function Home() {
                 <span>{t('home.moreXPNeeded', { xp: nextLevelXp })}</span>
               </div>
             </div>
+          </div>
+        </motion.div>
+
+        {/* Stats Cards */}
+        <motion.div variants={itemVariants} className="mb-8">
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4">Statistika</h2>
+          <div className="grid grid-cols-2 gap-4">
+            {leaderboardLoading ? (
+              <>
+                <SkeletonStatsCard />
+                <SkeletonStatsCard />
+              </>
+            ) : (
+              <>
+                <StatsCard
+                  icon={Bug}
+                  label="Tapılan Baqlar"
+                  value={foundBugs.length}
+                  color="orange"
+                  delay={0}
+                />
+                <StatsCard
+                  icon={Medal}
+                  label="Nailiyyətlər"
+                  value={unlockedCount}
+                  color="purple"
+                  delay={0.1}
+                />
+              </>
+            )}
           </div>
         </motion.div>
 
@@ -531,34 +564,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Recent Activity / Stats Row */}
-        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4 mb-8">
-          <div className="bg-white dark:bg-slate-800 p-5 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col justify-between h-full transition-colors">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="w-10 h-10 shrink-0 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 dark:text-green-400">
-                <Bug size={20} />
-              </div>
-              <div className="text-2xl font-black text-slate-900 dark:text-white">{foundBugs.length}</div>
-            </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{t('home.stats.foundBugs')}</div>
-          </div>
 
-          <Link to="/achievements" className="block h-full">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white dark:bg-slate-800 p-5 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col justify-between h-full cursor-pointer hover:border-yellow-300 dark:hover:border-yellow-700 hover:shadow-lg transition-all"
-            >
-              <div className="flex items-center gap-4 mb-2">
-                <div className="w-10 h-10 shrink-0 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center text-yellow-600 dark:text-yellow-400">
-                  <Medal size={20} />
-                </div>
-                <div className="text-2xl font-black text-slate-900 dark:text-white">{unlockedCount}</div>
-              </div>
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{t('home.stats.achievements')}</div>
-            </motion.div>
-          </Link>
-        </motion.div>
 
         {/* Footer / Contact Section */}
         <motion.div variants={itemVariants} className="mt-12 border-t border-slate-200 dark:border-slate-700 pt-8">
