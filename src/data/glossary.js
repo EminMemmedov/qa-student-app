@@ -329,6 +329,228 @@ export const glossaryTerms = [
             ru: 'Этапы, которые проходит баг от обнаружения до закрытия.',
             en: 'The different stages of a defect during its life cycle (e.g., New, Open, Fixed, Verified, Closed).'
         }
+    },
+
+    // --- Additional Terms ---
+    {
+        id: 'automation',
+        term: 'Test Automation',
+        category: 'types',
+        definition: {
+            az: 'Testlərin avtomatik icra edilməsi üçün alətlərdən və skriptlərdən istifadə.',
+            ru: 'Использование инструментов и скриптов для автоматического выполнения тестов.',
+            en: 'The use of software to control the execution of tests and the comparison of actual outcomes with predicted outcomes.'
+        }
+    },
+    {
+        id: 'selenium',
+        term: 'Selenium',
+        category: 'types',
+        definition: {
+            az: 'Veb tətbiqlərini test etmək üçün açıq mənbəli avtomatlaşdırma aləti.',
+            ru: 'Инструмент с открытым исходным кодом для автоматизации веб-приложений.',
+            en: 'An open-source tool for automating web browsers across many platforms.'
+        }
+    },
+    {
+        id: 'ci_cd',
+        term: 'CI/CD',
+        category: 'process',
+        definition: {
+            az: 'Continuous Integration və Continuous Deployment - kodun avtomatik inteqrasiyası və yayımlanması.',
+            ru: 'Непрерывная интеграция и развертывание - автоматическая интеграция и выпуск кода.',
+            en: 'Continuous Integration and Continuous Deployment - automated integration and release of code changes.'
+        }
+    },
+    {
+        id: 'unit_test',
+        term: 'Unit Testing',
+        category: 'types',
+        definition: {
+            az: 'Kodun ən kiçik hissələrini (funksiya, metod) ayrı-ayrılıqda test etmək.',
+            ru: 'Тестирование отдельных компонентов кода (функций, методов).',
+            en: 'Testing of individual components or units of a software application.'
+        }
+    },
+    {
+        id: 'integration_test',
+        term: 'Integration Testing',
+        category: 'types',
+        definition: {
+            az: 'Müxtəlif modulların bir-biri ilə inteqrasiyasını yoxlamaq.',
+            ru: 'Проверка взаимодействия различных модулей системы.',
+            en: 'Testing performed to expose defects in the interfaces and interaction between integrated components.'
+        }
+    },
+    {
+        id: 'performance_test',
+        term: 'Performance Testing',
+        category: 'types',
+        definition: {
+            az: 'Sistemin sürət, yüklənmə və stabillik baxımından performansını yoxlamaq.',
+            ru: 'Проверка производительности системы с точки зрения скорости, нагрузки и стабильности.',
+            en: 'Testing to determine the speed, responsiveness and stability of a system under a workload.'
+        }
+    },
+    {
+        id: 'load_test',
+        term: 'Load Testing',
+        category: 'types',
+        definition: {
+            az: 'Sistemin müəyyən yük altında necə işlədiyini yoxlamaq.',
+            ru: 'Проверка работы системы под определенной нагрузкой.',
+            en: 'Testing to determine how a system behaves under expected load conditions.'
+        }
+    },
+    {
+        id: 'stress_test',
+        term: 'Stress Testing',
+        category: 'types',
+        definition: {
+            az: 'Sistemin həddindən artıq yük altında necə davrandığını yoxlamaq.',
+            ru: 'Проверка поведения системы при экстремальных нагрузках.',
+            en: 'Testing to determine the robustness of software under extreme load conditions.'
+        }
+    },
+    {
+        id: 'security_test',
+        term: 'Security Testing',
+        category: 'types',
+        definition: {
+            az: 'Sistemin təhlükəsizlik zəifliklərini aşkar etmək üçün test.',
+            ru: 'Тестирование для выявления уязвимостей безопасности системы.',
+            en: 'Testing to uncover vulnerabilities of the system and determine that its data and resources are protected.'
+        }
+    },
+    {
+        id: 'usability_test',
+        term: 'Usability Testing',
+        category: 'types',
+        definition: {
+            az: 'Sistemin istifadəçi dostu olub-olmadığını yoxlamaq.',
+            ru: 'Проверка удобства использования системы.',
+            en: 'Testing to determine the extent to which the software can be used with ease.'
+        }
+    },
+    {
+        id: 'acceptance_test',
+        term: 'Acceptance Testing (UAT)',
+        category: 'types',
+        definition: {
+            az: 'Son istifadəçilər tərəfindən sistemin qəbul edilməsi üçün test.',
+            ru: 'Тестирование конечными пользователями для принятия системы.',
+            en: 'Formal testing conducted to determine whether a system satisfies its acceptance criteria.'
+        }
+    },
+    {
+        id: 'exploratory_test',
+        term: 'Exploratory Testing',
+        category: 'types',
+        definition: {
+            az: 'Əvvəlcədən hazırlanmış test case olmadan, kəşf edərək test etmək.',
+            ru: 'Тестирование без заранее подготовленных тест-кейсов, исследование системы.',
+            en: 'Testing where the tester actively controls the design of tests as those tests are performed.'
+        }
+    },
+    {
+        id: 'adhoc_test',
+        term: 'Ad-hoc Testing',
+        category: 'types',
+        definition: {
+            az: 'Struktursuz, təsadüfi test. Heç bir plan olmadan test etmək.',
+            ru: 'Неструктурированное, случайное тестирование без плана.',
+            en: 'Testing carried out informally without formal test preparation or documentation.'
+        }
+    },
+    {
+        id: 'monkey_test',
+        term: 'Monkey Testing',
+        category: 'types',
+        definition: {
+            az: 'Təsadüfi inputlar verərək sistemin çökməsini yoxlamaq.',
+            ru: 'Проверка системы случайными вводами для поиска сбоев.',
+            en: 'Testing using random inputs to find crashes or unexpected behavior.'
+        }
+    },
+    {
+        id: 'test_data',
+        term: 'Test Data',
+        category: 'documentation',
+        definition: {
+            az: 'Testləri icra etmək üçün istifadə olunan məlumatlar.',
+            ru: 'Данные, используемые для выполнения тестов.',
+            en: 'Data created or selected to satisfy the execution preconditions and inputs to execute test cases.'
+        }
+    },
+    {
+        id: 'test_environment',
+        term: 'Test Environment',
+        category: 'process',
+        definition: {
+            az: 'Testlərin icra edildiyi mühit (hardware, software, şəbəkə).',
+            ru: 'Среда, в которой выполняются тесты (оборудование, ПО, сеть).',
+            en: 'An environment containing hardware, instrumentation, simulators, software tools, and other support elements needed to conduct a test.'
+        }
+    },
+    {
+        id: 'defect_density',
+        term: 'Defect Density',
+        category: 'bug_management',
+        definition: {
+            az: 'Kod xəttinə və ya moduluna düşən xətaların sayı.',
+            ru: 'Количество дефектов на строку кода или модуль.',
+            en: 'The number of defects identified in a component or system divided by the size of the component or system.'
+        }
+    },
+    {
+        id: 'test_coverage',
+        term: 'Test Coverage',
+        category: 'techniques',
+        definition: {
+            az: 'Testlərin kodun nə qədərini əhatə etdiyini göstərən metrika.',
+            ru: 'Метрика, показывающая, какая часть кода покрыта тестами.',
+            en: 'The degree to which specified coverage items have been determined or have been exercised by a test suite.'
+        }
+    },
+    {
+        id: 'root_cause',
+        term: 'Root Cause Analysis',
+        category: 'bug_management',
+        definition: {
+            az: 'Xətanın əsas səbəbini tapmaq üçün aparılan analiz.',
+            ru: 'Анализ для определения основной причины дефекта.',
+            en: 'An analysis technique aimed at identifying the root causes of defects or problems.'
+        }
+    },
+    {
+        id: 'test_oracle',
+        term: 'Test Oracle',
+        category: 'techniques',
+        definition: {
+            az: 'Testin nəticəsinin düzgün olub-olmadığını müəyyən edən mənbə.',
+            ru: 'Источник, определяющий правильность результата теста.',
+            en: 'A source to determine expected results to compare with the actual result of the software under test.'
+        }
+    },
+    {
+        id: 'mock',
+        term: 'Mock Object',
+        category: 'types',
+        definition: {
+            az: 'Test zamanı real obyekti əvəz edən saxta obyekt.',
+            ru: 'Фиктивный объект, заменяющий реальный во время тестирования.',
+            en: 'A simulated object that mimics the behavior of real objects in controlled ways.'
+        }
+    },
+    {
+        id: 'stub',
+        term: 'Stub',
+        category: 'types',
+        definition: {
+            az: 'Hələ hazırlanmamış komponenti əvəz edən sadə kod.',
+            ru: 'Простой код, заменяющий еще не разработанный компонент.',
+            en: 'A skeletal or special-purpose implementation of a software component, used to develop or test a component that calls or is otherwise dependent on it.'
+        }
     }
 ];
 

@@ -1,19 +1,22 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Search, LibraryBig, Filter, Sparkles, ChevronLeft, ChevronDown, Lightbulb } from 'lucide-react';
+import { Search, LibraryBig, Filter, Sparkles, ChevronLeft, ChevronDown, Lightbulb, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import { glossaryTerms, categories } from '../data/glossary';
 import { useDebounce } from '../hooks/useDebounce';
+import { getStorageItem, setStorageItem } from '../utils/storage';
 
 export default function Glossary() {
     const { t, i18n } = useTranslation();
     const lang = i18n.language || 'az';
     const [search, setSearch] = useState('');
-    const debouncedSearch = useDebounce(search, 300); // Debounce search input
+    const debouncedSearch = useDebounce(search, 300);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [expandedTerm, setExpandedTerm] = useState(null);
+    const [favorites, setFavorites] = useState(() => getStorageItem('glossary_favorites', []));
+    const termRefs = useRef({});
 
     // Term of the Day (Random based on date)
     const termOfDay = useMemo(() => {
@@ -21,15 +24,32 @@ export default function Glossary() {
         return glossaryTerms[today % glossaryTerms.length];
     }, []);
 
+    const toggleFavorite = (termId) => {
+        const newFavorites = favorites.includes(termId)
+            ? favorites.filter(id => id !== termId)
+            : [...favorites, termId];
+        setFavorites(newFavorites);
+        setStorageItem('glossary_favorites', newFavorites);
+    };
+
+    const scrollToLetter = (letter) => {
+        const term = filteredTerms.find(t => t.term.toUpperCase().startsWith(letter));
+        if (term && termRefs.current[term.id]) {
+            termRefs.current[term.id].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
+
     const filteredTerms = useMemo(() => {
-        return glossaryTerms.filter(item => {
-            const matchesSearch = item.term.toLowerCase().includes(debouncedSearch.toLowerCase()) || 
-                                  item.definition[lang]?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-                                  item.definition['en'].toLowerCase().includes(debouncedSearch.toLowerCase());
+        let terms = glossaryTerms.filter(item => {
+            const matchesSearch = item.term.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+                item.definition[lang]?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+                item.definition['en'].toLowerCase().includes(debouncedSearch.toLowerCase());
             const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
-            return matchesSearch && matchesCategory;
+            const matchesFavorites = selectedCategory !== 'favorites' || favorites.includes(item.id);
+            return matchesSearch && matchesCategory && matchesFavorites;
         });
-    }, [debouncedSearch, selectedCategory, lang]);
+        return terms.sort((a, b) => a.term.localeCompare(b.term));
+    }, [debouncedSearch, selectedCategory, lang, favorites]);
 
     const categoryColors = {
         basics: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
@@ -60,7 +80,7 @@ export default function Glossary() {
                 </div>
 
                 {/* Term of the Day */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 text-white shadow-xl shadow-indigo-500/20 mb-8 relative overflow-hidden"
@@ -90,24 +110,33 @@ export default function Glossary() {
                 <div className="flex flex-col gap-4 mb-8 sticky top-20 z-30 bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur-xl py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-colors duration-300">
                     <div className="relative w-full">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
-                        <input 
-                            type="text" 
-                            placeholder={t('common.search', 'Axtar...')} 
+                        <input
+                            type="text"
+                            placeholder={t('common.search', 'Axtar...')}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm focus:shadow-md outline-none focus:border-blue-500 dark:focus:border-blue-400 text-slate-900 dark:text-white placeholder:text-slate-400 transition-all"
                         />
                     </div>
                     <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar">
+                        <button
+                            onClick={() => setSelectedCategory('favorites')}
+                            className={`px-5 py-3 rounded-xl font-bold whitespace-nowrap transition-all flex items-center gap-2 ${selectedCategory === 'favorites'
+                                ? 'bg-yellow-500 text-white shadow-lg shadow-yellow-500/30'
+                                : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'
+                                }`}
+                        >
+                            <Star size={16} className={selectedCategory === 'favorites' ? 'fill-current' : ''} />
+                            Sevimlilər ({favorites.length})
+                        </button>
                         {Object.entries(categories).map(([key, label]) => (
                             <button
                                 key={key}
                                 onClick={() => setSelectedCategory(key)}
-                                className={`px-5 py-3 rounded-xl font-bold whitespace-nowrap transition-all ${
-                                    selectedCategory === key 
-                                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
-                                        : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'
-                                }`}
+                                className={`px-5 py-3 rounded-xl font-bold whitespace-nowrap transition-all ${selectedCategory === key
+                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+                                    : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'
+                                    }`}
                             >
                                 {label[lang] || label['en']}
                             </button>
@@ -115,73 +144,122 @@ export default function Glossary() {
                     </div>
                 </div>
 
-                {/* Terms Grid */}
-                <div className="grid gap-4">
-                    <AnimatePresence mode="popLayout">
-                        {filteredTerms.length > 0 ? (
-                            filteredTerms.map((item) => (
-                                <motion.div
-                                    key={item.id}
-                                    layout
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    onClick={() => setExpandedTerm(expandedTerm === item.id ? null : item.id)}
-                                    className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all cursor-pointer group"
-                                >
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                                {item.term}
-                                            </h3>
-                                            <span className={`inline-block mt-2 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg ${categoryColors[item.category] || 'bg-slate-100 text-slate-500'}`}>
-                                                {categories[item.category]?.[lang] || item.category}
-                                            </span>
-                                        </div>
-                                        {item.example && (
-                                            <ChevronDown 
-                                                size={20} 
-                                                className={`text-slate-400 transition-transform duration-300 ${expandedTerm === item.id ? 'rotate-180' : ''}`} 
-                                            />
-                                        )}
-                                    </div>
-                                    
-                                    <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                                        {item.definition[lang] || item.definition['en']}
-                                    </p>
+                {/* Main Content with Alphabet Nav */}
+                <div className="flex gap-6">
+                    {/* Alphabet Navigation - Desktop Only */}
+                    <div className="hidden lg:block sticky top-32 h-fit">
+                        <div className="bg-white dark:bg-slate-800 rounded-2xl p-3 shadow-sm border border-slate-100 dark:border-slate-700">
+                            <div className="flex flex-col gap-1">
+                                {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => {
+                                    const hasTerms = filteredTerms.some(t => t.term.toUpperCase().startsWith(letter));
+                                    return (
+                                        <button
+                                            key={letter}
+                                            onClick={() => scrollToLetter(letter)}
+                                            disabled={!hasTerms}
+                                            className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${hasTerms
+                                                    ? 'text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30'
+                                                    : 'text-slate-300 dark:text-slate-600 cursor-not-allowed'
+                                                }`}
+                                        >
+                                            {letter}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
 
-                                    <AnimatePresence>
-                                        {expandedTerm === item.id && item.example && (
-                                            <motion.div
-                                                initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                                                animate={{ height: 'auto', opacity: 1, marginTop: 16 }}
-                                                exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                                                className="overflow-hidden"
-                                            >
-                                                <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 border border-slate-100 dark:border-slate-700">
-                                                    <div className="flex items-center gap-2 text-xs font-bold uppercase text-blue-500 mb-1">
-                                                        <Lightbulb size={12} /> Nümunə
-                                                    </div>
-                                                    <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                                                        {item.example[lang] || item.example['en']}
-                                                    </p>
+                    {/* Terms Grid */}
+                    <div className="flex-1 grid gap-4">
+                        <AnimatePresence mode="popLayout">
+                            {filteredTerms.length > 0 ? (
+                                filteredTerms.map((item) => (
+                                    <motion.div
+                                        key={item.id}
+                                        ref={el => termRefs.current[item.id] = el}
+                                        layout
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all group relative"
+                                    >
+                                        {/* Favorite Button */}
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                toggleFavorite(item.id);
+                                            }}
+                                            className="absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                                        >
+                                            <Star
+                                                size={20}
+                                                className={`transition-all ${favorites.includes(item.id)
+                                                        ? 'fill-yellow-400 text-yellow-400'
+                                                        : 'text-slate-300 dark:text-slate-600 hover:text-yellow-400'
+                                                    }`}
+                                            />
+                                        </button>
+
+                                        <div
+                                            onClick={() => setExpandedTerm(expandedTerm === item.id ? null : item.id)}
+                                            className="cursor-pointer"
+                                        >
+                                            <div className="flex justify-between items-start mb-3 pr-10">
+                                                <div>
+                                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                        {item.term}
+                                                    </h3>
+                                                    <span className={`inline-block mt-2 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg ${categoryColors[item.category] || 'bg-slate-100 text-slate-500'}`}>
+                                                        {categories[item.category]?.[lang] || item.category}
+                                                    </span>
                                                 </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                                {item.example && (
+                                                    <ChevronDown
+                                                        size={20}
+                                                        className={`text-slate-400 transition-transform duration-300 ${expandedTerm === item.id ? 'rotate-180' : ''}`}
+                                                    />
+                                                )}
+                                            </div>
+
+                                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                                                {item.definition[lang] || item.definition['en']}
+                                            </p>
+
+                                            <AnimatePresence>
+                                                {expandedTerm === item.id && item.example && (
+                                                    <motion.div
+                                                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                        animate={{ height: 'auto', opacity: 1, marginTop: 16 }}
+                                                        exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 border border-slate-100 dark:border-slate-700">
+                                                            <div className="flex items-center gap-2 text-xs font-bold uppercase text-blue-500 mb-1">
+                                                                <Lightbulb size={12} /> Nümunə
+                                                            </div>
+                                                            <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                                                                {item.example[lang] || item.example['en']}
+                                                            </p>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="text-center py-12 text-slate-400"
+                                >
+                                    <Filter size={48} className="mx-auto mb-4 opacity-20" />
+                                    <p>Heç nə tapılmadı</p>
                                 </motion.div>
-                            ))
-                        ) : (
-                            <motion.div 
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="text-center py-12 text-slate-400"
-                            >
-                                <Filter size={48} className="mx-auto mb-4 opacity-20" />
-                                <p>Heç nə tapılmadı</p>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                            )}
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
         </PageTransition>
