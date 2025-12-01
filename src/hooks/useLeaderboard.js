@@ -135,8 +135,11 @@ export function useLeaderboard(shouldFetchLeaders = true) {
                         }
                     }
 
-                    // Reload to apply changes immediately
-                    window.location.reload();
+                    // Dispatch event to notify components of data sync
+                    window.dispatchEvent(new CustomEvent('data-synced'));
+
+                    // Refresh leaderboard data
+                    fetchLeaderboard();
                 }
             }
         }, (error) => {

@@ -4,6 +4,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import { AnimatePresence } from 'framer-motion';
 import { DevToolsProvider } from './context/DevToolsContext';
+import ModuleErrorBoundary from './components/ModuleErrorBoundary';
 
 // Lazy load pages for better performance with prefetching
 const Home = lazy(() => import(/* webpackPrefetch: true */ './pages/Home'));
@@ -54,22 +55,22 @@ function App() {
               <Route path="theory/:moduleId" element={<Theory />} />
               <Route path="practice" element={<PracticeHub />} />
               <Route path="achievements" element={<Achievements />} />
-              <Route path="practice/registration" element={<Registration />} />
-              <Route path="practice/payment" element={<Payment />} />
-              <Route path="practice/banking" element={<Banking />} />
-              <Route path="practice/exam" element={<Exam />} />
-              <Route path="practice/exam-results" element={<ExamResults />} />
-              <Route path="practice/api" element={<API />} />
-              <Route path="practice/mobile" element={<Mobile />} />
-              <Route path="practice/security" element={<Security />} />
-              <Route path="practice/performance" element={<Performance />} />
-              <Route path="practice/ecommerce" element={<Ecommerce />} />
-              <Route path="interview" element={<Interview />} />
-              <Route path="practice/interview-results" element={<InterviewResults />} />
-              <Route path="practice/automation" element={<Automation />} />
-              <Route path="practice/database" element={<Database />} />
-              <Route path="glossary" element={<Glossary />} />
-              <Route path="istqb" element={<ISTQB />} />
+              <Route path="practice/registration" element={<ModuleErrorBoundary><Registration /></ModuleErrorBoundary>} />
+              <Route path="practice/payment" element={<ModuleErrorBoundary><Payment /></ModuleErrorBoundary>} />
+              <Route path="practice/banking" element={<ModuleErrorBoundary><Banking /></ModuleErrorBoundary>} />
+              <Route path="practice/exam" element={<ModuleErrorBoundary><Exam /></ModuleErrorBoundary>} />
+              <Route path="practice/exam-results" element={<ModuleErrorBoundary><ExamResults /></ModuleErrorBoundary>} />
+              <Route path="practice/api" element={<ModuleErrorBoundary><API /></ModuleErrorBoundary>} />
+              <Route path="practice/mobile" element={<ModuleErrorBoundary><Mobile /></ModuleErrorBoundary>} />
+              <Route path="practice/security" element={<ModuleErrorBoundary><Security /></ModuleErrorBoundary>} />
+              <Route path="practice/performance" element={<ModuleErrorBoundary><Performance /></ModuleErrorBoundary>} />
+              <Route path="practice/ecommerce" element={<ModuleErrorBoundary><Ecommerce /></ModuleErrorBoundary>} />
+              <Route path="interview" element={<ModuleErrorBoundary><Interview /></ModuleErrorBoundary>} />
+              <Route path="practice/interview-results" element={<ModuleErrorBoundary><InterviewResults /></ModuleErrorBoundary>} />
+              <Route path="practice/automation" element={<ModuleErrorBoundary><Automation /></ModuleErrorBoundary>} />
+              <Route path="practice/database" element={<ModuleErrorBoundary><Database /></ModuleErrorBoundary>} />
+              <Route path="glossary" element={<ModuleErrorBoundary><Glossary /></ModuleErrorBoundary>} />
+              <Route path="istqb" element={<ModuleErrorBoundary><ISTQB /></ModuleErrorBoundary>} />
               <Route path="leaderboard" element={<Leaderboard />} />
             </Route>
           </Routes>

@@ -4,6 +4,7 @@ import { useLeaderboard } from '../hooks/useLeaderboard';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import { SkeletonLeaderboardItem } from './SkeletonCard';
 
 const getAvatarColor = (name) => {
     if (!name) return 'bg-slate-200';
@@ -113,7 +114,17 @@ const HomeLeaderboard = () => {
     }, [refreshLeaderboard]);
 
     if (loading) return (
-        <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] p-6 shadow-xl border border-slate-100 dark:border-slate-700 mb-8 animate-pulse h-64"></div>
+        <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] p-6 shadow-xl border border-slate-100 dark:border-slate-700 mb-8">
+            <div className="flex items-center justify-between mb-6">
+                <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-32 animate-pulse"></div>
+                <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-20 animate-pulse"></div>
+            </div>
+            <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                    <SkeletonLeaderboardItem key={i} />
+                ))}
+            </div>
+        </div>
     );
 
     if (leaders.length === 0) return null;
