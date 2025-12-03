@@ -107,6 +107,21 @@ export default function Home() {
     }
   };
 
+  const handleCloseRegistration = () => {
+    if (isEditing) {
+      setShowRegistration(false);
+      setIsEditing(false);
+    } else if (savedAccounts.length > 0) {
+      // Revert to last used account
+      const sorted = [...savedAccounts].sort((a, b) => (b.lastUsed || 0) - (a.lastUsed || 0));
+      const lastAccount = sorted[0];
+      if (lastAccount) {
+        switchAccount(lastAccount.uid);
+        window.location.reload();
+      }
+    }
+  };
+
   useEffect(() => {
     if (!leaderboardLoading && !userProfile) {
       setShowRegistration(true);
@@ -200,13 +215,10 @@ export default function Home() {
               animate={{ scale: 1, y: 0 }}
               className="bg-white dark:bg-slate-800 w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 relative"
             >
-              {/* Close button for editing mode */}
-              {isEditing && (
+              {/* Close button */}
+              {(isEditing || savedAccounts.length > 0) && (
                 <button
-                  onClick={() => {
-                    setShowRegistration(false);
-                    setIsEditing(false);
-                  }}
+                  onClick={handleCloseRegistration}
                   className="absolute top-4 right-4 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
                   aria-label="Bağla"
                 >
