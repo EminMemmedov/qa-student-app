@@ -226,13 +226,14 @@ export default function Leaderboard() {
         console.log('UserProfile:', userProfile);
         console.log('Leaders:', leaders);
 
-        // Try to find user in leaders
+        // Try to find user in leaders - check both uid and id
         let currentUserRank = 0;
         let currentUser = null;
 
         if (leaders && leaders.length > 0) {
-            currentUserRank = leaders.findIndex(u => u.uid === userProfile.uid) + 1;
-            currentUser = leaders.find(u => u.uid === userProfile.uid);
+            // Firestore returns 'id' field, but userProfile has 'uid'
+            currentUserRank = leaders.findIndex(u => u.uid === userProfile.uid || u.id === userProfile.uid) + 1;
+            currentUser = leaders.find(u => u.uid === userProfile.uid || u.id === userProfile.uid);
             console.log('Found rank:', currentUserRank, 'User:', currentUser);
         }
 
@@ -279,8 +280,8 @@ export default function Leaderboard() {
         leaders[2] || null
     ];
     const rest = leaders.slice(3);
-    const currentUserRank = leaders.findIndex(u => u.uid === userProfile?.uid) + 1;
-    const currentUser = leaders.find(u => u.uid === userProfile?.uid);
+    const currentUserRank = leaders.findIndex(u => u.uid === userProfile?.uid || u.id === userProfile?.uid) + 1;
+    const currentUser = leaders.find(u => u.uid === userProfile?.uid || u.id === userProfile?.uid);
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-32 transition-colors">
