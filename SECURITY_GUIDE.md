@@ -43,8 +43,10 @@ service cloud.firestore {
     }
     
     // Проверка: не слишком ли частые обновления (rate limiting)
+    // ВАЖНО: Проверяем только если поле lastUpdated существует (backward compatibility)
     function notTooFrequent() {
-      return request.time > resource.data.lastUpdated + duration.value(2, 's');
+      return !('lastUpdated' in resource.data) || 
+             request.time > resource.data.lastUpdated + duration.value(2, 's');
     }
     
     // ============================================
@@ -55,14 +57,17 @@ service cloud.firestore {
       // Чтение доступно всем (для лидерборда)
       allow read: if true;
       
-      // Создание нового пользователя
+      // Создание нового пользователя ИЛИ восстановление существующего
+      // Разрешаем любой XP при создании (для восстановления аккаунта)
       allow create: if 
         // Имя должно быть валидным
         isValidName(request.resource.data.name) &&
-        // XP должен быть 0 при создании
-        request.resource.data.xp == 0 &&
-        // foundBugs должен быть пустым массивом
-        request.resource.data.foundBugs == [];
+        // XP должен быть неотрицательным
+        request.resource.data.xp >= 0 &&
+        // foundBugs должен быть валидным массивом (может быть не пустым при восстановлении)
+        ('progress' in request.resource.data && 
+         'foundBugs' in request.resource.data.progress &&
+         isValidBugsArray(request.resource.data.progress.foundBugs));
       
       // Обновление существующего пользователя
       allow update: if 
@@ -74,14 +79,25 @@ service cloud.firestore {
         (request.resource.data.xp - resource.data.xp) <= 500 &&
         
         // ===== ЗАЩИТА FOUND BUGS =====
-        // 3. foundBugs должен быть валидным массивом
-        isValidBugsArray(request.resource.data.foundBugs) &&
+        // 3. foundBugs должен быть валидным массивом (если поле progress существует)
+        (!('progress' in request.resource.data) || 
+         !('foundBugs' in request.resource.data.progress) ||
+         isValidBugsArray(request.resource.data.progress.foundBugs)) &&
         
         // 4. Нельзя удалять найденные баги (только добавлять)
-        request.resource.data.foundBugs.size() >= resource.data.foundBugs.size() &&
+        // Проверяем только если оба поля существуют
+        (!('progress' in resource.data) || 
+         !('foundBugs' in resource.data.progress) ||
+         !('progress' in request.resource.data) ||
+         !('foundBugs' in request.resource.data.progress) ||
+         request.resource.data.progress.foundBugs.size() >= resource.data.progress.foundBugs.size()) &&
         
         // 5. Нельзя добавить больше 10 багов за раз
-        (request.resource.data.foundBugs.size() - resource.data.foundBugs.size()) <= 10 &&
+        (!('progress' in resource.data) || 
+         !('foundBugs' in resource.data.progress) ||
+         !('progress' in request.resource.data) ||
+         !('foundBugs' in request.resource.data.progress) ||
+         (request.resource.data.progress.foundBugs.size() - resource.data.progress.foundBugs.size()) <= 10) &&
         
         // ===== ЗАЩИТА ИМЕНИ =====
         // 6. Если имя меняется, оно должно быть валидным
@@ -89,7 +105,10 @@ service cloud.firestore {
         
         // ===== RATE LIMITING =====
         // 7. Нельзя обновлять профиль чаще, чем раз в 2 секунды
-        (!fieldChanged('xp') && !fieldChanged('foundBugs') || notTooFrequent());
+        // Проверяем только если меняются критичные поля
+        (!fieldChanged('xp') && 
+         !('progress' in request.resource.data || 'progress' in resource.data) || 
+         notTooFrequent());
       
       // Удаление запрещено
       allow delete: if false;

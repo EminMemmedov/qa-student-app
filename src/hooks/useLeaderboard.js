@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
-import { collection, query, orderBy, limit, onSnapshot, doc, setDoc, where, getDocs } from 'firebase/firestore';
+import { collection, query, orderBy, limit, onSnapshot, doc, setDoc, where, getDocs, serverTimestamp } from 'firebase/firestore';
 import { getStorageItem, setStorageItem } from '../utils/storage';
 import { useGameProgress } from './useGameProgress';
 import { useAchievements } from './useAchievements';
@@ -77,7 +77,8 @@ export function useLeaderboard(shouldFetchLeaders = true) {
                     level: currentLevel,
                     badges: unlockedAchievements,
                     progress: progressData, // Store full progress
-                    lastActive: new Date().toISOString()
+                    lastActive: new Date().toISOString(),
+                    lastUpdated: serverTimestamp() // Required for Security Rules rate limiting
                 }, { merge: true });
             } catch (error) {
                 if (error.code === 'permission-denied') {
@@ -261,6 +262,9 @@ export function useLeaderboard(shouldFetchLeaders = true) {
                 userData.createdAt = new Date().toISOString();
             }
 
+            // Add lastUpdated timestamp for Security Rules
+            userData.lastUpdated = serverTimestamp();
+
             await setDoc(doc(db, COLLECTION_NAME, uid), userData, { merge: true });
 
             // Only set user profile state if we are NOT going to reload immediately
@@ -296,7 +300,8 @@ export function useLeaderboard(shouldFetchLeaders = true) {
             // Update Firestore
             await setDoc(doc(db, COLLECTION_NAME, userProfile.uid), {
                 name: cleanName,
-                name_lower: nameLower
+                name_lower: nameLower,
+                lastUpdated: serverTimestamp() // Required for Security Rules
             }, { merge: true });
 
             return true;
