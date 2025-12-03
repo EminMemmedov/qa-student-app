@@ -217,17 +217,32 @@ export default function Leaderboard() {
     };
 
     const handleShare = async () => {
-        if (!userProfile || !leaders || leaders.length === 0) {
-            console.log('No user profile or leaders data');
+        if (!userProfile) {
+            console.log('No user profile');
             return;
         }
 
-        const currentUserRank = leaders.findIndex(u => u.uid === userProfile.uid) + 1;
-        const currentUser = leaders.find(u => u.uid === userProfile.uid);
+        // Debug logging
+        console.log('UserProfile:', userProfile);
+        console.log('Leaders:', leaders);
 
+        // Try to find user in leaders
+        let currentUserRank = 0;
+        let currentUser = null;
+
+        if (leaders && leaders.length > 0) {
+            currentUserRank = leaders.findIndex(u => u.uid === userProfile.uid) + 1;
+            currentUser = leaders.find(u => u.uid === userProfile.uid);
+            console.log('Found rank:', currentUserRank, 'User:', currentUser);
+        }
+
+        // If user not in leaders list, use userProfile data directly
         if (!currentUser || currentUserRank === 0) {
-            console.log('User not found in leaderboard');
-            return;
+            console.log('User not in top leaders, using profile data');
+            // Get XP from localStorage or hooks
+            const xp = getStorageItem('qa_game_xp', 0);
+            currentUserRank = leaders.length > 0 ? leaders.length + 1 : 1; // Approximate rank
+            currentUser = { ...userProfile, xp };
         }
 
         const shareData = {
