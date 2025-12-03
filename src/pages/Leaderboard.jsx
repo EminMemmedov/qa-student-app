@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, User, Loader2, ChevronRight, Sparkles, Crown, Edit2, X, Share2, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Trophy, User, Loader2, ChevronRight, Sparkles, Crown, Edit2, X, Share2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLeaderboard } from '../hooks/useLeaderboard';
 import { getStorageItem, setStorageItem } from '../utils/storage';
@@ -62,27 +62,6 @@ const Confetti = () => {
                 />
             ))}
         </div>
-    );
-};
-
-// Rank change indicator
-const RankTrend = ({ previousRank, currentRank }) => {
-    if (!previousRank || previousRank === currentRank) {
-        return <Minus size={14} className="text-slate-400" />;
-    }
-
-    const improved = currentRank < previousRank;
-    const change = Math.abs(currentRank - previousRank);
-
-    return (
-        <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className={`flex items-center gap-0.5 ${improved ? 'text-green-500' : 'text-red-500'}`}
-        >
-            {improved ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
-            <span className="text-[10px] font-bold">{change}</span>
-        </motion.div>
     );
 };
 
@@ -201,25 +180,6 @@ export default function Leaderboard() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showShareToast, setShowShareToast] = useState(false);
 
-    // Track previous rankings for trend indicators
-    const [previousRankings, setPreviousRankings] = useState(() =>
-        getStorageItem('qa_previous_rankings', {})
-    );
-
-    // Update rankings history
-    useEffect(() => {
-        if (!loading && leaders.length > 0) {
-            const currentRankings = {};
-            leaders.forEach((user, index) => {
-                currentRankings[user.uid] = index + 1;
-            });
-
-            // Save current as previous for next time
-            setTimeout(() => {
-                setStorageItem('qa_previous_rankings', currentRankings);
-            }, 5000); // Delay to allow viewing trends
-        }
-    }, [leaders, loading]);
 
     useEffect(() => {
         if (!loading && !userProfile) {
@@ -398,6 +358,21 @@ export default function Leaderboard() {
                     <p className="text-indigo-100 text-center text-sm font-medium opacity-90">
                         Ən güclü QA mütəxəssisləri
                     </p>
+
+                    {/* Share Button for all users */}
+                    {currentUser && (
+                        <div className="flex justify-center mt-4">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={handleShare}
+                                className="flex items-center gap-2 px-6 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-all shadow-lg border border-white/30"
+                            >
+                                <Share2 size={18} />
+                                <span className="font-bold text-sm">Paylaş</span>
+                            </motion.button>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -413,7 +388,6 @@ export default function Leaderboard() {
                 <div className="space-y-3 pb-8 bg-white dark:bg-slate-800 rounded-t-[2.5rem] pt-8 -mx-4 px-6 min-h-[200px] shadow-xl border-t border-slate-100 dark:border-slate-700 relative z-10">
                     {rest.length > 0 ? rest.map((user, index) => {
                         const currentRank = index + 4;
-                        const previousRank = previousRankings[user.uid];
 
                         return (
                             <motion.div
@@ -426,10 +400,7 @@ export default function Leaderboard() {
                                     : 'bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-700'
                                     }`}
                             >
-                                <div className="flex items-center gap-2">
-                                    <div className="font-bold text-slate-400 w-6 text-center">{currentRank}</div>
-                                    <RankTrend previousRank={previousRank} currentRank={currentRank} />
-                                </div>
+                                <div className="font-bold text-slate-400 w-6 text-center">{currentRank}</div>
 
                                 <div className={`w-10 h-10 min-w-[2.5rem] rounded-xl ${getAvatarColor(user.name)} flex items-center justify-center text-white font-bold shadow-sm`}>
                                     {user.name.charAt(0)}
@@ -475,10 +446,7 @@ export default function Leaderboard() {
                             className="fixed bottom-24 left-4 right-4 z-[60]"
                         >
                             <div className="bg-indigo-900/90 backdrop-blur-md text-white rounded-2xl p-4 shadow-2xl shadow-indigo-900/50 flex items-center gap-4 border border-indigo-500/30 max-w-md mx-auto">
-                                <div className="flex items-center gap-2">
-                                    <div className="font-black text-indigo-300 w-8 text-center text-lg">#{currentUserRank}</div>
-                                    <RankTrend previousRank={previousRankings[currentUser.uid]} currentRank={currentUserRank} />
-                                </div>
+                                <div className="font-black text-indigo-300 w-8 text-center text-lg">#{currentUserRank}</div>
                                 <div className={`w-10 h-10 min-w-[2.5rem] rounded-xl ${getAvatarColor(currentUser.name)} flex items-center justify-center text-white font-bold shadow-sm border-2 border-white/20`}>
                                     {currentUser.name.charAt(0)}
                                 </div>
@@ -499,19 +467,8 @@ export default function Leaderboard() {
                                     </div>
                                     <div className="text-xs text-indigo-200 font-medium">Sənin nəticən</div>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <div className="text-white font-black whitespace-nowrap bg-white/10 px-3 py-1 rounded-lg">
-                                        {currentUser.xp} XP
-                                    </div>
-                                    <motion.button
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        onClick={handleShare}
-                                        className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
-                                        title="Paylaş"
-                                    >
-                                        <Share2 size={18} />
-                                    </motion.button>
+                                <div className="text-white font-black whitespace-nowrap bg-white/10 px-3 py-1 rounded-lg">
+                                    {currentUser.xp} XP
                                 </div>
                             </div>
                         </motion.div>
