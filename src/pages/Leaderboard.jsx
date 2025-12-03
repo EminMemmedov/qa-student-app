@@ -217,10 +217,18 @@ export default function Leaderboard() {
     };
 
     const handleShare = async () => {
-        const currentUserRank = leaders.findIndex(u => u.uid === userProfile?.uid) + 1;
-        const currentUser = leaders.find(u => u.uid === userProfile?.uid);
+        if (!userProfile || !leaders || leaders.length === 0) {
+            console.log('No user profile or leaders data');
+            return;
+        }
 
-        if (!currentUser) return;
+        const currentUserRank = leaders.findIndex(u => u.uid === userProfile.uid) + 1;
+        const currentUser = leaders.find(u => u.uid === userProfile.uid);
+
+        if (!currentUser || currentUserRank === 0) {
+            console.log('User not found in leaderboard');
+            return;
+        }
 
         const shareData = {
             title: 'QA Academy - Mənim Nəticəm',
@@ -369,7 +377,7 @@ export default function Leaderboard() {
                                 className="flex items-center gap-2 px-6 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-all shadow-lg border border-white/30"
                             >
                                 <Share2 size={18} />
-                                <span className="font-bold text-sm">Paylaş</span>
+                                <span className="font-bold text-sm">Nəticəni Paylaş</span>
                             </motion.button>
                         </div>
                     )}
