@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/PageTransition';
@@ -295,90 +296,111 @@ export default function Home() {
 
             <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-2 flex items-center flex-wrap gap-2">
               {userProfile ? (
-                <div className="flex items-center gap-2 relative" ref={accountMenuRef}>
+                <div className="flex items-center gap-2 relative">
                   <div
                     className="flex items-center gap-2 cursor-pointer group"
-                    onClick={() => setShowAccountMenu(!showAccountMenu)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      // Store position for Portal
+                      if (accountMenuRef.current) {
+                        accountMenuRef.current.dataset.top = rect.bottom + window.scrollY + 10;
+                        accountMenuRef.current.dataset.left = rect.left + window.scrollX;
+                      }
+                      setShowAccountMenu(!showAccountMenu);
+                    }}
+                    ref={accountMenuRef}
                   >
                     <span>Salam, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">{userProfile.name.split(' ')[0]}</span>!</span>
                     <ChevronDown size={20} className={`text-slate-400 group-hover:text-indigo-500 transition-transform duration-200 ${showAccountMenu ? 'rotate-180' : ''}`} />
                   </div>
 
-                  {/* Account Switcher Dropdown */}
+                  {/* Account Switcher Dropdown via Portal */}
                   <AnimatePresence>
                     {showAccountMenu && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden z-50"
-                      >
-                        <div className="p-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50">
-                          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Hesablar</p>
-                        </div>
-
-                        <div className="max-h-60 overflow-y-auto">
-                          {/* Current Account */}
-                          <div className="p-3 flex items-center justify-between bg-indigo-50/50 dark:bg-indigo-900/20 border-l-4 border-indigo-500">
-                            <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-sm">
-                                {userProfile.name.charAt(0)}
-                              </div>
-                              <div>
-                                <p className="font-bold text-sm text-slate-900 dark:text-white truncate max-w-[100px]">{userProfile.name}</p>
-                                <p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">{xp} XP</p>
-                              </div>
-                            </div>
-                            <Check size={16} className="text-indigo-500" />
+                      <Portal>
+                        <div
+                          className="fixed inset-0 z-[9998]"
+                          onClick={() => setShowAccountMenu(false)}
+                        />
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          style={{
+                            top: accountMenuRef.current ? parseFloat(accountMenuRef.current.dataset.top || 0) : 0,
+                            left: accountMenuRef.current ? parseFloat(accountMenuRef.current.dataset.left || 0) : 0,
+                          }}
+                          className="absolute w-64 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden z-[9999]"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="p-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50">
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Hesablar</p>
                           </div>
 
-                          {/* Saved Accounts */}
-                          {savedAccounts.filter(acc => acc.uid !== userProfile.uid).map(account => (
-                            <div
-                              key={account.uid}
-                              onClick={() => handleSwitchAccount(account.uid)}
-                              className="p-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer transition-colors group"
-                            >
+                          <div className="max-h-60 overflow-y-auto">
+                            {/* Current Account */}
+                            <div className="p-3 flex items-center justify-between bg-indigo-50/50 dark:bg-indigo-900/20 border-l-4 border-indigo-500">
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 font-bold text-sm">
-                                  {account.name.charAt(0)}
+                                <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-sm">
+                                  {userProfile.name.charAt(0)}
                                 </div>
                                 <div>
-                                  <p className="font-bold text-sm text-slate-700 dark:text-slate-200 truncate max-w-[100px]">{account.name}</p>
-                                  <p className="text-xs text-slate-400 font-medium">{account.xp} XP</p>
+                                  <p className="font-bold text-sm text-slate-900 dark:text-white truncate max-w-[100px]">{userProfile.name}</p>
+                                  <p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">{xp} XP</p>
                                 </div>
                               </div>
-                              <button
-                                onClick={(e) => handleRemoveAccount(e, account.uid)}
-                                className="p-1.5 rounded-full text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-all"
-                                title="Hesabı sil"
-                              >
-                                <X size={14} />
-                              </button>
+                              <Check size={16} className="text-indigo-500" />
                             </div>
-                          ))}
-                        </div>
 
-                        {/* Actions */}
-                        <div className="p-2 border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 space-y-1">
-                          <button
-                            onClick={handleAddNewAccount}
-                            className="w-full flex items-center gap-2 p-2 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all shadow-sm hover:shadow"
-                          >
-                            <Plus size={16} />
-                            Yeni hesab əlavə et
-                          </button>
+                            {/* Saved Accounts */}
+                            {savedAccounts.filter(acc => acc.uid !== userProfile.uid).map(account => (
+                              <div
+                                key={account.uid}
+                                onClick={() => handleSwitchAccount(account.uid)}
+                                className="p-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer transition-colors group"
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 font-bold text-sm">
+                                    {account.name.charAt(0)}
+                                  </div>
+                                  <div>
+                                    <p className="font-bold text-sm text-slate-700 dark:text-slate-200 truncate max-w-[100px]">{account.name}</p>
+                                    <p className="text-xs text-slate-400 font-medium">{account.xp} XP</p>
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={(e) => handleRemoveAccount(e, account.uid)}
+                                  className="p-1.5 rounded-full text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-all"
+                                  title="Hesabı sil"
+                                >
+                                  <X size={14} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
 
-                          <button
-                            onClick={handleEditClick}
-                            className="w-full flex items-center gap-2 p-2 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all shadow-sm hover:shadow"
-                          >
-                            <Edit2 size={16} />
-                            Adı dəyişdir
-                          </button>
-                        </div>
-                      </motion.div>
+                          {/* Actions */}
+                          <div className="p-2 border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 space-y-1">
+                            <button
+                              onClick={handleAddNewAccount}
+                              className="w-full flex items-center gap-2 p-2 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all shadow-sm hover:shadow"
+                            >
+                              <Plus size={16} />
+                              Yeni hesab əlavə et
+                            </button>
+
+                            <button
+                              onClick={handleEditClick}
+                              className="w-full flex items-center gap-2 p-2 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all shadow-sm hover:shadow"
+                            >
+                              <Edit2 size={16} />
+                              Adı dəyişdir
+                            </button>
+                          </div>
+                        </motion.div>
+                      </Portal>
                     )}
                   </AnimatePresence>
                 </div>
