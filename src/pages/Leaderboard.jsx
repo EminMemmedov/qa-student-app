@@ -360,7 +360,7 @@ export default function Leaderboard() {
                     </p>
 
                     {/* Share Button for all users */}
-                    {currentUser && (
+                    {userProfile && (
                         <div className="flex justify-center mt-4">
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
