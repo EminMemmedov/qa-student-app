@@ -94,7 +94,7 @@ export function loadAccountData(accountData) {
 /**
  * Switch to a different account
  */
-export function switchToAccount(uid) {
+export function switchAccount(uid) {
     // Save current account first
     saveCurrentAccount();
 
