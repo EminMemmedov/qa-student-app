@@ -782,3 +782,7 @@ export default function Home() {
     </PageTransition>
   );
 }
+const Portal = ({ children }) => {
+  if (typeof document === 'undefined') return null;
+  return createPortal(children, document.body);
+};
