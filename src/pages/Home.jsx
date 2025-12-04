@@ -533,6 +533,7 @@ export default function Home() {
                   value={foundBugs.length}
                   color="orange"
                   delay={0}
+                  to="/practice"
                 />
                 <StatsCard
                   icon={Medal}
@@ -540,6 +541,7 @@ export default function Home() {
                   value={unlockedCount}
                   color="purple"
                   delay={0.1}
+                  to="/achievements"
                 />
               </>
             )}

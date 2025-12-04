@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
 
-const StatsCard = memo(({ icon: Icon, label, value, trend, color = 'blue', delay = 0 }) => {
+const StatsCard = memo(({ icon: Icon, label, value, trend, color = 'blue', delay = 0, to }) => {
     const colorClasses = {
         blue: 'from-blue-500 to-blue-600 shadow-blue-500/20',
         purple: 'from-purple-500 to-purple-600 shadow-purple-500/20',
@@ -18,13 +19,13 @@ const StatsCard = memo(({ icon: Icon, label, value, trend, color = 'blue', delay
         pink: 'bg-pink-500/20 border-pink-500/30'
     };
 
-    return (
+    const cardContent = (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.3 }}
             whileHover={{ scale: 1.05, y: -4 }}
-            className="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-lg border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-all"
+            className={`bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-lg border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-all ${to ? 'cursor-pointer' : ''}`}
         >
             <div className="flex items-start justify-between mb-3">
                 <div className={`p-3 rounded-xl border ${iconBgClasses[color]}`}>
@@ -47,6 +48,13 @@ const StatsCard = memo(({ icon: Icon, label, value, trend, color = 'blue', delay
             </div>
         </motion.div>
     );
+
+    // If 'to' prop is provided, wrap in Link
+    if (to) {
+        return <Link to={to}>{cardContent}</Link>;
+    }
+
+    return cardContent;
 });
 
 StatsCard.displayName = 'StatsCard';
