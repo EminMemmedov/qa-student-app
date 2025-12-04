@@ -383,11 +383,9 @@ export default function API() {
                                                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden space-y-2">
                                                         {headers.map((h, i) => (
                                                             <div key={i} className="flex flex-col sm:flex-row gap-2">
-                                                                <input placeholder="Key" value={h.key} onChange={e => { const n = [...headers]; n[i].key = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm w-full" />
-                                                                <div className="flex gap-2">
-                                                                    <input placeholder="Value" value={h.value} onChange={e => { const n = [...headers]; n[i].value = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
-                                                                    {i === headers.length - 1 && <button onClick={() => setHeaders([...headers, { key: '', value: '' }])} className="p-2 text-sky-400 shrink-0"><Plus size={16} /></button>}
-                                                                </div>
+                                                                <input placeholder="Key" value={h.key} onChange={e => { const n = [...headers]; n[i].key = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
+                                                                <input placeholder="Value" value={h.value} onChange={e => { const n = [...headers]; n[i].value = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
+                                                                {i === headers.length - 1 && <button onClick={() => setHeaders([...headers, { key: '', value: '' }])} className="p-2 text-sky-400 shrink-0"><Plus size={16} /></button>}
                                                             </div>
                                                         ))}
                                                         {headers.length === 0 && <button onClick={() => setHeaders([{ key: '', value: '' }])} className="text-xs text-sky-400 flex items-center gap-1"><Plus size={12} /> Add Header</button>}
