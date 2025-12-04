@@ -387,9 +387,9 @@ export default function API() {
                                                                     placeholder="Key"
                                                                     value={h.key}
                                                                     onChange={e => { const n = [...headers]; n[i].key = e.target.value; setHeaders(n) }}
-                                                                    className="w-full sm:flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm min-w-0"
+                                                                    className="w-full sm:w-auto sm:flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm min-w-0"
                                                                 />
-                                                                <div className="relative w-full sm:flex-1 min-w-0">
+                                                                <div className="relative w-full sm:w-auto sm:flex-1 min-w-0">
                                                                     <input
                                                                         placeholder="Value"
                                                                         value={h.value}
