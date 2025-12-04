@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Server, Play, CheckCircle, AlertCircle, Globe, ChevronLeft, Plus, Trash2, Lock, Code, History, FileJson, Layout, ChevronDown, Zap, Eye, EyeOff, RotateCcw } from 'lucide-react';
+import { Server, Play, CheckCircle, AlertCircle, Globe, ChevronLeft, Plus, Trash2, Lock, Unlock, Code, History, FileJson, Layout, ChevronDown, Zap, Eye, EyeOff, RotateCcw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../../components/PageTransition';
 import Toast from '../../components/Toast';
