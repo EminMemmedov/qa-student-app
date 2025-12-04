@@ -217,10 +217,10 @@ export default function API() {
     };
 
     return (
-        <PageTransition className="min-h-screen bg-slate-900 text-slate-300 p-4 pt-20 pb-24">
+        <PageTransition className="min-h-screen bg-slate-900 text-slate-300 p-6 pt-20 pb-24">
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
-                <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center justify-between mb-8">
                     <div className="flex items-start gap-4">
                         <Link to="/practice" className="mt-1 p-2 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors shrink-0 border border-slate-700">
                             <ChevronLeft className="text-white" size={20} />
@@ -252,13 +252,13 @@ export default function API() {
                 </div>
 
                 {/* Level Selector */}
-                <div className="flex gap-3 mb-6 overflow-x-auto pb-2 justify-start no-scrollbar px-1">
+                <div className="flex gap-4 mb-8 overflow-x-auto pb-2 justify-start no-scrollbar px-1">
                     {[1, 2, 3, 4, 5].map((lvl) => (
                         <button
                             key={lvl}
                             onClick={() => (completedLevels.includes(lvl - 1) || lvl === 1) && setLevel(lvl)}
                             disabled={lvl > 1 && !completedLevels.includes(lvl - 1)}
-                            className={`flex-1 min-w-[100px] p-3 rounded-xl border-2 flex flex-col items-center gap-1 transition-all ${level === lvl ? 'border-sky-500 bg-sky-500/10 text-white' :
+                            className={`flex-1 min-w-[150px] p-4 rounded-xl border-2 flex flex-col items-center gap-2 transition-all ${level === lvl ? 'border-sky-500 bg-sky-500/10 text-white' :
                                 (lvl > 1 && !completedLevels.includes(lvl - 1)) ? 'border-slate-800 opacity-50' : 'border-slate-700 bg-slate-800'
                                 }`}
                         >
@@ -271,7 +271,7 @@ export default function API() {
                 <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 min-h-[600px]">
                     {/* Task Panel */}
                     <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
-                        <div className="bg-slate-800 rounded-2xl p-4 sm:p-5 border border-slate-700 shadow-lg">
+                        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-xl">
                             <div className="flex items-center gap-2 mb-3">
                                 <Server className="text-sky-400" size={20} />
                                 <h2 className="text-lg font-bold text-white">{t('api.task')}</h2>
@@ -298,7 +298,7 @@ export default function API() {
                         </div>
 
                         {/* Route Suggestions (Quick Actions) */}
-                        <div className="bg-slate-800 rounded-2xl p-4 sm:p-5 border border-slate-700 shadow-lg">
+                        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-xl">
                             <h3 className="text-xs font-bold text-slate-500 uppercase mb-3 flex items-center gap-2">
                                 <Zap size={14} /> Quick Routes
                             </h3>
