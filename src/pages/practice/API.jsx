@@ -268,9 +268,9 @@ export default function API() {
                     ))}
                 </div>
 
-                <div className="grid grid-cols-1 2xl:grid-cols-3 gap-6">
+                <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6">
                     {/* Task Panel */}
-                    <div className="2xl:col-span-1 space-y-6">
+                    <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
                         <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
                             <div className="flex items-center gap-2 mb-3">
                                 <Server className="text-sky-400" size={20} />
@@ -318,7 +318,7 @@ export default function API() {
                     </div>
 
                     {/* API Client Interface */}
-                    <div className="2xl:col-span-2 bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden flex flex-col">
+                    <div className="lg:col-span-2 bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden flex flex-col order-1 lg:order-2">
                         {/* Request Bar */}
                         <div className="p-4 border-b border-slate-700 bg-slate-800/80 backdrop-blur-sm">
                             <div className="flex flex-col xl:flex-row gap-3">
