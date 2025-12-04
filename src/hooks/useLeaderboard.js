@@ -136,8 +136,11 @@ export function useLeaderboard(shouldFetchLeaders = true) {
                         }
                     }
 
-                    // Dispatch event to notify components of data sync
+                    // Dispatch event to notify other components of data sync
                     window.dispatchEvent(new CustomEvent('data-synced'));
+
+                    // Also dispatch xp-changed to trigger achievement checks
+                    window.dispatchEvent(new CustomEvent('xp-changed', { detail: { xp: remoteXP } }));
 
                     // Refresh leaderboard data
                     fetchLeaderboard();
