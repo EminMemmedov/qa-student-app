@@ -275,7 +275,7 @@ export default function API() {
                     })}
                 </div>
 
-                <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 min-h-[600px]">
+                <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 min-h-[800px]">
                     {/* Left: Task & Quick Routes */}
                     <div className="lg:col-span-1 flex flex-col gap-6 order-2 lg:order-1">
                         {/* Task Card */}
@@ -332,7 +332,7 @@ export default function API() {
 
                     {/* Right: API Client Interface */}
                     <div className="lg:col-span-2 flex flex-col gap-4 order-1 lg:order-2">
-                        <div className="bg-slate-800 rounded-2xl border border-slate-700 shadow-2xl flex flex-col overflow-hidden min-h-[600px]">
+                        <div className="bg-slate-800 rounded-2xl border border-slate-700 shadow-2xl flex flex-col overflow-hidden min-h-[800px]">
                             {/* Request Bar */}
                             <div className="p-6 border-b border-slate-700 bg-slate-800/80 backdrop-blur-sm">
                                 <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-3 items-center">
