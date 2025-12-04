@@ -268,7 +268,7 @@ export default function API() {
                             >
                                 <div className="flex items-center gap-2">
                                     {isLocked ? <Lock size={16} /> : isCompleted ? <CheckCircle size={16} className="text-green-500" /> : <Unlock size={16} />}
-                                    <span className="font-bold text-sm">{t(`api.levels.level${lvl}`)}</span>
+                                    <span className="font-bold text-sm">Level {lvl}</span>
                                 </div>
                             </button>
                         );
