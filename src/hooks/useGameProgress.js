@@ -132,7 +132,14 @@ export function useGameProgress() {
 
     const addXP = (amount) => {
         // Add XP directly (for interview, exam, etc.)
-        setXp(prev => prev + amount);
+        setXp(prev => {
+            const newXP = prev + amount;
+            // Dispatch event to trigger achievement checks
+            setTimeout(() => {
+                window.dispatchEvent(new CustomEvent('xp-changed', { detail: { xp: newXP } }));
+            }, 100);
+            return newXP;
+        });
     };
 
     return { foundBugs, addBug, xp, resetProgress, getBugPoints, getBugDifficulty, deductXP, addXP };

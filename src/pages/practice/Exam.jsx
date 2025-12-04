@@ -6,14 +6,17 @@ import { Clock, CheckCircle, XCircle, ArrowRight, Award } from 'lucide-react';
 import { getRandomQuestions } from '../../data/examQuestions';
 import { useAdaptiveExam } from '../../hooks/useAdaptiveExam';
 import { useGameProgress } from '../../hooks/useGameProgress';
+import { useAchievements } from '../../hooks/useAchievements';
 import PageTransition from '../../components/PageTransition';
 import { Sparkles, Brain } from 'lucide-react';
+import { setStorageItem, getStorageItem } from '../../utils/storage';
 
 export default function Exam() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { getNextQuestion, currentDifficulty, resetExam } = useAdaptiveExam();
-    const { addXP } = useGameProgress();
+    const { addXP, xp, foundBugs } = useGameProgress();
+    const { checkAchievements } = useAchievements();
 
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -28,7 +31,7 @@ export default function Exam() {
         const optionsWithIndex = question.options.map((opt, i) => ({ text: opt, originalIndex: i }));
         const shuffledOptions = optionsWithIndex.sort(() => Math.random() - 0.5);
         const newCorrectIndex = shuffledOptions.findIndex(opt => opt.originalIndex === question.correctAnswer);
-        
+
         return {
             ...question,
             options: shuffledOptions.map(opt => opt.text),
@@ -127,11 +130,43 @@ export default function Exam() {
             }
         });
 
+        // Calculate percentage
+        const percentage = Math.round((correctCount / questions.length) * 100);
+
+        // Store exam score
+        setStorageItem('qa_exam_score', percentage);
+
         // Award XP for correct answers (e.g., 10 XP per correct answer)
         const xpEarned = correctCount * 10;
         if (xpEarned > 0) {
             addXP(xpEarned);
         }
+
+        // Check achievements after a short delay
+        setTimeout(() => {
+            const dbLevels = getStorageItem('qa_db_completed_levels', []);
+            const autoLevels = getStorageItem('qa_automation_completed_levels', []);
+            const apiLevels = getStorageItem('qa_api_completed_levels', []);
+            const mobileLevels = getStorageItem('qa_mobile_completed_levels', []);
+            const interviewComplete = getStorageItem('qa_interview_complete', false);
+
+            checkAchievements({
+                xp: xp + xpEarned,
+                foundBugs: foundBugs || [],
+                totalBugs: 84,
+                moduleBugs: {},
+                getBugDifficulty: () => 'medium',
+                completedLevels: {
+                    database: dbLevels,
+                    automation: autoLevels,
+                    api: apiLevels,
+                    mobile: mobileLevels
+                },
+                examScore: percentage,
+                interviewComplete: interviewComplete,
+                addXP: null // Don't add XP again
+            });
+        }, 200);
 
         // Navigate to results
         navigate('/practice/exam-results', {

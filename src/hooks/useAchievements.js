@@ -25,6 +25,54 @@ export function useAchievements() {
         setStorageItem('qa_hints_used', hintsUsed);
     }, [hintsUsed]);
 
+    // Automatic XP-based achievement checking
+    useEffect(() => {
+        const checkXPAchievements = () => {
+            const currentXP = getStorageItem('qa_game_xp', 0);
+            const foundBugs = getStorageItem('qa_game_progress', []);
+            const dbLevels = getStorageItem('qa_db_completed_levels', []);
+            const autoLevels = getStorageItem('qa_automation_completed_levels', []);
+            const apiLevels = getStorageItem('qa_api_completed_levels', []);
+            const mobileLevels = getStorageItem('qa_mobile_completed_levels', []);
+            const examScore = getStorageItem('qa_exam_score', 0);
+            const interviewComplete = getStorageItem('qa_interview_complete', false);
+
+            // Check XP-based achievements
+            checkAchievements({
+                xp: currentXP,
+                foundBugs: foundBugs || [],
+                totalBugs: 84,
+                moduleBugs: {},
+                getBugDifficulty: () => 'medium',
+                completedLevels: {
+                    database: dbLevels,
+                    automation: autoLevels,
+                    api: apiLevels,
+                    mobile: mobileLevels
+                },
+                examScore: examScore,
+                interviewComplete: interviewComplete,
+                addXP: null // Don't add XP when checking achievements
+            });
+        };
+
+        // Check on mount (for retroactive unlocking)
+        checkXPAchievements();
+
+        // Listen for XP changes
+        const handleXPChange = () => {
+            checkXPAchievements();
+        };
+
+        window.addEventListener('xp-changed', handleXPChange);
+        window.addEventListener('data-synced', handleXPChange);
+
+        return () => {
+            window.removeEventListener('xp-changed', handleXPChange);
+            window.removeEventListener('data-synced', handleXPChange);
+        };
+    }, [unlockedAchievements]);
+
     const checkAchievements = (stats) => {
         const { foundBugs, totalBugs, moduleBugs, getBugDifficulty, xp, completedLevels, examScore, interviewComplete, addXP } = stats;
         const newUnlocks = [];
@@ -151,7 +199,7 @@ export function useAchievements() {
     const unlockAchievement = (achievementId) => {
         if (!unlockedAchievements.includes(achievementId)) {
             setUnlockedAchievements(prev => [...prev, achievementId]);
-            
+
             // Find achievement details for notification
             const achievement = achievements.find(a => a.id === achievementId);
             if (achievement) {

@@ -306,10 +306,10 @@ export default function Payment() {
                             <input
                                 type="text"
                                 placeholder="0000 0000 0000 0000"
-                                className={`w - full pl - 10 p - 3 border - 2 rounded - xl outline - none transition - colors ${touched.cardNumber && errors.cardNumber
+                                className={`w-full pl-10 p-3 border-2 rounded-xl outline-none transition-colors ${touched.cardNumber && errors.cardNumber
                                     ? 'border-red-300 focus:border-red-500'
                                     : 'border-slate-200 focus:border-green-500'
-                                    } `}
+                                    }`}
                                 value={cardNumber}
                                 onChange={(e) => setCardNumber(e.target.value)}
                                 onBlur={() => handleBlur('cardNumber')}
@@ -337,10 +337,10 @@ export default function Payment() {
                             <input
                                 type="text"
                                 placeholder="Ad Soyad"
-                                className={`w - full pl - 10 p - 3 border - 2 rounded - xl outline - none transition - colors ${touched.cardName && errors.cardName
+                                className={`w-full pl-10 p-3 border-2 rounded-xl outline-none transition-colors ${touched.cardName && errors.cardName
                                     ? 'border-red-300 focus:border-red-500'
                                     : 'border-slate-200 focus:border-purple-500'
-                                    } `}
+                                    }`}
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                                 onBlur={() => handleBlur('cardName')}
@@ -356,7 +356,7 @@ export default function Payment() {
 
                     {/* Bug: Inconsistent spacing */}
                     <div
-                        className="flex gap-4 mb-10 cursor-pointer"
+                        className="flex flex-col sm:flex-row gap-4 mb-10 cursor-pointer"
                         onClick={() => handleBugClick('form_spacing', 'Form elementləri arasında boşluq qeyri-bərabərdir')}
                     >
                         {/* Expiry */}
@@ -366,10 +366,10 @@ export default function Payment() {
                                 <Calendar className="absolute left-3 top-3.5 text-slate-400" size={18} />
                                 <input
                                     type="month"
-                                    className={`w - full pl - 10 p - 3 border - 2 rounded - xl outline - none transition - colors ${touched.expiry && errors.expiry
+                                    className={`w-full pl-10 p-3 border-2 rounded-xl outline-none transition-colors ${touched.expiry && errors.expiry
                                         ? 'border-red-300 focus:border-red-500'
                                         : 'border-slate-200 focus:border-purple-500'
-                                        } `}
+                                        }`}
                                     value={expiry}
                                     onChange={(e) => setExpiry(e.target.value)}
                                     onBlur={() => handleBlur('expiry')}
@@ -391,10 +391,10 @@ export default function Payment() {
                                 <input
                                     type="text"
                                     placeholder="123"
-                                    className={`w - full pl - 10 p - 3 border - 2 rounded - xl outline - none transition - colors ${touched.cvv && errors.cvv
+                                    className={`w-full pl-10 p-3 border-2 rounded-xl outline-none transition-colors ${touched.cvv && errors.cvv
                                         ? 'border-red-300 focus:border-red-500'
                                         : 'border-slate-200 focus:border-purple-500'
-                                        } `}
+                                        }`}
                                     value={cvv}
                                     onChange={(e) => {
                                         setCvv(e.target.value);

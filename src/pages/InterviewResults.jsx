@@ -3,15 +3,18 @@ import { motion } from 'framer-motion';
 import { Award, CheckCircle, AlertTriangle, RefreshCw, Home, ChevronRight } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { useGameProgress } from '../hooks/useGameProgress';
+import { useAchievements } from '../hooks/useAchievements';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { setStorageItem, getStorageItem } from '../utils/storage';
 
 export default function InterviewResults() {
     const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
     const { results } = location.state || { results: [] };
-    const { addXP } = useGameProgress();
+    const { addXP, xp, foundBugs } = useGameProgress();
+    const { checkAchievements } = useAchievements();
 
     const totalScore = Math.round(results.reduce((acc, curr) => acc + curr.score, 0) / results.length);
     const passed = totalScore >= 60;
@@ -20,6 +23,37 @@ export default function InterviewResults() {
         if (results.length > 0) {
             const xpEarned = Math.round(totalScore * 2); // 2 XP per point
             addXP(xpEarned);
+
+            // Mark interview as complete if passed
+            if (passed) {
+                setStorageItem('qa_interview_complete', true);
+            }
+
+            // Check achievements after a short delay to ensure XP is updated
+            setTimeout(() => {
+                const dbLevels = getStorageItem('qa_db_completed_levels', []);
+                const autoLevels = getStorageItem('qa_automation_completed_levels', []);
+                const apiLevels = getStorageItem('qa_api_completed_levels', []);
+                const mobileLevels = getStorageItem('qa_mobile_completed_levels', []);
+                const examScore = getStorageItem('qa_exam_score', 0);
+
+                checkAchievements({
+                    xp: xp + xpEarned,
+                    foundBugs: foundBugs || [],
+                    totalBugs: 84,
+                    moduleBugs: {},
+                    getBugDifficulty: () => 'medium',
+                    completedLevels: {
+                        database: dbLevels,
+                        automation: autoLevels,
+                        api: apiLevels,
+                        mobile: mobileLevels
+                    },
+                    examScore: examScore,
+                    interviewComplete: passed,
+                    addXP: null // Don't add XP again
+                });
+            }, 200);
         }
     }, []);
 
