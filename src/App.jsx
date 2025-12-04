@@ -28,6 +28,7 @@ const Database = lazy(() => import('./pages/practice/Database'));
 const Glossary = lazy(() => import(/* webpackPrefetch: true */ './pages/Glossary'));
 const ISTQB = lazy(() => import(/* webpackPrefetch: true */ './pages/ISTQB'));
 const Exam = lazy(() => import(/* webpackPrefetch: true */ './pages/practice/Exam'));
+const FoundBugs = lazy(() => import('./pages/FoundBugs'));
 
 // Import skeleton components
 import { SkeletonHome } from './components/Skeleton';
@@ -71,6 +72,7 @@ function App() {
               <Route path="practice/database" element={<ModuleErrorBoundary><Database /></ModuleErrorBoundary>} />
               <Route path="glossary" element={<ModuleErrorBoundary><Glossary /></ModuleErrorBoundary>} />
               <Route path="istqb" element={<ModuleErrorBoundary><ISTQB /></ModuleErrorBoundary>} />
+              <Route path="found-bugs" element={<FoundBugs />} />
               <Route path="leaderboard" element={<Leaderboard />} />
             </Route>
           </Routes>

@@ -533,7 +533,7 @@ export default function Home() {
                   value={foundBugs.length}
                   color="orange"
                   delay={0}
-                  to="/practice"
+                  to="/found-bugs"
                 />
                 <StatsCard
                   icon={Medal}
