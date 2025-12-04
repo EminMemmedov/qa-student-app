@@ -21,9 +21,9 @@ export default function API() {
     const { checkAchievements } = useAchievements();
 
     const [level, setLevel] = useState(1);
-    const [activeTab, setActiveTab] = useState('request'); 
+    const [activeTab, setActiveTab] = useState('request');
     const [toast, setToast] = useState(null);
-    
+
     // Server State (Dynamic DB)
     const [serverUsers, setServerUsers] = useState(initialUsers);
 
@@ -34,7 +34,7 @@ export default function API() {
     const [body, setBody] = useState('');
     const [bodyMode, setBodyMode] = useState('form'); // 'form' or 'json'
     const [showHeaders, setShowHeaders] = useState(false);
-    
+
     // Form State for Body Builder
     const [formData, setFormData] = useState({ name: '', email: '' });
 
@@ -125,7 +125,7 @@ export default function API() {
     const sendRequest = async () => {
         setIsLoading(true);
         setResponse(null);
-        setActiveTab('response'); 
+        setActiveTab('response');
 
         await new Promise(r => setTimeout(r, 600));
 
@@ -136,11 +136,11 @@ export default function API() {
         // --- SERVER LOGIC ---
         if (url === '/users' && method === 'GET') {
             status = 200; data = serverUsers;
-        } 
+        }
         else if (url.match(/^\/users\/\d+$/) && method === 'GET') {
             const id = parseInt(url.split('/').pop());
             const user = serverUsers.find(u => u.id === id);
-            if (user) { status = 200; data = user; } 
+            if (user) { status = 200; data = user; }
             else { status = 404; statusText = "Not Found"; data = { error: "User not found" }; }
         }
         else if (url === '/users' && method === 'POST') {
@@ -166,7 +166,7 @@ export default function API() {
                     const updated = { ...serverUsers[index], ...parsed };
                     setServerUsers(prev => { const n = [...prev]; n[index] = updated; return n; });
                     status = 200; data = updated;
-                } catch(e) { status = 400; data = { error: "Invalid JSON" }; }
+                } catch (e) { status = 400; data = { error: "Invalid JSON" }; }
             } else { status = 404; data = { error: "User not found" }; }
         }
         else if (url === '/admin') {
@@ -189,7 +189,7 @@ export default function API() {
             if (!completedLevels.includes(level)) {
                 const newCompleted = [...completedLevels, level];
                 setCompletedLevels(newCompleted);
-                
+
                 if (!hasSeenAnswer) {
                     addXP(200);
                     checkAchievements({ xp: xp + 200, completedLevels: { api: newCompleted }, addXP, foundBugs: [], moduleBugs: {}, getBugDifficulty: () => 'medium' });
@@ -209,8 +209,8 @@ export default function API() {
         setUrl(ans.url);
         setHeaders(ans.headers.length > 0 ? ans.headers : [{ key: '', value: '' }]);
         if (ans.body) {
-             setBody(ans.body);
-             setBodyMode('json'); // Switch to JSON mode to show exact answer
+            setBody(ans.body);
+            setBodyMode('json'); // Switch to JSON mode to show exact answer
         }
         if (ans.headers.length > 0) setShowHeaders(true);
         setActiveTab('request');
@@ -235,9 +235,9 @@ export default function API() {
                             <p className="text-slate-400 text-sm sm:text-base">{t('api.description')}</p>
                         </div>
                     </div>
-                    <button 
+                    <button
                         onClick={() => {
-                            if(window.confirm(t('common.reset_confirm') || "Are you sure you want to reset progress?")) {
+                            if (window.confirm(t('common.reset_confirm') || "Are you sure you want to reset progress?")) {
                                 setCompletedLevels([]);
                                 setLevel(1);
                                 setServerUsers(initialUsers);
@@ -258,10 +258,9 @@ export default function API() {
                             key={lvl}
                             onClick={() => (completedLevels.includes(lvl - 1) || lvl === 1) && setLevel(lvl)}
                             disabled={lvl > 1 && !completedLevels.includes(lvl - 1)}
-                            className={`flex-1 min-w-[100px] p-3 rounded-xl border-2 flex flex-col items-center gap-1 transition-all ${
-                                level === lvl ? 'border-sky-500 bg-sky-500/10 text-white' : 
-                                (lvl > 1 && !completedLevels.includes(lvl - 1)) ? 'border-slate-800 opacity-50' : 'border-slate-700 bg-slate-800'
-                            }`}
+                            className={`flex-1 min-w-[100px] p-3 rounded-xl border-2 flex flex-col items-center gap-1 transition-all ${level === lvl ? 'border-sky-500 bg-sky-500/10 text-white' :
+                                    (lvl > 1 && !completedLevels.includes(lvl - 1)) ? 'border-slate-800 opacity-50' : 'border-slate-700 bg-slate-800'
+                                }`}
                         >
                             <span className="text-xs font-bold uppercase">Level {lvl}</span>
                             {(lvl > 1 && !completedLevels.includes(lvl - 1)) ? <Lock size={14} /> : completedLevels.includes(lvl) ? <CheckCircle size={14} className="text-green-500" /> : <Globe size={14} />}
@@ -278,7 +277,7 @@ export default function API() {
                                 <h2 className="text-lg font-bold text-white">{t('api.task')}</h2>
                             </div>
                             <p className="text-slate-200 font-medium mb-4 leading-relaxed">{currentLevel.task}</p>
-                            
+
                             <div className="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50 text-sm text-slate-400 mb-4">
                                 <p className="font-bold text-slate-500 text-xs uppercase mb-1">{t('api.hint')}</p>
                                 {currentLevel.hint}
@@ -305,8 +304,8 @@ export default function API() {
                             </h3>
                             <div className="flex flex-wrap gap-2">
                                 {availableRoutes.map((r, i) => (
-                                    <button 
-                                        key={i} 
+                                    <button
+                                        key={i}
                                         onClick={() => selectRoute(r)}
                                         className="text-xs bg-slate-900 hover:bg-slate-700 border border-slate-700 px-3 py-2 rounded-lg text-slate-300 transition-colors text-left"
                                     >
@@ -324,8 +323,8 @@ export default function API() {
                         <div className="p-4 border-b border-slate-700 bg-slate-800/80 backdrop-blur-sm">
                             <div className="flex flex-col xl:flex-row gap-3">
                                 <div className="flex-1 flex gap-2">
-                                    <select 
-                                        value={method} 
+                                    <select
+                                        value={method}
                                         onChange={(e) => setMethod(e.target.value)}
                                         className="bg-slate-900 text-white font-bold rounded-xl px-4 py-3 border border-slate-700 outline-none focus:border-sky-500"
                                     >
@@ -336,8 +335,8 @@ export default function API() {
                                     </select>
                                     <div className="flex-1 relative">
                                         <span className="hidden md:block absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-sm select-none">https://api.qa</span>
-                                        <input 
-                                            type="text" 
+                                        <input
+                                            type="text"
                                             value={url}
                                             onChange={(e) => setUrl(e.target.value)}
                                             placeholder="/users"
@@ -345,7 +344,7 @@ export default function API() {
                                         />
                                     </div>
                                 </div>
-                                <button 
+                                <button
                                     onClick={sendRequest}
                                     disabled={isLoading}
                                     className="bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg shadow-sky-500/20 active:scale-95 w-full xl:w-auto shrink-0"
@@ -378,18 +377,18 @@ export default function API() {
                                                 {showHeaders ? <EyeOff size={14} /> : <Eye size={14} />}
                                                 {showHeaders ? 'Hide Headers' : 'Show Headers (Advanced)'}
                                             </button>
-                                            
+
                                             <AnimatePresence>
                                                 {showHeaders && (
                                                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden space-y-2">
                                                         {headers.map((h, i) => (
                                                             <div key={i} className="flex gap-2">
-                                                                <input placeholder="Key" value={h.key} onChange={e => {const n=[...headers];n[i].key=e.target.value;setHeaders(n)}} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
-                                                                <input placeholder="Value" value={h.value} onChange={e => {const n=[...headers];n[i].value=e.target.value;setHeaders(n)}} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
-                                                                {i === headers.length - 1 && <button onClick={() => setHeaders([...headers, {key:'',value:''}])} className="p-2 text-sky-400"><Plus size={16}/></button>}
+                                                                <input placeholder="Key" value={h.key} onChange={e => { const n = [...headers]; n[i].key = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
+                                                                <input placeholder="Value" value={h.value} onChange={e => { const n = [...headers]; n[i].value = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
+                                                                {i === headers.length - 1 && <button onClick={() => setHeaders([...headers, { key: '', value: '' }])} className="p-2 text-sky-400"><Plus size={16} /></button>}
                                                             </div>
                                                         ))}
-                                                        {headers.length === 0 && <button onClick={() => setHeaders([{key:'',value:''}])} className="text-xs text-sky-400 flex items-center gap-1"><Plus size={12}/> Add Header</button>}
+                                                        {headers.length === 0 && <button onClick={() => setHeaders([{ key: '', value: '' }])} className="text-xs text-sky-400 flex items-center gap-1"><Plus size={12} /> Add Header</button>}
                                                     </motion.div>
                                                 )}
                                             </AnimatePresence>
@@ -410,36 +409,36 @@ export default function API() {
                                                     <div className="space-y-3 bg-slate-900/50 p-4 rounded-xl border border-slate-700/50">
                                                         <div>
                                                             <label className="text-xs text-slate-500 mb-1 block">Name</label>
-                                                            <input 
-                                                                value={formData.name} 
-                                                                onChange={e => setFormData({...formData, name: e.target.value})} 
-                                                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-sky-500 outline-none" 
+                                                            <input
+                                                                value={formData.name}
+                                                                onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-sky-500 outline-none"
                                                                 placeholder="John Doe"
                                                             />
                                                         </div>
                                                         <div>
                                                             <label className="text-xs text-slate-500 mb-1 block">Email</label>
-                                                            <input 
-                                                                value={formData.email} 
-                                                                onChange={e => setFormData({...formData, email: e.target.value})} 
-                                                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-sky-500 outline-none" 
+                                                            <input
+                                                                value={formData.email}
+                                                                onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-sky-500 outline-none"
                                                                 placeholder="john@example.com"
                                                             />
                                                         </div>
                                                     </div>
                                                 ) : (
-                                                    <textarea 
-                                                        value={body} 
-                                                        onChange={e => setBody(e.target.value)} 
+                                                    <textarea
+                                                        value={body}
+                                                        onChange={e => setBody(e.target.value)}
                                                         className="w-full h-40 bg-slate-900 border border-slate-700 rounded-xl p-4 font-mono text-sm text-emerald-400 focus:border-sky-500 outline-none resize-none"
                                                         spellCheck="false"
                                                     />
                                                 )}
                                             </div>
                                         ) : (
-                                            <div className="flex flex-col items-center justify-center py-10 text-slate-600 border-2 border-dashed border-slate-800 rounded-xl">
+                                            <div className="flex flex-col items-center justify-center py-10 text-slate-600 border-2 border-dashed border-slate-800 rounded-xl px-4">
                                                 <Code size={24} className="mb-2 opacity-50" />
-                                                <p className="text-xs font-medium">{t('api.body_not_allowed', { method })}</p>
+                                                <p className="text-xs sm:text-sm font-medium text-center">{t('api.body_not_allowed', { method })}</p>
                                             </div>
                                         )}
                                     </motion.div>
@@ -472,7 +471,7 @@ export default function API() {
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
         </PageTransition>
     );
 }
