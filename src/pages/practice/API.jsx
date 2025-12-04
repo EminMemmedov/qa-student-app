@@ -259,7 +259,7 @@ export default function API() {
                             onClick={() => (completedLevels.includes(lvl - 1) || lvl === 1) && setLevel(lvl)}
                             disabled={lvl > 1 && !completedLevels.includes(lvl - 1)}
                             className={`flex-1 min-w-[100px] p-3 rounded-xl border-2 flex flex-col items-center gap-1 transition-all ${level === lvl ? 'border-sky-500 bg-sky-500/10 text-white' :
-                                    (lvl > 1 && !completedLevels.includes(lvl - 1)) ? 'border-slate-800 opacity-50' : 'border-slate-700 bg-slate-800'
+                                (lvl > 1 && !completedLevels.includes(lvl - 1)) ? 'border-slate-800 opacity-50' : 'border-slate-700 bg-slate-800'
                                 }`}
                         >
                             <span className="text-xs font-bold uppercase">Level {lvl}</span>
@@ -382,10 +382,12 @@ export default function API() {
                                                 {showHeaders && (
                                                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden space-y-2">
                                                         {headers.map((h, i) => (
-                                                            <div key={i} className="flex gap-2">
-                                                                <input placeholder="Key" value={h.key} onChange={e => { const n = [...headers]; n[i].key = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
-                                                                <input placeholder="Value" value={h.value} onChange={e => { const n = [...headers]; n[i].value = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
-                                                                {i === headers.length - 1 && <button onClick={() => setHeaders([...headers, { key: '', value: '' }])} className="p-2 text-sky-400"><Plus size={16} /></button>}
+                                                            <div key={i} className="flex flex-col sm:flex-row gap-2">
+                                                                <input placeholder="Key" value={h.key} onChange={e => { const n = [...headers]; n[i].key = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm w-full" />
+                                                                <div className="flex gap-2">
+                                                                    <input placeholder="Value" value={h.value} onChange={e => { const n = [...headers]; n[i].value = e.target.value; setHeaders(n) }} className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm" />
+                                                                    {i === headers.length - 1 && <button onClick={() => setHeaders([...headers, { key: '', value: '' }])} className="p-2 text-sky-400 shrink-0"><Plus size={16} /></button>}
+                                                                </div>
                                                             </div>
                                                         ))}
                                                         {headers.length === 0 && <button onClick={() => setHeaders([{ key: '', value: '' }])} className="text-xs text-sky-400 flex items-center gap-1"><Plus size={12} /> Add Header</button>}
