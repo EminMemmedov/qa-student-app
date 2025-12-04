@@ -118,21 +118,21 @@ export default function FoundBugs() {
                 <motion.header
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-8"
+                    className="mb-6 sm:mb-8"
                 >
                     <Link
                         to="/"
-                        className="inline-flex items-center text-slate-500 dark:text-slate-400 mb-4 hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
+                        className="inline-flex items-center text-slate-500 dark:text-slate-400 mb-3 sm:mb-4 hover:text-slate-800 dark:hover:text-slate-200 transition-colors text-sm sm:text-base"
                     >
-                        <ArrowLeft size={20} className="mr-1" />
+                        <ArrowLeft size={18} className="sm:w-5 sm:h-5 mr-1" />
                         Ana Səhifə
                     </Link>
                     <div className="flex justify-between items-start">
                         <div>
-                            <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
+                            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-1 sm:mb-2">
                                 Tapılan Baqlar
                             </h1>
-                            <p className="text-slate-500 dark:text-slate-400 text-lg">
+                            <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-lg">
                                 Praktika modullarında tapdığınız bütün baqlar
                             </p>
                         </div>
@@ -143,19 +143,19 @@ export default function FoundBugs() {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl p-6 sm:p-8 mb-8 text-white shadow-xl"
+                    className="bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl sm:rounded-3xl p-4 sm:p-8 mb-6 sm:mb-8 text-white shadow-xl"
                 >
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-                        <div className="flex-1 text-center sm:text-left">
-                            <div className="text-sm sm:text-base font-medium opacity-90 mb-2">Ümumi Tapılmış Baqlar</div>
-                            <div className="text-5xl sm:text-6xl font-black mb-4 sm:mb-0">{foundBugs.length}</div>
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="flex-1 text-center">
+                            <div className="text-xs sm:text-base font-medium opacity-90 mb-1">Ümumi Tapılmış Baqlar</div>
+                            <div className="text-4xl sm:text-6xl font-black">{foundBugs.length}</div>
                         </div>
-                        <div className="flex-1 text-center sm:text-right">
-                            <div className="text-sm sm:text-base font-medium opacity-90 mb-2">Qazanılan XP</div>
+                        <div className="flex-1 text-center">
+                            <div className="text-xs sm:text-base font-medium opacity-90 mb-1">Qazanılan XP</div>
                             <div className="text-4xl sm:text-5xl font-black">{totalPoints}</div>
                         </div>
-                        <div className="p-4 sm:p-6 bg-white/20 rounded-2xl">
-                            <Bug size={48} className="sm:w-12 sm:h-12" />
+                        <div className="hidden sm:block p-6 bg-white/20 rounded-2xl">
+                            <Bug size={48} />
                         </div>
                     </div>
                 </motion.div>
