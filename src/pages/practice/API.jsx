@@ -268,10 +268,10 @@ export default function API() {
                     ))}
                 </div>
 
-                <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6">
+                <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 min-h-[600px]">
                     {/* Task Panel */}
                     <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
-                        <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
+                        <div className="bg-slate-800 rounded-2xl p-4 sm:p-5 border border-slate-700 shadow-lg">
                             <div className="flex items-center gap-2 mb-3">
                                 <Server className="text-sky-400" size={20} />
                                 <h2 className="text-lg font-bold text-white">{t('api.task')}</h2>
@@ -298,7 +298,7 @@ export default function API() {
                         </div>
 
                         {/* Route Suggestions (Quick Actions) */}
-                        <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
+                        <div className="bg-slate-800 rounded-2xl p-4 sm:p-5 border border-slate-700 shadow-lg">
                             <h3 className="text-xs font-bold text-slate-500 uppercase mb-3 flex items-center gap-2">
                                 <Zap size={14} /> Quick Routes
                             </h3>
@@ -320,7 +320,7 @@ export default function API() {
                     {/* API Client Interface */}
                     <div className="lg:col-span-2 bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden flex flex-col order-1 lg:order-2">
                         {/* Request Bar */}
-                        <div className="p-4 border-b border-slate-700 bg-slate-800/80 backdrop-blur-sm">
+                        <div className="p-3 sm:p-4 border-b border-slate-700 bg-slate-800/80 backdrop-blur-sm">
                             <div className="flex flex-col xl:flex-row gap-3">
                                 <div className="flex-1 flex gap-2">
                                     <select
@@ -367,7 +367,7 @@ export default function API() {
                         </div>
 
                         {/* Content */}
-                        <div className="p-5 min-h-[350px] bg-slate-900/30">
+                        <div className="p-3 sm:p-5 min-h-[400px] lg:min-h-[600px] bg-slate-900/30">
                             <AnimatePresence mode="wait">
                                 {activeTab === 'request' && (
                                     <motion.div key="req" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6">
