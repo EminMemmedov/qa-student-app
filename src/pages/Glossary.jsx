@@ -178,16 +178,15 @@ export default function Glossary() {
 
                     {/* Terms Grid */}
                     <div className="flex-1 grid gap-4">
-                        <AnimatePresence mode="wait">
+                        <AnimatePresence>
                             {filteredTerms.length > 0 ? (
                                 filteredTerms.map((item) => (
                                     <motion.div
                                         key={item.id}
                                         ref={el => termRefs.current[item.id] = el}
-                                        layout
                                         initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        transition={{ duration: 0.2 }}
                                         className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all group relative"
                                     >
                                         {/* Favorite Button */}
