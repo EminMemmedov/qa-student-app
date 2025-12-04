@@ -322,31 +322,31 @@ export default function API() {
                         {/* Request Bar */}
                         {/* Request Bar */}
                         <div className="p-4 sm:p-6 border-b border-slate-700 bg-slate-800/80 backdrop-blur-sm">
-                            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-3">
+                            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-3 items-center">
                                 <select
                                     value={method}
                                     onChange={(e) => setMethod(e.target.value)}
-                                    className="bg-slate-900 text-white font-bold rounded-xl px-4 py-3 border border-slate-700 outline-none focus:border-sky-500 w-full md:w-auto"
+                                    className="h-12 bg-slate-900 text-white font-bold rounded-xl px-4 border border-slate-700 outline-none focus:border-sky-500 w-full md:w-auto cursor-pointer"
                                 >
                                     <option>GET</option>
                                     <option>POST</option>
                                     <option>PUT</option>
                                     <option>DELETE</option>
                                 </select>
-                                <div className="relative">
+                                <div className="relative w-full">
                                     <span className="hidden xl:block absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-sm select-none">https://api.qa</span>
                                     <input
                                         type="text"
                                         value={url}
                                         onChange={(e) => setUrl(e.target.value)}
                                         placeholder="/users"
-                                        className="w-full bg-slate-900 text-white rounded-xl pl-4 xl:pl-32 pr-4 py-3 border border-slate-700 outline-none focus:border-sky-500 font-mono"
+                                        className="h-12 w-full bg-slate-900 text-white rounded-xl pl-4 xl:pl-32 pr-4 border border-slate-700 outline-none focus:border-sky-500 font-mono"
                                     />
                                 </div>
                                 <button
                                     onClick={sendRequest}
                                     disabled={isLoading}
-                                    className="bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg shadow-sky-500/20 active:scale-95 w-full md:w-auto"
+                                    className="h-12 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl px-6 flex items-center justify-center gap-2 transition-all shadow-lg shadow-sky-500/20 active:scale-95 w-full md:w-auto"
                                 >
                                     {isLoading ? <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" /> : <Play size={18} fill="currentColor" />}
                                     <span>{t('api.send', 'Sorğu Göndər')}</span>
