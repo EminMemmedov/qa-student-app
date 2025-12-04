@@ -63,35 +63,35 @@ export default function API() {
     const levels = {
         1: {
             id: 1,
-            task: t('api.levels.level1_task'),
+            task: t('api.levels.level1_task', 'Bütün istifadəçiləri əldə edin'),
             hint: t('api.levels.level1_hint') || "Use GET method to retrieve data.",
             answer: { method: 'GET', url: '/users', headers: [], body: '' },
             check: (res, req) => res.status === 200 && req.method === 'GET' && req.url === '/users'
         },
         2: {
             id: 2,
-            task: t('api.levels.level2_task'),
+            task: t('api.levels.level2_task', 'Mövcud olmayan istifadəçini əldə etməyə çalışın (404 xətası)'),
             hint: t('api.levels.level2_hint') || "Try to access a resource ID that likely doesn't exist.",
             answer: { method: 'GET', url: '/users/999', headers: [], body: '' },
             check: (res, req) => res.status === 404
         },
         3: {
             id: 3,
-            task: t('api.levels.level3_task'),
+            task: t('api.levels.level3_task', 'Yeni istifadəçi yaradın (POST metodu)'),
             hint: t('api.levels.level3_hint') || "POST method requires a body with user details.",
             answer: { method: 'POST', url: '/users', headers: [], body: '{\n  "name": "Test",\n  "email": "test@mail.az"\n}' },
             check: (res, req) => res.status === 201 && req.method === 'POST'
         },
         4: {
             id: 4,
-            task: t('api.levels.level4_task'),
+            task: t('api.levels.level4_task', 'Admin panelinə daxil olun (Authorization header)'),
             hint: t('api.levels.level4_hint') || "Protected routes need an Authorization header.",
             answer: { method: 'GET', url: '/admin', headers: [{ key: 'Authorization', value: 'Bearer admin-token' }], body: '' },
             check: (res, req) => res.status === 200 && req.url === '/admin'
         },
         5: {
             id: 5,
-            task: t('api.levels.level5_task'),
+            task: t('api.levels.level5_task', 'İstifadəçi məlumatlarını yeniləyin (PUT metodu)'),
             hint: t('api.levels.level5_hint') || "PUT method updates an existing resource by ID.",
             answer: { method: 'PUT', url: '/users/1', headers: [], body: '{\n  "name": "Updated Name"\n}' },
             check: (res, req) => res.status === 200 && req.method === 'PUT'
