@@ -178,7 +178,7 @@ export default function Glossary() {
 
                     {/* Terms Grid */}
                     <div className="flex-1 grid gap-4">
-                        <AnimatePresence mode="popLayout">
+                        <AnimatePresence mode="wait">
                             {filteredTerms.length > 0 ? (
                                 filteredTerms.map((item) => (
                                     <motion.div
