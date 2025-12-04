@@ -143,19 +143,19 @@ export default function FoundBugs() {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl p-6 mb-8 text-white shadow-xl"
+                    className="bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl p-6 sm:p-8 mb-8 text-white shadow-xl"
                 >
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <div className="text-sm font-medium opacity-90 mb-1">Ümumi Tapılmış Baqlar</div>
-                            <div className="text-5xl font-black">{foundBugs.length}</div>
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+                        <div className="flex-1 text-center sm:text-left">
+                            <div className="text-sm sm:text-base font-medium opacity-90 mb-2">Ümumi Tapılmış Baqlar</div>
+                            <div className="text-5xl sm:text-6xl font-black mb-4 sm:mb-0">{foundBugs.length}</div>
                         </div>
-                        <div className="text-right">
-                            <div className="text-sm font-medium opacity-90 mb-1">Qazanılan XP</div>
-                            <div className="text-3xl font-black">{totalPoints}</div>
+                        <div className="flex-1 text-center sm:text-right">
+                            <div className="text-sm sm:text-base font-medium opacity-90 mb-2">Qazanılan XP</div>
+                            <div className="text-4xl sm:text-5xl font-black">{totalPoints}</div>
                         </div>
-                        <div className="p-4 bg-white/20 rounded-2xl">
-                            <Bug size={48} />
+                        <div className="p-4 sm:p-6 bg-white/20 rounded-2xl">
+                            <Bug size={48} className="sm:w-12 sm:h-12" />
                         </div>
                     </div>
                 </motion.div>
@@ -198,18 +198,18 @@ export default function FoundBugs() {
                                 className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-700 overflow-hidden"
                             >
                                 {/* Module Header */}
-                                <div className={`bg-gradient-to-r ${moduleColors[moduleName]} p-4 text-white`}>
-                                    <div className="flex items-center justify-between">
-                                        <h3 className="text-xl font-black">{moduleNames[moduleName]}</h3>
-                                        <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
+                                <div className={`bg-gradient-to-r ${moduleColors[moduleName]} p-4 sm:p-5 text-white`}>
+                                    <div className="flex items-center justify-between gap-3">
+                                        <h3 className="text-lg sm:text-xl font-black truncate">{moduleNames[moduleName]}</h3>
+                                        <div className="flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded-full flex-shrink-0">
                                             <CheckCircle size={16} />
-                                            <span className="font-bold">{bugsByModule[moduleName].length} baq</span>
+                                            <span className="font-bold text-sm">{bugsByModule[moduleName].length} baq</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Bugs List */}
-                                <div className="p-4 space-y-3">
+                                <div className="p-3 sm:p-4 space-y-3">
                                     {bugsByModule[moduleName].map(bug => {
                                         const difficulty = getBugDifficulty(bug.id);
                                         const points = getBugPoints(difficulty);
@@ -217,13 +217,13 @@ export default function FoundBugs() {
                                         return (
                                             <div
                                                 key={bug.id}
-                                                className="flex items-start gap-3 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-100 dark:border-slate-600"
+                                                className="flex items-start gap-3 p-3 sm:p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-100 dark:border-slate-600"
                                             >
-                                                <div className="flex-shrink-0 w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                                                    <CheckCircle size={18} className="text-green-600 dark:text-green-400" />
+                                                <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mt-0.5">
+                                                    <CheckCircle size={16} className="sm:w-[18px] sm:h-[18px] text-green-600 dark:text-green-400" />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-slate-900 dark:text-white font-medium mb-2">
+                                                    <p className="text-sm sm:text-base text-slate-900 dark:text-white font-medium mb-2 leading-snug">
                                                         {bug.description}
                                                     </p>
                                                     <div className="flex flex-wrap gap-2">
