@@ -218,7 +218,7 @@ export default function API() {
 
     return (
         <PageTransition className="min-h-screen bg-slate-900 text-slate-300 p-6 pt-20 pb-24">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-[1600px] mx-auto">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
