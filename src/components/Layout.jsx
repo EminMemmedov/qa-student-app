@@ -18,7 +18,7 @@ export default function Layout() {
         // Achievement close logic can be added here if needed
     }, []);
 
-    const isWidePage = ['/practice/database', '/practice/automation'].includes(location.pathname);
+    const isWidePage = ['/practice/database', '/practice/automation', '/practice/api'].includes(location.pathname);
     const isHomePage = location.pathname === '/';
 
     return (
@@ -30,7 +30,7 @@ export default function Layout() {
                     paddingTop: 'env(safe-area-inset-top)'
                 }}
             >
-                <div className={`w-full mx-auto min-h-screen bg-white dark:bg-slate-800 md:shadow-2xl relative overflow-hidden transition-colors duration-300 ${isWidePage ? 'max-w-7xl' : ''}`}>
+                <div className={`w-full mx-auto min-h-screen bg-white dark:bg-slate-800 md:shadow-2xl relative overflow-hidden transition-colors duration-300 ${isWidePage ? 'max-w-7xl' : 'max-w-md'}`}>
                     {/* Top Controls */}
                     <div className={`fixed top-4 right-4 z-50 flex items-center gap-2 ${isHomePage ? 'sm:hidden' : ''}`}>
                         <ThemeToggle />
