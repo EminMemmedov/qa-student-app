@@ -67,19 +67,19 @@ export default function Glossary() {
     };
 
     return (
-        <PageTransition className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6 pt-24 pb-24 transition-colors duration-300">
+        <PageTransition className="min-h-screen bg-slate-50 dark:bg-slate-900 p-4 sm:p-6 pt-20 sm:pt-24 pb-24 transition-colors duration-300">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
-                <div className="flex items-center gap-4 mb-8">
-                    <Link to="/" className="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all text-slate-600 dark:text-slate-300">
-                        <ChevronLeft size={24} />
+                <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                    <Link to="/" className="p-2 sm:p-3 bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md transition-all text-slate-600 dark:text-slate-300">
+                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-black text-slate-900 dark:text-white flex items-center gap-3">
-                            <LibraryBig className="text-blue-600 dark:text-blue-400" size={32} />
+                        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-2 sm:gap-3">
+                            <LibraryBig className="text-blue-600 dark:text-blue-400 w-6 h-6 sm:w-8 sm:h-8" />
                             QA Lüğəti
                         </h1>
-                        <p className="text-slate-500 dark:text-slate-400 font-medium">
+                        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
                             Terminlər və onların izahı
                         </p>
                     </div>
@@ -89,39 +89,39 @@ export default function Glossary() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 text-white shadow-xl shadow-indigo-500/20 mb-8 relative overflow-hidden"
+                    className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-white shadow-xl shadow-indigo-500/20 mb-6 sm:mb-8 relative overflow-hidden"
                 >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
                     <div className="relative z-10">
-                        <div className="flex items-center gap-2 mb-4 text-indigo-100 font-bold text-sm uppercase tracking-wider">
-                            <Sparkles size={16} className="text-yellow-300" />
+                        <div className="flex items-center gap-2 mb-3 sm:mb-4 text-indigo-100 font-bold text-xs sm:text-sm uppercase tracking-wider">
+                            <Sparkles className="w-4 h-4" />
                             Günün Termini
                         </div>
-                        <h2 className="text-3xl font-black mb-3">{termOfDay.term}</h2>
-                        <p className="text-indigo-50 text-lg leading-relaxed mb-4">
+                        <h2 className="text-2xl sm:text-3xl font-black mb-2 sm:mb-3">{termOfDay.term}</h2>
+                        <p className="text-indigo-50 text-sm sm:text-lg leading-relaxed mb-3 sm:mb-4">
                             {termOfDay.definition[lang] || termOfDay.definition['en']}
                         </p>
                         {termOfDay.example && (
-                            <div className="bg-white/10 rounded-xl p-4 border border-white/10">
+                            <div className="bg-white/10 rounded-xl p-3 sm:p-4 border border-white/10">
                                 <div className="flex items-center gap-2 text-xs font-bold uppercase text-indigo-200 mb-1">
                                     <Lightbulb size={12} /> Nümunə
                                 </div>
-                                <p className="text-sm font-medium">{termOfDay.example[lang] || termOfDay.example['en']}</p>
+                                <p className="text-xs sm:text-sm font-medium">{termOfDay.example[lang] || termOfDay.example['en']}</p>
                             </div>
                         )}
                     </div>
                 </motion.div>
 
                 {/* Search & Filter */}
-                <div className="flex flex-col gap-4 mb-8 sticky top-20 z-30 bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur-xl py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-colors duration-300">
+                <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8 sticky top-16 sm:top-20 z-30 bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur-xl py-3 sm:py-4 -mx-4 px-4 sm:mx-0 sm:px-0 transition-colors duration-300">
                     <div className="relative w-full">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
+                        <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none w-4 h-4 sm:w-5 sm:h-5" />
                         <input
                             type="text"
                             placeholder={t('common.search', 'Axtar...')}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm focus:shadow-md outline-none focus:border-blue-500 dark:focus:border-blue-400 text-slate-900 dark:text-white placeholder:text-slate-400 transition-all"
+                            className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-3.5 text-sm sm:text-base bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm focus:shadow-md outline-none focus:border-blue-500 dark:focus:border-blue-400 text-slate-900 dark:text-white placeholder:text-slate-400 transition-all"
                         />
                     </div>
                     <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar">
@@ -187,7 +187,7 @@ export default function Glossary() {
                                         initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ duration: 0.2 }}
-                                        className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all group relative"
+                                        className="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all group relative"
                                     >
                                         {/* Favorite Button */}
                                         <button
@@ -195,11 +195,10 @@ export default function Glossary() {
                                                 e.stopPropagation();
                                                 toggleFavorite(item.id);
                                             }}
-                                            className="absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                                            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                                         >
                                             <Star
-                                                size={20}
-                                                className={`transition-all ${favorites.includes(item.id)
+                                                className={`w-4 h-4 sm:w-5 sm:h-5 transition-all ${favorites.includes(item.id)
                                                     ? 'fill-yellow-400 text-yellow-400'
                                                     : 'text-slate-300 dark:text-slate-600 hover:text-yellow-400'
                                                     }`}
@@ -210,24 +209,23 @@ export default function Glossary() {
                                             onClick={() => setExpandedTerm(expandedTerm === item.id ? null : item.id)}
                                             className="cursor-pointer"
                                         >
-                                            <div className="flex justify-between items-start mb-3 pr-10">
+                                            <div className="flex justify-between items-start mb-2 sm:mb-3 pr-8 sm:pr-10">
                                                 <div>
-                                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                                                         {item.term}
                                                     </h3>
-                                                    <span className={`inline-block mt-2 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg ${categoryColors[item.category] || 'bg-slate-100 text-slate-500'}`}>
+                                                    <span className={`inline-block mt-1.5 sm:mt-2 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg ${categoryColors[item.category] || 'bg-slate-100 text-slate-500'}`}>
                                                         {categories[item.category]?.[lang] || item.category}
                                                     </span>
                                                 </div>
                                                 {item.example && (
                                                     <ChevronDown
-                                                        size={20}
-                                                        className={`text-slate-400 transition-transform duration-300 ${expandedTerm === item.id ? 'rotate-180' : ''}`}
+                                                        className={`w-4 h-4 sm:w-5 sm:h-5 text-slate-400 transition-transform duration-300 ${expandedTerm === item.id ? 'rotate-180' : ''}`}
                                                     />
                                                 )}
                                             </div>
 
-                                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                                            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                                                 {item.definition[lang] || item.definition['en']}
                                             </p>
 
