@@ -408,16 +408,16 @@
         "task": "Tapşırıq",
         "hint": "İpucu",
         "levels": {
-            "level1_task": "Sistemdəki bütün mövcud istifadəçilərin siyahısını əldə edin.",
-            "level1_hint": "Məlumat almaq üçün hansı HTTP metodu istifadə olunur? URL '/users' olmalıdır.",
-            "level2_task": "Sistemdə mövcud olmayan bir istifadəçini axtararkən sistemin düzgün xəta kodu qaytardığını yoxlayın.",
-            "level2_hint": "Mövcud olmayan ID ilə sorğu göndərin (məsələn, çox böyük rəqəm). Gözlənilən status: 404.",
-            "level3_task": "Sistemə yeni bir istifadəçi əlavə edin.",
-            "level3_hint": "Yeni məlumat yaratmaq üçün POST metodu lazımdır. Body hissəsində istifadəçi məlumatlarını göndərin.",
-            "level4_task": "Yalnız administratorların görə biləcəyi məxfi məlumatları əldə etməyə çalışın.",
-            "level4_hint": "Bu sorğu autentifikasiya tələb edir. Header-ə 'Authorization' tokenini əlavə edin.",
-            "level5_task": "1 nömrəli istifadəçinin adını dəyişdirin.",
-            "level5_hint": "Mövcud məlumatı yeniləmək üçün PUT metodu istifadə olunur. URL-də ID qeyd olunmalıdır."
+            "level1_task": "Sistemdə qeydiyyatdan keçmiş istifadəçilərin siyahısını əldə edin",
+            "level1_hint": "GET metodu ilə /users endpoint-inə sorğu göndərin. Bu ən sadə REST API sorğusudur - heç bir əlavə parametr lazım deyil.",
+            "level2_task": "ID=1 olan istifadəçinin məlumatlarını əldə edin",
+            "level2_hint": "Konkret istifadəçi məlumatı üçün GET /users/{id} formatından istifadə edin. URL-də /users/1 yazın.",
+            "level3_task": "Sistemə yeni istifadəçi əlavə edin (ad və email göndərməlisiniz)",
+            "level3_hint": "POST metodu ilə /users endpoint-inə yeni istifadəçi yaradın. Body-də JSON formatında {\"name\": \"...\", \"email\": \"...\"} göndərin. Body Builder-dən istifadə edə bilərsiniz.",
+            "level4_task": "Admin panelinə giriş əldə edin (Authentication tələb olunur)",
+            "level4_hint": "Qorunan endpoint-lərə giriş üçün Authorization header lazımdır. \"Show Headers (Advanced)\" düyməsinə basın, Key: Authorization, Value: Bearer admin-token yazın və GET /admin sorğusu göndərin.",
+            "level5_task": "ID=2 olan istifadəçinin adını \"Vəli Məmmədov\" olaraq yeniləyin",
+            "level5_hint": "Mövcud məlumatı yeniləmək üçün PUT metodu istifadə olunur. PUT /users/2 sorğusu göndərin və Body-də {\"name\": \"Vəli Məmmədov\"} yazın."
         }
     },
     "mobile": {
