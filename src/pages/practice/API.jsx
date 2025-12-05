@@ -78,35 +78,35 @@ export default function API() {
         1: {
             id: 1,
             task: t('api.levels.level1_task', 'Bütün istifadəçiləri əldə edin'),
-            hint: t('api.levels.level1_hint') || "Use GET method to retrieve data.",
+            hint: t('api.levels.level1_hint', 'GET metodu ilə /users endpoint-inə sorğu göndərin. Body və ya header-lərə ehtiyac yoxdur.'),
             answer: { method: 'GET', url: '/users', headers: [], body: '' },
             check: (res, req) => res.status === 200 && req.method === 'GET' && req.url === '/users'
         },
         2: {
             id: 2,
             task: t('api.levels.level2_task', 'Mövcud olmayan istifadəçini əldə etməyə çalışın (404 xətası)'),
-            hint: t('api.levels.level2_hint') || "Try to access a resource ID that likely doesn't exist.",
+            hint: t('api.levels.level2_hint', 'Mövcud olmayan ID ilə GET sorğusu göndərin. Məsələn: /users/999 (bu ID bazada yoxdur və 404 xətası qaytaracaq).'),
             answer: { method: 'GET', url: '/users/999', headers: [], body: '' },
             check: (res, req) => res.status === 404
         },
         3: {
             id: 3,
             task: t('api.levels.level3_task', 'Yeni istifadəçi yaradın (POST metodu)'),
-            hint: t('api.levels.level3_hint') || "POST method requires a body with user details.",
+            hint: t('api.levels.level3_hint', 'POST metodu ilə /users endpoint-inə sorğu göndərin. Body-də JSON formatında "name" və "email" göndərin.'),
             answer: { method: 'POST', url: '/users', headers: [], body: '{\n  "name": "Test",\n  "email": "test@mail.az"\n}' },
             check: (res, req) => res.status === 201 && req.method === 'POST'
         },
         4: {
             id: 4,
-            task: t('api.levels.level4_task', 'Admin panelinə daxil olun (Authorization header)'),
-            hint: t('api.levels.level4_hint') || "Protected routes need an Authorization header.",
+            task: t('api.levels.level4_task', 'Admin panelinə daxil olun (Authorization header tələb olunur)'),
+            hint: t('api.levels.level4_hint', 'GET metodu ilə /admin endpoint-inə sorğu göndərin. Header-də Authorization: Bearer admin-token əlavə edin. "Show Headers" düyməsinə basın və header əlavə edin.'),
             answer: { method: 'GET', url: '/admin', headers: [{ key: 'Authorization', value: 'Bearer admin-token' }], body: '' },
             check: (res, req) => res.status === 200 && req.url === '/admin'
         },
         5: {
             id: 5,
             task: t('api.levels.level5_task', 'İstifadəçi məlumatlarını yeniləyin (PUT metodu)'),
-            hint: t('api.levels.level5_hint') || "PUT method updates an existing resource by ID.",
+            hint: t('api.levels.level5_hint', 'PUT metodu ilə /users/1 endpoint-inə sorğu göndərin. Body-də JSON formatında yenilənmiş "name" göndərin.'),
             answer: { method: 'PUT', url: '/users/1', headers: [], body: '{\n  "name": "Updated Name"\n}' },
             check: (res, req) => res.status === 200 && req.method === 'PUT'
         }
