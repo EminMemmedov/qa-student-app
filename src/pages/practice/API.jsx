@@ -49,6 +49,20 @@ export default function API() {
         return saved ? JSON.parse(saved) : [];
     });
 
+    // Reset form and answer state when level changes
+    useEffect(() => {
+        setMethod('GET');
+        setUrl('');
+        setHeaders([{ key: '', value: '' }]);
+        setBody('');
+        setBodyMode('form');
+        setShowHeaders(false);
+        setFormData({ name: '', email: '' });
+        setResponse(null);
+        setHasSeenAnswer(false);
+        setActiveTab('request');
+    }, [level]);
+
     useEffect(() => {
         localStorage.setItem('qa_api_completed', JSON.stringify(completedLevels));
     }, [completedLevels]);
