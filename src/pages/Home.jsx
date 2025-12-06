@@ -6,7 +6,7 @@ import PageTransition from '../components/PageTransition';
 import { Sparkles, Trophy, BookOpen, Bug, ArrowRight, Target, MessageSquare, Linkedin, Instagram, Phone, ExternalLink, Newspaper, FileText, Bot, GraduationCap, User, ChevronRight, Loader2, Edit2, X, PieChart, Medal, ChevronDown, Plus, LogOut, Check, Users } from 'lucide-react';
 import { useGameProgress } from '../hooks/useGameProgress';
 import { useAchievements } from '../hooks/useAchievements';
-import { useStreak } from '../hooks/useStreak';
+
 import LearningProgress from '../components/LearningProgress';
 import HomeLeaderboard from '../components/HomeLeaderboard';
 import ThemeToggle from '../components/ThemeToggle';
@@ -673,6 +673,37 @@ export default function Home() {
             </motion.div>
           </Link>
         </div>
+
+        {/* Resume Builder Card */}
+        <Link to="/resume-builder" className="block mb-8" rel="prefetch">
+          <motion.div
+            variants={itemVariants}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="group relative overflow-hidden bg-white dark:bg-slate-800 rounded-[2rem] p-6 shadow-xl border border-slate-100 dark:border-slate-700"
+          >
+            <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+              <FileText size={80} className="text-indigo-600 dark:text-indigo-400 rotate-12" />
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
+                <FileText size={28} />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">CV Konstruktor</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Nailiyyətləriniz əsasında peşəkar QA CV-si yaradın
+                </p>
+              </div>
+              <div className="ml-auto">
+                <div className="w-10 h-10 bg-slate-50 dark:bg-slate-700 rounded-full flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors text-slate-400">
+                  <ArrowRight size={20} />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </Link>
 
         {/* LinkedIn Articles Section */}
         <motion.div

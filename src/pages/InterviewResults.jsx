@@ -31,10 +31,10 @@ export default function InterviewResults() {
 
             // Check achievements after a short delay to ensure XP is updated
             setTimeout(() => {
-                const dbLevels = getStorageItem('qa_db_completed_levels', []);
-                const autoLevels = getStorageItem('qa_automation_completed_levels', []);
-                const apiLevels = getStorageItem('qa_api_completed_levels', []);
-                const mobileLevels = getStorageItem('qa_mobile_completed_levels', []);
+                const dbLevels = getStorageItem('qa_database_completed', []);
+                const autoLevels = getStorageItem('qa_automation_completed', []);
+                const apiLevels = getStorageItem('qa_api_completed', []);
+                const mobileLevels = getStorageItem('qa_mobile_completed', []);
                 const examScore = getStorageItem('qa_exam_score', 0);
 
                 checkAchievements({

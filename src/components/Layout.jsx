@@ -18,7 +18,7 @@ export default function Layout() {
         // Achievement close logic can be added here if needed
     }, []);
 
-    const isWidePage = ['/practice/database', '/practice/automation', '/practice/api'].includes(location.pathname);
+    const isWidePage = ['/practice/database', '/practice/automation', '/practice/api', '/resume-builder'].includes(location.pathname);
     const isHomePage = location.pathname === '/';
 
     return (
