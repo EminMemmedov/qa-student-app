@@ -352,7 +352,7 @@ export default function ResumeBuilder() {
                 <motion.header
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-8 relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-3xl p-8 shadow-2xl shadow-indigo-500/30"
+                    className="mb-6 md:mb-8 relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-2xl shadow-indigo-500/30"
                 >
                     {/* Decorative Elements */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
@@ -366,17 +366,17 @@ export default function ResumeBuilder() {
                             <motion.div
                                 initial={{ scale: 0.9 }}
                                 animate={{ scale: 1 }}
-                                className="flex items-center gap-4 mb-3"
+                                className="flex items-center gap-3 md:gap-4 mb-2 md:mb-3"
                             >
-                                <div className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
-                                    <FileText className="text-white" size={32} />
+                                <div className="p-2 md:p-3 bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl border border-white/20">
+                                    <FileText className="text-white" size={24} />
                                 </div>
                                 <div>
-                                    <h1 className="text-4xl font-black text-white tracking-tight flex items-center gap-2">
+                                    <h1 className="text-2xl md:text-4xl font-black text-white tracking-tight flex items-center gap-2">
                                         CV Konstruktor
-                                        <span className="text-2xl">✨</span>
+                                        <span className="text-lg md:text-2xl">✨</span>
                                     </h1>
-                                    <p className="text-blue-100/90 text-sm font-medium mt-1">
+                                    <p className="text-blue-100/90 text-xs md:text-sm font-medium mt-1">
                                         Oyun proqresinizi peşəkar bir QA CV-sinə çevirin
                                     </p>
                                 </div>
@@ -412,10 +412,10 @@ export default function ResumeBuilder() {
                             whileHover={{ scale: 1.05, y: -2 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={calculateATS}
-                            className="relative group flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-2xl shadow-white/20 hover:shadow-white/40 transition-all overflow-hidden"
+                            className="relative group flex items-center gap-2 px-4 md:px-8 py-2.5 md:py-3.5 rounded-lg md:rounded-xl font-bold text-xs md:text-sm bg-white text-indigo-600 shadow-2xl shadow-white/20 hover:shadow-white/40 transition-all overflow-hidden"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <Sparkles size={20} className="relative z-10 group-hover:text-white transition-colors" />
+                            <Sparkles size={16} className="relative z-10 group-hover:text-white transition-colors md:w-5 md:h-5" />
                             <span className="relative z-10 group-hover:text-white transition-colors">ATS Yoxla</span>
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-white animate-pulse"></div>
                         </motion.button>
@@ -611,21 +611,21 @@ export default function ResumeBuilder() {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="relative bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-2xl border-2 border-transparent bg-gradient-to-br from-white via-white to-indigo-50/30 dark:from-slate-800 dark:via-slate-800 dark:to-indigo-900/10 overflow-hidden"
+                            className="relative bg-white dark:bg-slate-800 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-2xl border-2 border-transparent bg-gradient-to-br from-white via-white to-indigo-50/30 dark:from-slate-800 dark:via-slate-800 dark:to-indigo-900/10 overflow-hidden"
                         >
                             {/* Decorative gradient border effect */}
                             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 -z-10 blur-xl"></div>
 
-                            <h2 className="text-2xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent mb-6 flex items-center gap-3">
-                                <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl">
-                                    <User size={20} className="text-white" />
+                            <h2 className="text-lg md:text-2xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
+                                <div className="p-1.5 md:p-2 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg md:rounded-xl">
+                                    <User size={16} className="text-white md:w-5 md:h-5" />
                                 </div>
                                 Şəxsi Məlumatlar
                             </h2>
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Ad və Soyad</label>
+                                    <label className="block text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Ad və Soyad</label>
                                     <input
                                         type="text"
                                         name="fullName"
@@ -799,13 +799,13 @@ export default function ResumeBuilder() {
                                 transition={{ delay: 0.2 }}
                                 className="mt-8 pt-6 border-t-2 border-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-800 dark:via-purple-800 dark:to-pink-800"
                             >
-                                <h3 className="text-xl font-black bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4 flex items-center gap-3">
-                                    <div className="p-2 bg-gradient-to-br from-orange-500 to-pink-500 rounded-xl">
-                                        <Award size={18} className="text-white" />
+                                <h3 className="text-base md:text-xl font-black bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
+                                    <div className="p-1.5 md:p-2 bg-gradient-to-br from-orange-500 to-pink-500 rounded-lg md:rounded-xl">
+                                        <Award size={14} className="text-white md:w-[18px] md:h-[18px]" />
                                     </div>
                                     Aşkarlanan Bacarıqlar ({earnedSkills.length})
                                 </h3>
-                                <div className="flex flex-wrap gap-3">
+                                <div className="flex flex-wrap gap-2 md:gap-3">
                                     {earnedSkills.length > 0 ? (
                                         earnedSkills.map((skill, index) => (
                                             <motion.span
@@ -813,7 +813,7 @@ export default function ResumeBuilder() {
                                                 initial={{ opacity: 0, scale: 0.8 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{ delay: index * 0.05 }}
-                                                className="group relative px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 transition-all cursor-default overflow-hidden"
+                                                className="group relative px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg md:rounded-xl text-xs md:text-sm font-bold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 transition-all cursor-default overflow-hidden"
                                             >
                                                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                                 <span className="relative z-10 flex items-center gap-2">
