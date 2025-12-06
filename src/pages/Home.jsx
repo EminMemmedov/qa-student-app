@@ -678,28 +678,41 @@ export default function Home() {
         <Link to="/resume-builder" className="block mb-8" rel="prefetch">
           <motion.div
             variants={itemVariants}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, y: -4 }}
             whileTap={{ scale: 0.98 }}
-            className="group relative overflow-hidden bg-white dark:bg-slate-800 rounded-[2rem] p-6 shadow-xl border border-slate-100 dark:border-slate-700"
+            className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 rounded-[2.5rem] p-8 shadow-2xl shadow-indigo-500/30 cursor-pointer"
           >
-            <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-              <FileText size={80} className="text-indigo-600 dark:text-indigo-400 rotate-12" />
-            </div>
+            {/* Decorative Background Elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-700"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl -ml-12 -mb-12 group-hover:scale-110 transition-transform duration-700"></div>
 
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
-                <FileText size={28} />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">CV Konstruktor</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Nailiyyətləriniz əsasında peşəkar QA CV-si yaradın
-                </p>
-              </div>
-              <div className="ml-auto">
-                <div className="w-10 h-10 bg-slate-50 dark:bg-slate-700 rounded-full flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors text-slate-400">
-                  <ArrowRight size={20} />
+            {/* Pattern Overlay */}
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+            <div className="relative z-10 flex items-center justify-between gap-6">
+              <div className="flex items-center gap-6">
+                <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center text-white border border-white/20 shadow-inner group-hover:rotate-6 transition-transform duration-300">
+                  <FileText size={40} className="drop-shadow-lg" />
                 </div>
+
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-3xl font-black text-white tracking-tight">CV Konstruktor</h3>
+                    <span className="bg-white/20 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-white/10">
+                      Premium
+                    </span>
+                  </div>
+                  <p className="text-blue-100/90 text-lg font-medium leading-relaxed max-w-md">
+                    Nailiyyətləriniz əsasında <span className="text-white font-bold">peşəkar QA CV-si</span> yaradın və işə qəbul şansınızı artırın.
+                  </p>
+                </div>
+              </div>
+
+              <div className="hidden sm:flex flex-col items-center gap-2">
+                <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-indigo-600 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <ArrowRight size={24} strokeWidth={3} />
+                </div>
+                <span className="text-white/60 text-xs font-bold uppercase tracking-widest">Başla</span>
               </div>
             </div>
           </motion.div>
