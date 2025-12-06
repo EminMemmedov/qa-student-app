@@ -680,39 +680,38 @@ export default function Home() {
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
             whileTap={{ scale: 0.98 }}
-            className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 rounded-[2.5rem] p-8 shadow-2xl shadow-indigo-500/30 cursor-pointer"
+            className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 rounded-[2rem] p-5 shadow-2xl shadow-indigo-500/30 cursor-pointer"
           >
             {/* Decorative Background Elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-700"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl -ml-12 -mb-12 group-hover:scale-110 transition-transform duration-700"></div>
+            <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl -mr-12 -mt-12 group-hover:scale-110 transition-transform duration-700"></div>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/20 rounded-full blur-3xl -ml-8 -mb-8 group-hover:scale-110 transition-transform duration-700"></div>
 
             {/* Pattern Overlay */}
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
 
-            <div className="relative z-10 flex items-center justify-between gap-6">
-              <div className="flex items-center gap-6">
-                <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center text-white border border-white/20 shadow-inner group-hover:rotate-6 transition-transform duration-300">
-                  <FileText size={40} className="drop-shadow-lg" />
+            <div className="relative z-10 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white border border-white/20 shadow-inner group-hover:rotate-6 transition-transform duration-300">
+                  <FileText size={28} className="drop-shadow-lg" />
                 </div>
 
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-3xl font-black text-white tracking-tight">CV Konstruktor</h3>
-                    <span className="bg-white/20 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-white/10">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-xl font-black text-white tracking-tight">CV Konstruktor</h3>
+                    <span className="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider backdrop-blur-sm border border-white/10">
                       Premium
                     </span>
                   </div>
-                  <p className="text-blue-100/90 text-lg font-medium leading-relaxed max-w-md">
-                    Nailiyyətləriniz əsasında <span className="text-white font-bold">peşəkar QA CV-si</span> yaradın və işə qəbul şansınızı artırın.
+                  <p className="text-blue-100/90 text-sm font-medium leading-tight max-w-sm">
+                    Nailiyyətləriniz əsasında <span className="text-white font-bold">peşəkar QA CV-si</span> yaradın.
                   </p>
                 </div>
               </div>
 
-              <div className="hidden sm:flex flex-col items-center gap-2">
-                <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-indigo-600 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <ArrowRight size={24} strokeWidth={3} />
+              <div className="hidden sm:flex flex-col items-center gap-1">
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-indigo-600 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <ArrowRight size={18} strokeWidth={3} />
                 </div>
-                <span className="text-white/60 text-xs font-bold uppercase tracking-widest">Başla</span>
               </div>
             </div>
           </motion.div>
