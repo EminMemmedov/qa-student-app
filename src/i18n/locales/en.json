@@ -180,7 +180,9 @@
         "filter": "Filter",
         "sort": "Sort",
         "settings": "Settings",
-        "language": "Language"
+        "language": "Language",
+        "updating": "Updating Application...",
+        "updatingDesc": "New version detected. Cleaning cache and reloading..."
     },
     "categories": {
         "qa_basics": "QA Basics",

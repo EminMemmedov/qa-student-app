@@ -43,11 +43,14 @@ const PageLoader = () => (
   </div>
 );
 
+import VersionChecker from './components/VersionChecker';
+
 function App() {
   const location = useLocation();
 
   return (
     <DevToolsProvider>
+      <VersionChecker />
       <AnimatePresence mode="wait">
         <Suspense fallback={<PageLoader />}>
           <Routes location={location} key={location.pathname}>

@@ -2,7 +2,24 @@
     "common": {
         "answer": "Cavabı Göstər",
         "reset": "Sıfırla",
-        "solution_loaded": "Cavab Yükləndi"
+        "solution_loaded": "Cavab Yükləndi",
+        "updating": "Tətbiq Yenilənir...",
+        "updatingDesc": "Yeni versiya tapıldı. Keş təmizlənir və səhifə yenilənir...",
+        "loading": "Yüklənir...",
+        "save": "Yadda saxla",
+        "cancel": "Ləğv et",
+        "close": "Bağla",
+        "submit": "Göndər",
+        "back": "Geri",
+        "next": "Növbəti",
+        "previous": "Əvvəlki",
+        "yes": "Bəli",
+        "no": "Xeyr",
+        "search": "Axtar",
+        "filter": "Filtr",
+        "sort": "Sırala",
+        "settings": "Parametrlər",
+        "language": "Dil"
     },
     "contact": {
         "title": "Bizimlə Əlaqə",
@@ -183,23 +200,6 @@
                 "description": "5 Hard səviyyəli baq tapın"
             }
         }
-    },
-    "common": {
-        "loading": "Yüklənir...",
-        "save": "Yadda saxla",
-        "cancel": "Ləğv et",
-        "close": "Bağla",
-        "submit": "Göndər",
-        "back": "Geri",
-        "next": "Növbəti",
-        "previous": "Əvvəlki",
-        "yes": "Bəli",
-        "no": "Xeyr",
-        "search": "Axtar",
-        "filter": "Filtr",
-        "sort": "Sırala",
-        "settings": "Parametrlər",
-        "language": "Dil"
     },
     "bugReport": {
         "title": "Baq Reportu",
