@@ -6,6 +6,7 @@ import PageTransition from '../components/PageTransition';
 import { Sparkles, Trophy, BookOpen, Bug, ArrowRight, Target, MessageSquare, Linkedin, Instagram, Phone, ExternalLink, Newspaper, FileText, Bot, GraduationCap, User, ChevronRight, Loader2, Edit2, X, PieChart, Medal, ChevronDown, Plus, LogOut, Check, Users } from 'lucide-react';
 import { useGameProgress } from '../hooks/useGameProgress';
 import { useAchievements } from '../hooks/useAchievements';
+import ChristmasGarland from '../components/ChristmasGarland';
 
 import LearningProgress from '../components/LearningProgress';
 import HomeLeaderboard from '../components/HomeLeaderboard';
@@ -284,6 +285,8 @@ export default function Home() {
       >
         {/* Header Section */}
         <motion.header variants={itemVariants} className="relative z-10 flex justify-between items-start mb-8">
+          {/* Christmas Garland */}
+          <ChristmasGarland />
           <div className="flex-1">
             <div className="flex items-center gap-4 mb-6">
               <motion.div
@@ -298,6 +301,31 @@ export default function Home() {
                 {/* Logo Container */}
                 <div className="relative bg-white dark:bg-slate-800 p-3 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-black/30 ring-1 ring-slate-100 dark:ring-slate-700">
                   <img src="/qa-academy.png" alt="QA Academy" className="h-12 w-auto object-contain" />
+
+                  {/* Santa Hat */}
+                  <motion.img
+                    src="/santa-hat.png"
+                    alt="Santa Hat"
+                    className="absolute -top-3 -right-3 w-8 h-8 md:w-10 md:h-10 drop-shadow-lg"
+                    initial={{ rotate: -15, scale: 0 }}
+                    animate={{
+                      rotate: [-15, -10, -15],
+                      scale: 1
+                    }}
+                    transition={{
+                      rotate: {
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      },
+                      scale: {
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20,
+                        delay: 0.3
+                      }
+                    }}
+                  />
                 </div>
               </motion.div>
               <div className="flex flex-col justify-center">
@@ -516,9 +544,12 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Stats Cards */}
+        {/* Stats Cards with Festive Styling */}
         <motion.div variants={itemVariants} className="mb-8">
-          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4">Statistika</h2>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+            Statistika
+            <span className="text-lg">❄️</span>
+          </h2>
           <div className="grid grid-cols-2 gap-4">
             {leaderboardLoading ? (
               <>
@@ -527,22 +558,30 @@ export default function Home() {
               </>
             ) : (
               <>
-                <StatsCard
-                  icon={Bug}
-                  label="Tapılan Baqlar"
-                  value={foundBugs.length}
-                  color="orange"
-                  delay={0}
-                  to="/found-bugs"
-                />
-                <StatsCard
-                  icon={Medal}
-                  label="Nailiyyətlər"
-                  value={unlockedCount}
-                  color="purple"
-                  delay={0.1}
-                  to="/achievements"
-                />
+                <div className="relative">
+                  {/* Snowflake decoration */}
+                  <div className="absolute -top-2 -right-2 text-2xl opacity-50 animate-pulse">❄️</div>
+                  <StatsCard
+                    icon={Bug}
+                    label="Tapılan Baqlar"
+                    value={foundBugs.length}
+                    color="orange"
+                    delay={0}
+                    to="/found-bugs"
+                  />
+                </div>
+                <div className="relative">
+                  {/* Snowflake decoration */}
+                  <div className="absolute -top-2 -left-2 text-2xl opacity-50 animate-pulse" style={{ animationDelay: '0.5s' }}>⭐</div>
+                  <StatsCard
+                    icon={Medal}
+                    label="Nailiyyətlər"
+                    value={unlockedCount}
+                    color="purple"
+                    delay={0.1}
+                    to="/achievements"
+                  />
+                </div>
               </>
             )}
           </div>
