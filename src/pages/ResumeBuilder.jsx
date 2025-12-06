@@ -348,49 +348,79 @@ export default function ResumeBuilder() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6 pt-24 pb-32">
             <div className="w-full mx-auto">
-                {/* Header */}
-                <header className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <h1 className="text-3xl font-black text-slate-900 dark:text-white flex items-center gap-3">
-                            <FileText className="text-indigo-600 dark:text-indigo-400" size={32} />
-                            CV Konstruktor
-                        </h1>
-                        <p className="text-slate-500 dark:text-slate-400 mt-2">
-                            Oyun proqresinizi peşəkar bir QA CV-sinə çevirin.
-                        </p>
-                    </div>
+                {/* Enhanced Header with Gradient */}
+                <motion.header
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-8 relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-3xl p-8 shadow-2xl shadow-indigo-500/30"
+                >
+                    {/* Decorative Elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl -ml-12 -mb-12"></div>
 
-                    <div className="flex bg-white dark:bg-slate-800 p-1.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 lg:hidden">
-                        <button
-                            onClick={() => setActiveTab('edit')}
-                            className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'edit'
-                                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
-                                : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700/50'
-                                }`}
-                        >
-                            <Layout size={18} />
-                            Redaktor
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('preview')}
-                            className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'preview'
-                                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
-                                : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700/50'
-                                }`}
-                        >
-                            <Eye size={18} />
-                            Önizləmə
-                        </button>
-                    </div>
+                    {/* Pattern Overlay */}
+                    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
 
-                    <button
-                        onClick={calculateATS}
-                        className="flex items-center gap-2 px-6 py-2.5 rounded-lg font-bold text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all"
-                    >
-                        <Sparkles size={18} />
-                        ATS Yoxla
-                    </button>
-                </header>
+                    <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div className="flex-1">
+                            <motion.div
+                                initial={{ scale: 0.9 }}
+                                animate={{ scale: 1 }}
+                                className="flex items-center gap-4 mb-3"
+                            >
+                                <div className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
+                                    <FileText className="text-white" size={32} />
+                                </div>
+                                <div>
+                                    <h1 className="text-4xl font-black text-white tracking-tight flex items-center gap-2">
+                                        CV Konstruktor
+                                        <span className="text-2xl">✨</span>
+                                    </h1>
+                                    <p className="text-blue-100/90 text-sm font-medium mt-1">
+                                        Oyun proqresinizi peşəkar bir QA CV-sinə çevirin
+                                    </p>
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        {/* Mobile Tab Switcher */}
+                        <div className="flex bg-white/10 backdrop-blur-md p-1.5 rounded-xl border border-white/20 lg:hidden">
+                            <button
+                                onClick={() => setActiveTab('edit')}
+                                className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'edit'
+                                    ? 'bg-white text-indigo-600 shadow-lg'
+                                    : 'text-white/70 hover:text-white hover:bg-white/10'
+                                    }`}
+                            >
+                                <Layout size={18} />
+                                Redaktor
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('preview')}
+                                className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'preview'
+                                    ? 'bg-white text-indigo-600 shadow-lg'
+                                    : 'text-white/70 hover:text-white hover:bg-white/10'
+                                    }`}
+                            >
+                                <Eye size={18} />
+                                Önizləmə
+                            </button>
+                        </div>
+
+                        {/* Enhanced ATS Button */}
+                        <motion.button
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={calculateATS}
+                            className="relative group flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-2xl shadow-white/20 hover:shadow-white/40 transition-all overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <Sparkles size={20} className="relative z-10 group-hover:text-white transition-colors" />
+                            <span className="relative z-10 group-hover:text-white transition-colors">ATS Yoxla</span>
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-white animate-pulse"></div>
+                        </motion.button>
+                    </div>
+                </motion.header>
 
                 {/* ATS Modal */}
                 <AnimatePresence>
@@ -576,15 +606,20 @@ export default function ResumeBuilder() {
                 </AnimatePresence>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    {/* Editor Panel */}
+                    {/* Enhanced Editor Panel */}
                     <div className={`lg:col-span-5 space-y-6 ${activeTab === 'preview' ? 'hidden lg:block' : ''}`}>
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-100 dark:border-slate-700"
+                            className="relative bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-2xl border-2 border-transparent bg-gradient-to-br from-white via-white to-indigo-50/30 dark:from-slate-800 dark:via-slate-800 dark:to-indigo-900/10 overflow-hidden"
                         >
-                            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                                <User size={20} className="text-blue-500" />
+                            {/* Decorative gradient border effect */}
+                            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 -z-10 blur-xl"></div>
+
+                            <h2 className="text-2xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent mb-6 flex items-center gap-3">
+                                <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl">
+                                    <User size={20} className="text-white" />
+                                </div>
                                 Şəxsi Məlumatlar
                             </h2>
 
@@ -757,28 +792,52 @@ export default function ResumeBuilder() {
                             </div>
 
 
-                            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-700">
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                                    <Award size={18} className="text-orange-500" />
+                            {/* Enhanced Skills Section */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.2 }}
+                                className="mt-8 pt-6 border-t-2 border-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-800 dark:via-purple-800 dark:to-pink-800"
+                            >
+                                <h3 className="text-xl font-black bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4 flex items-center gap-3">
+                                    <div className="p-2 bg-gradient-to-br from-orange-500 to-pink-500 rounded-xl">
+                                        <Award size={18} className="text-white" />
+                                    </div>
                                     Aşkarlanan Bacarıqlar ({earnedSkills.length})
                                 </h3>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-3">
                                     {earnedSkills.length > 0 ? (
-                                        earnedSkills.map(skill => (
-                                            <span key={skill.id} className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg text-sm font-medium border border-green-200 dark:border-green-800">
-                                                {skill.skill}
-                                            </span>
+                                        earnedSkills.map((skill, index) => (
+                                            <motion.span
+                                                key={skill.id}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ delay: index * 0.05 }}
+                                                className="group relative px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 transition-all cursor-default overflow-hidden"
+                                            >
+                                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                                <span className="relative z-10 flex items-center gap-2">
+                                                    <CheckCircle2 size={14} />
+                                                    {skill.skill}
+                                                </span>
+                                            </motion.span>
                                         ))
                                     ) : (
-                                        <p className="text-sm text-slate-400 italic">
-                                            Hələ heç bir bacarıq aşkarlanmayıb. Bacarıq qazanmaq üçün təcrübə modullarını tamamlayın.
-                                        </p>
+                                        <div className="w-full p-6 bg-gradient-to-br from-slate-50 to-indigo-50/30 dark:from-slate-900 dark:to-indigo-900/10 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700">
+                                            <p className="text-sm text-slate-500 dark:text-slate-400 text-center italic flex items-center justify-center gap-2">
+                                                <Sparkles size={16} className="text-indigo-400" />
+                                                Hələ heç bir bacarıq aşkarlanmayıb. Bacarıq qazanmaq üçün təcrübə modullarını tamamlayın.
+                                            </p>
+                                        </div>
                                     )}
                                 </div>
-                                <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-xs text-blue-600 dark:text-blue-300">
-                                    Bacarıqlar Təcrübə Modulları və İmtahan nəticələrinizə əsasən avtomatik əlavə olunur.
+                                <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-100 dark:border-blue-800">
+                                    <p className="text-xs text-blue-600 dark:text-blue-300 font-medium flex items-center gap-2">
+                                        <Target size={14} />
+                                        Bacarıqlar Təcrübə Modulları və İmtahan nəticələrinizə əsasən avtomatik əlavə olunur.
+                                    </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         </motion.div>
                     </div>
 
